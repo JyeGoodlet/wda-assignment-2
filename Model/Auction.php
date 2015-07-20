@@ -18,10 +18,24 @@ class AuctionItem {
 	public $startBid;
 	#double reserve price of auction
 	public $reservePrice;
+	#current bid price
+	public $currentBidPrice;
 	#current winning bid id
-	public $winningBidId
+	public $winningBidId;
+	#category of item
+	public $categoryId;
+
+	#array of all the bids
+	public $bids;
 
 
+	//functions
+	
+	function getBids() {
+
+
+
+	}
 
 }
 
