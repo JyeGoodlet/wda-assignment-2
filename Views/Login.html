@@ -1,0 +1,21 @@
+<html>
+<head>
+</head>
+<body>
+<h2>Login</h2>
+
+<form method="post">
+<label for="username"> User Name </label>
+<input type="text" id="username" name="username">
+
+<label for="password"> Password </label>
+<input type="password" id="password" name="password">
+ <button type="submit" class="btn btn-default">Submit</button>
+</form>
+<?php if(isset($message)): ?>
+<p><?php  echo $message; ?></p>
+<?php endif; ?>
+</body>
+
+
+</html>
