@@ -1,5 +1,5 @@
 Options +FollowSymLinks
 RewriteEngine on 
 RewriteRule ^/?Login$ /Controllers/LoginController.php [L]
-RewriteRule ^/?login$ /views/login.html [L]
+RewriteRule ^/?login$ /Controllers/LoginController.php [L]
 

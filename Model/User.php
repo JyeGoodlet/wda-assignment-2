@@ -25,22 +25,35 @@ class User {
 
 	}
 
-	//returns user if correct or false if failure
+	//returns true if exists, false if doesnt
 	public function attempLogin() {
 
 		$query = "SELECT * from users
 				  where username = :username
-				  and password =:password	";
+				  and password =:password
+				  limit 1	";
 
 
 		$stmt = $this->pdo->prepare($query);
 		$stmt->bindParam(':username', $this->username);
 		$stmt->bindParam(':password', $this->password);
 		$stmt->execute();
-		$users = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$user = $stmt->fetch(PDO::FETCH_OBJ);
 
-  		var_dump($users);
-		echo "attempting login ";
+		
+		if (!empty($user)) {
+			//get users id
+			$this->id = $user->id;
+			//echo "true";
+			return true;
+		}
+		else {
+			//echo "false";
+			return false;
+		}
+
+  		
+	
 
 	}
 

@@ -17,7 +17,7 @@ function OnRequest() {
 }
 
 function loginGet() {
-	echo "Get";
+	//echo "Get";
 	include_once("../Views/login.html");
 
 
@@ -29,9 +29,16 @@ function loginPost($username, $password) {
 
 		//Attemp to log user in
 		ModelFacade::login($_POST["username"], $_POST["password"]);
-
-		$message = "Username or password does not exist";
-		include_once("../Views/login.html");
+		if (ModelFacade::checkLoggedIn()) {
+			//redirect
+			header( 'Location: /index' ) ;
+		}
+		else {
+			$message = "Username or password does not exist";
+			include_once("../Views/login.html");
+		}
+		
+		
 	}
 	else {
 		$message = "Please enter username and password";
