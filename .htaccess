@@ -1,5 +1,12 @@
 Options +FollowSymLinks
-RewriteEngine on 
-RewriteRule ^/?Login$ /Controllers/LoginController.php [L]
-RewriteRule ^/?login$ /Controllers/LoginController.php [L]
+RewriteEngine on
+RewriteRule ^/?Login$ /Controllers/Login.php [L]
+RewriteRule ^/?login$ /Controllers/Login.php [L]
+RewriteRule ^/?Signup$ /Controllers/signup.php [L]
+RewriteRule ^/?signup$ /Controllers/signup.php [L]
+RewriteRule ^/?logout$ /Controllers/logout.php [L]
+RewriteRule ^/?Logout$ /Controllers/logout.php [L]
+RewriteRule ^/?index$ /Controllers/index.php [L]
+RewriteRule ^/?Index$ /Controllers/index.php [L]
+
 

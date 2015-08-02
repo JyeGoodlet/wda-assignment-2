@@ -9,13 +9,15 @@ class User {
 	public $username;
 	//users password
 	public $password;
+	//bool isAdmin
+	public $isAdmin;
 
-	//store database stuff
-	private $pdo;
+
+
 
 	function __construct($username, $password) {
 		$connection = new DbConnect();
-		$this->pdo = $connection->connect();
+		$pdo = $connection->connect();
 
 		$this->username = $username;
 		$this->password = $password;
@@ -28,13 +30,15 @@ class User {
 	//returns true if exists, false if doesnt
 	public function attempLogin() {
 
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
 		$query = "SELECT * from users
 				  where username = :username
 				  and password =:password
 				  limit 1	";
 
 
-		$stmt = $this->pdo->prepare($query);
+		$stmt = $pdo->prepare($query);
 		$stmt->bindParam(':username', $this->username);
 		$stmt->bindParam(':password', $this->password);
 		$stmt->execute();
@@ -44,6 +48,7 @@ class User {
 		if (!empty($user)) {
 			//get users id
 			$this->id = $user->id;
+			$this->isAdmin = $user->is_admin;
 			//echo "true";
 			return true;
 		}
@@ -54,6 +59,37 @@ class User {
 
   		
 	
+
+	}
+
+    public function checkUsernameAvailable() {
+
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "select username from users
+                  where username = :username";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':username', $this->username);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_OBJ);
+
+        if ($user == false) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+	public function signup() {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+		$query = "insert into users(username, password)
+				  values (:username, :password)";
+		$stmt = $pdo->prepare($query);
+		$stmt->bindParam(':username', $this->username);
+		$stmt->bindParam(':password', $this->password);
+		$stmt->execute();
 
 	}
 
