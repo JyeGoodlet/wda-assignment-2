@@ -9,7 +9,7 @@ function OnRequest() {
     $requestMethod = $_SERVER['REQUEST_METHOD'];
     if (ModelFacade::checkLoggedIn()) {
         //redirect if user is logged in
-        header("Location: /Index2.php");
+        header("Location: /Index.php");
 
     }
     if ($requestMethod == "GET") {
