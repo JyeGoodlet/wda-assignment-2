@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<link rel="stylesheet" href="../Content/css/bootstrap.min.css"/>
+</head>
+<body>
+    <div class="container">
+        
+        <h2>Index</h2>
+
+        <p>Testing git commit from VS!</p>
+
+        <?php 
+        
+            if(ModelFacade::checkLoggedIn()) {
+                echo "<p>Hello, " . ModelFacade::getLoggedInUser()->username . " <a href='/logout.php'>[Logout]</a></p>";
+            }
+        
+        ?>
+
+    </div>
+
+</body>
+</html>

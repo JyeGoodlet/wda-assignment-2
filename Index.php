@@ -11,7 +11,11 @@ require "/Model/ModelFacade.php";
 ModelFacade::redirectUnauthorises();
 
 //get all categories and subcategories
+OnRequest();
 
+function OnRequest() {
+    include_once('/Views/index.html');
+}
 
 
 ?>
