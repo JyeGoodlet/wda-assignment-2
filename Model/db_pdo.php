@@ -2,10 +2,10 @@
 
 class DbConnect {
 
-	public $DB_USER = 'a1';
-	public $DB_PW = 'A1Password';
+	public $DB_USER = 'root';
+	public $DB_PW = 'A@password';
 	public $databaseName='msgboard';
-	public $hostName ='127.0.0.1';
+	public $hostName ='ec2-54-153-161-207.ap-southeast-2.compute.amazonaws.com';
 	public $dsn;
 
 	function __construct() {
