@@ -23,7 +23,7 @@
 
         <table>
             <?php foreach($category->subcategories as $subcategory): ?>
-            <tr><td><a href="/post?id=<?php echo $subcategory->id; ?>"><?php echo $subcategory->subcategory; ?></a></td></tr>
+            <tr><td><a href="/Posts.php?id=<?php echo $subcategory->id; ?>"><?php echo $subcategory->subcategory; ?></a></td></tr>
             <?php endforeach;?>
         </table>
         <?php endforeach;?>

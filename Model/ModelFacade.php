@@ -84,6 +84,12 @@ Class ModelFacade {
 
 	}
 
+	public static function getSubCategory($id) {
+		$subcategory = new Subcategory();
+		$subcategory->getSubcategory($id);
+		return $subcategory;
+	}
+
 
 
 
