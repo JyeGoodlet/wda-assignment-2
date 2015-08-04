@@ -5,7 +5,10 @@
 
 		public $id;
 
-		public $name;
+		public $category;
+
+		//list to hold our subcategories
+		public $subcategories;
 
 	}
 

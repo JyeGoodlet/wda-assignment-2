@@ -2,6 +2,11 @@
 
 require "User.php";
 
+require "Category.php";
+require "Subcategory.php";
+require "Categories.php";
+
+
 Class ModelFacade {
 
 
@@ -70,6 +75,14 @@ Class ModelFacade {
         return $avaiable;
 
     }
+
+
+	public static function getAllCategoriesWithSubcategories() {
+		$categories = new Categories();
+		$categories = $categories->getAllCategoriesWithSubcategories();
+		return $categories;
+
+	}
 
 
 

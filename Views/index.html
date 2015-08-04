@@ -9,8 +9,6 @@
         
         <h2>Index</h2>
 
-        <p>Testing git commit from VS!</p>
-
         <?php 
         
             if(ModelFacade::checkLoggedIn()) {
@@ -18,6 +16,18 @@
             }
         
         ?>
+        <div id="boards">
+
+        <?php foreach($categories as $category): ?>
+        <h3><?php echo $category->category; ?> </h3>
+
+        <table>
+            <?php foreach($category->subcategories as $subcategory): ?>
+            <tr><td><a href="/post?id=<?php echo $subcategory->id; ?>"><?php echo $subcategory->subcategory; ?></a></td></tr>
+            <?php endforeach;?>
+        </table>
+        <?php endforeach;?>
+        </div>
 
     </div>
 

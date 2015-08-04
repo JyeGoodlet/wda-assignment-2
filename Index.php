@@ -14,6 +14,8 @@ ModelFacade::redirectUnauthorises();
 OnRequest();
 
 function OnRequest() {
+    //get all categories and subcategories
+    $categories = ModelFacade::getAllCategoriesWithSubcategories();
     include_once('/Views/index.html');
 }
 
