@@ -59,7 +59,7 @@ Class ModelFacade {
             session_start();
         }
 		if (!isset($_SESSION['user'])) {
-			header("Location: /Login");
+			header("Location: /login.php");
 		}
 
 	}

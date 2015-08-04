@@ -6,7 +6,7 @@
  * Time: 5:46 PM
  */
 
-require "../Model/ModelFacade.php";
+require "/Model/ModelFacade.php";
 //redirect if user not logged in
 ModelFacade::redirectUnauthorises();
 

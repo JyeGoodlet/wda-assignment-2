@@ -18,7 +18,7 @@ function OnRequest() {
 
 
 function SignupGet() {
-    include_once("../Views/Signup.html");
+    include_once("/Views/Signup.html");
 
 }
 
@@ -51,7 +51,7 @@ function SignupPost() {
 
 
     //
-    include_once("../Views/Signup.html");
+    include_once("/Views/Signup.html");
 }
 
 
