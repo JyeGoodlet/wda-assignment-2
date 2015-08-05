@@ -22,7 +22,7 @@ function OnRequest() {
 
 function loginGet() {
     //echo "Get";
-    include_once("/Views/login.html");
+    include_once("/Views/Login.html");
 
 
 }
@@ -35,19 +35,19 @@ function loginPost() {
         ModelFacade::login($_POST["username"], $_POST["password"]);
         if (ModelFacade::checkLoggedIn()) {
             //redirect
-            header( 'Location: index.php' ) ;
+            header( 'Location: Index.php' ) ;
             exit();
         }
         else {
             $message = "Username or password does not exist";
-            include_once("/Views/login.html");
+            include_once("/Views/Login.html");
         }
 
 
     }
     else {
         $message = "Please enter username and password";
-        include_once("/Views/login.html");
+        include_once("/Views/Login.html");
     }
 
 

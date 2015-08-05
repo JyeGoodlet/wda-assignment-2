@@ -24,7 +24,11 @@
 
                     <?php if(ModelFacade::checkLoggedIn()) { ?>
                     
-                        <li><a href="#"><?php echo ModelFacade::getLoggedInUser()->username ?></a></li>
+                    <li>
+                        <a href="/users/<?php echo ModelFacade::getLoggedInUser()->id?>"><?php echo ModelFacade::getLoggedInUser()->username ?></a>
+                    </li>
+
+                     <li><a href="/logout.php">Logout</a></li>   
                 
                     <?php }
                     else { ?>
