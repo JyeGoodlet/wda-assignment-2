@@ -12,8 +12,8 @@
     </thead>
     <?php foreach($posts as $post):;?>
     <tr>
-        <td><?php echo $post->title; ?></td>
-        <td style="font-size: 14px;"><?php echo $post->commentcount; ?></td>
+        <td><a href="Thread.php?id=<?php echo $post->id; ?>"><?php echo $post->title; ?></a></td>
+        <td style="font-size: 14px;text-align: center;"><?php echo $post->commentcount; ?></td>
         <td style="font-size: 14px;text-align: center;"><?php echo $post->username?><br>
             <?php echo $post->date?>
         </td>
@@ -23,5 +23,6 @@
     <?php endforeach;?>
     </tbody>
 </table>
+<a href="NewThread.php?subcategory=<?php echo $post->id; ?>" type="button" class="btn btn-primary">New Thread</a>
 
 <?php include_once('Include/Footer.html'); ?>
