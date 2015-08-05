@@ -9,6 +9,6 @@
 //Require Model
 require "/Model/ModelFacade.php";
 ModelFacade::logout();
-ModelFacade::redirectUnauthorises();
+ModelFacade::redirectUnauthorised();
 
 ?>

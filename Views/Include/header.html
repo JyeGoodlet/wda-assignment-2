@@ -1,8 +1,68 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Message Board | <?php $pageTitle; ?></title>
+        <title><?php if(isset($pageTitle)){echo $pageTitle . " | ";} ?>Message Board</title>
         <link rel="stylesheet" href="../../Content/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../../Content/css/font-awesome.min.css" />
+
+        <script src="../../Content/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+        <script src="../../Content/js/bootstrap.min.js" type="text/javascript"></script>
     </head>
     <body>
-        <div class="container"> 
+
+        <div class="navbar navbar-default">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand" href="/">Message Board Name</a>
+
+                </div>
+
+                <ul class="nav navbar-nav navbar-right">
+
+                    <?php if(ModelFacade::checkLoggedIn()) { ?>
+                    
+                        <li><a href="#"><?php echo ModelFacade::getLoggedInUser()->username ?></a></li>
+                
+                    <?php }
+                    else { ?>
+
+                        <li class="dropdown" id="login">
+
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="login"><i class="fa fa-sign-in"></i> Login</a>
+
+                            <div class="dropdown-menu">
+
+                                <form action="../../Login.php" method="post" class="navbar-form">
+                                    <div class="form-group">
+                                        <label for="username">User Name </label>
+                                        <input class="form-control" type="text" id="username" name="username" placeholder="Username">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="password">Password </label>
+                                        <input class="form-control" type="password" id="password" name="password" placeholder="Password">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-default">Submit</button>
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </li>
+
+                    <?php } ?>
+                </ul>
+
+            </div>
+
+        </div>
+        
+        <div class="container">
+
+

@@ -11,7 +11,7 @@
 
 require "/Model/ModelFacade.php";
 //redirect if user not logged in
-ModelFacade::redirectUnauthorises();
+ModelFacade::redirectUnauthorised();
 
 //get all categories and subcategories
 OnRequest();

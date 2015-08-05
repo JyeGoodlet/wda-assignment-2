@@ -7,14 +7,14 @@ require "Subcategory.php";
 require "Categories.php";
 
 
-Class ModelFacade {
+class ModelFacade {
     
 
 	public static function login($username, $password) {
 		//
 		$user = new User($username, $password);
 		
-		if ($user->attempLogin()) {
+		if ($user->attemptLogin()) {
 			session_start();
 			$_SESSION["user"] = $user;
 
@@ -59,7 +59,7 @@ Class ModelFacade {
 		}
 	}
 
-	public static function redirectUnauthorises() {
+	public static function redirectUnauthorised() {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
@@ -89,6 +89,8 @@ Class ModelFacade {
 		$subcategory->getSubcategory($id);
 		return $subcategory;
 	}
+
+
 
 
 

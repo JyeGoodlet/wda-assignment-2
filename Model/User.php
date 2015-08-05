@@ -28,7 +28,7 @@ class User {
 	}
 
 	//returns true if exists, false if doesnt
-	public function attempLogin() {
+	public function attemptLogin() {
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
