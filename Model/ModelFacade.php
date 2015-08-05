@@ -1,6 +1,7 @@
 <?php
 
 require "User.php";
+require "Users.php";
 
 require "Category.php";
 require "Subcategory.php";
@@ -61,8 +62,18 @@ class ModelFacade {
             session_start();
         }
 		if (!isset($_SESSION['user'])) {
-			header("Location: /login.php");
+			header("Location: /Login.php");
 		}
+
+	}
+
+    public static function redirectUnauthorisedNotAdmin() {
+        ModelFacade::redirectUnauthorised();
+
+        // Check if admin - if not, boot them back to index
+        if(!ModelFacade::getLoggedInUser()->isAdmin) {
+            header("Location: /Index.php");
+        }
 
 	}
 
@@ -97,7 +108,10 @@ class ModelFacade {
 
 	}
 
-
+    public static function GetAllUsers() {
+        $users = new Users();
+        return $users->GetAllUsers();
+    }
 
 
 
