@@ -1,13 +1,8 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-	<link rel="stylesheet" href="../Content/css/bootstrap.min.css"/>
-</head>
-<body>
-    <div class="container">
+<?php include_once('Include/header.html'); ?>
+
+<div class="container"> 
         
-        <h2>Index</h2>
+    <h2>Index</h2>
 
         <?php 
         
@@ -18,18 +13,17 @@
         ?>
         <div id="boards">
 
-        <?php foreach($categories as $category): ?>
-        <h3><?php echo $category->category; ?> </h3>
+            <?php foreach($categories as $category): ?>
+            <h3><?php echo $category->category; ?> </h3>
 
-        <table>
-            <?php foreach($category->subcategories as $subcategory): ?>
-            <tr><td><a href="/Posts.php?id=<?php echo $subcategory->id; ?>"><?php echo $subcategory->subcategory; ?></a></td></tr>
+            <table>
+                <?php foreach($category->subcategories as $subcategory): ?>
+                <tr><td><a href="/Posts.php?id=<?php echo $subcategory->id; ?>"><?php echo $subcategory->subcategory; ?></a></td></tr>
+                <?php endforeach;?>
+            </table>
             <?php endforeach;?>
-        </table>
-        <?php endforeach;?>
         </div>
 
     </div>
 
-</body>
-</html>
+<?php include_once('Include/footer.html'); ?> 
