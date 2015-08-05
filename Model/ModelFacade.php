@@ -5,7 +5,7 @@ require "User.php";
 require "Category.php";
 require "Subcategory.php";
 require "Categories.php";
-
+require "Posts.php";
 
 class ModelFacade {
     
@@ -19,9 +19,6 @@ class ModelFacade {
 			$_SESSION["user"] = $user;
 
 		}
-
-		
-		
 
 	}
 
@@ -76,7 +73,7 @@ class ModelFacade {
 
     }
 
-
+	//get categories with subcategories
 	public static function getAllCategoriesWithSubcategories() {
 		$categories = new Categories();
 		$categories = $categories->getAllCategoriesWithSubcategories();
@@ -84,10 +81,20 @@ class ModelFacade {
 
 	}
 
+	//get subcategory by its id
 	public static function getSubCategory($id) {
 		$subcategory = new Subcategory();
 		$subcategory->getSubcategory($id);
 		return $subcategory;
+	}
+
+	//get a subcategories posts
+	public static function getPosts($subcategoryId) {
+
+		$posts = new Posts();
+		$posts = $posts->getPosts($subcategoryId);
+		return $posts;
+
 	}
 
 
