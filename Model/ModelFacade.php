@@ -1,12 +1,11 @@
 <?php
 
 require "User.php";
-require "Users.php";
 
 require "Category.php";
 require "Subcategory.php";
 require "Categories.php";
-
+require "Posts.php";
 
 class ModelFacade {
     
@@ -20,7 +19,6 @@ class ModelFacade {
 			$_SESSION["user"] = $user;
 
 		}
-		
 
 	}
 
@@ -63,18 +61,8 @@ class ModelFacade {
             session_start();
         }
 		if (!isset($_SESSION['user'])) {
-			header("Location: /Login.php");
+			header("Location: /login.php");
 		}
-
-	}
-
-    public static function redirectUnauthorisedNotAdmin() {
-        ModelFacade::redirectUnauthorised();
-
-        // Check if admin - if not, boot them back to index
-        if(!ModelFacade::getLoggedInUser()->isAdmin) {
-            header("Location: /Index.php");
-        }
 
 	}
 
@@ -85,7 +73,7 @@ class ModelFacade {
 
     }
 
-
+	//get categories with subcategories
 	public static function getAllCategoriesWithSubcategories() {
 		$categories = new Categories();
 		$categories = $categories->getAllCategoriesWithSubcategories();
@@ -93,16 +81,27 @@ class ModelFacade {
 
 	}
 
+	//get subcategory by its id
 	public static function getSubCategory($id) {
 		$subcategory = new Subcategory();
 		$subcategory->getSubcategory($id);
 		return $subcategory;
 	}
 
-    public static function GetAllUsers() {
-        $users = new Users();
-        return $users->GetAllUsers();
-    }
+	//get a subcategories posts
+	public static function getPosts($subcategoryId) {
+
+		$posts = new Posts();
+		$posts = $posts->getPosts($subcategoryId);
+		return $posts;
+
+	}
+
+
+
+
+
+
 
 }
 

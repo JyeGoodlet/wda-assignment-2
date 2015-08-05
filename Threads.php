@@ -18,10 +18,11 @@ OnRequest();
 
 function OnRequest() {
     //get subcategory
-
     $subcategory = ModelFacade::getSubCategory($_GET["id"]);
 
-    include_once('/Views/Posts.html');
+    //get Posts
+    $posts = ModelFacade::getPosts($subcategory->id);
+    include_once('/Views/Threads.html');
 }
 
 
