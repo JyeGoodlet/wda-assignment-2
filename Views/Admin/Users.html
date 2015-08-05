@@ -1,0 +1,13 @@
+<div class="panel panel-default">
+
+    <div class="panel-heading">
+        <h3 class="panel-title">Manage User Accounts</h3>
+    </div>
+
+    <div class="panel-body">
+       <?php foreach(ModelFacade::GetAllUsers() as $user) {
+            echo $user['username'] . "<br>";     
+        }?>
+    </div>
+
+</div>

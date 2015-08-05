@@ -25,10 +25,18 @@
                     <?php if(ModelFacade::checkLoggedIn()) { ?>
                     
                     <li>
-                        <a href="/users/<?php echo ModelFacade::getLoggedInUser()->id?>"><?php echo ModelFacade::getLoggedInUser()->username ?></a>
-                    </li>
+                        <a href="/users/<?php echo ModelFacade::getLoggedInUser()->id?>"><i class="fa fa-user"></i> <?php echo ModelFacade::getLoggedInUser()->username ?></a>
+                    </li>                    
 
-                     <li><a href="/logout.php">Logout</a></li>   
+                    <?php if(ModelFacade::getLoggedInUser()->isAdmin) { ?>
+
+                    <li><a href="/Admin.php"><i class="fa fa-cog"></i> Admin View</a></li>
+                              
+                    <?php } ?>
+                    
+                    <li><a href="#"><i class="fa fa-envelope"></i> 0 new messages</a></li>
+
+                     <li class="active"><a href="/logout.php"><i class="fa fa-sign-out"></i> Logout</a></li>   
                 
                     <?php }
                     else { ?>
