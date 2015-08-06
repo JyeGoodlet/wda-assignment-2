@@ -3,30 +3,33 @@ $pageTitle = 'Welcome';
 include_once('Include/Header.html'); 
 ?>
 
-<div class="container"> 
-        
-    <h2>Index</h2>
+<div class="container">
 
-        <?php 
-        
-            if(ModelFacade::checkLoggedIn()) {
-                echo "<p>Hello, " . ModelFacade::getLoggedInUser()->username . " <a href='/logout.php'>[Logout]</a></p>";
-            }
-        
-        ?>
-        <div id="boards">
 
-            <?php foreach($categories as $category): ?>
-            <h3><?php echo $category->category; ?> </h3>
+    <div id="boards" class="row">
+        <?php foreach($categories as $category): ?>
+        <div class="col-lg-6 ">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><?php echo $category->category; ?> Questions</div>
 
-            <table>
-                <?php foreach($category->subcategories as $subcategory): ?>
-                <tr><td><a href="/Threads.php?id=<?php echo $subcategory->id; ?>"><?php echo $subcategory->subcategory; ?></a></td></tr>
-                <?php endforeach;?>
-            </table>
-            <?php endforeach;?>
+                <div class="panel-body">
+
+
+                    <table>
+                        <?php foreach($category->subcategories as $subcategory): ?>
+                        <tr>
+                            <td><a href="/Threads.php?id=<?php echo $subcategory->id; ?>"><?php echo $subcategory->
+                                subcategory; ?></a></td>
+                        </tr>
+                        <?php endforeach;?>
+                    </table>
+                </div>
+            </div>
         </div>
+        <?php endforeach;?>
 
     </div>
+
+</div>
 
 <?php include_once('Include/Footer.html'); ?> 
