@@ -1,0 +1,36 @@
+<?php include_once('Include/Header.html'); ?>
+
+<div class="col-lg-6 col-lg-offset-3">
+
+    <h2>New Thread for <?php echo ModelFacade::getSubCategory($_GET["subcategory"])->subcategory ; ?> Questions</h2>
+
+   <form method="post">
+       <div class="form-group <?php echo (isset($titleReq) ? $titleReq : '' ); ?>   ">
+           <label for="username"> Title </label>
+           <input  class="form-control" name="title" id="title" type="text" placeholder="Title" aria-describedby="inputWarning1Status" value="<?php echo (isset($title) ? $title : ''); ?>"> </input>
+           <?php if(isset($titleReq)): ?>
+           <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+           <span id="inputWarning1Status" class="sr-only">(warning)</span>
+           <?php endif; ?>
+       </div>
+       <div class="form-group <?php echo (isset($contentReq) ? $contentReq : '' ); ?>">
+           <label for="content">Content</label>
+           <textarea   rows="6" class="form-control" name="content" id="content" type="text"  ><?php echo (isset($content) ? $content : ''); ?></textarea>
+           <?php if(isset($contentReq)): ?>
+           <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+           <span id="inputWarning2Status" class="sr-only">(warning)</span>
+           <?php endif; ?>
+       </div>
+       <div class="form-group ">
+           <?php if(isset($message)): ?>
+           <div class="alert text-danger alert-warning" role="alert">Missing Fields Required</div>
+           <?php endif; ?>
+           <button  type="submit" class="btn btn-default pull-right">Post</button>
+       </div>
+
+
+    </form>
+
+</div>
+
+<?php include_once('Include/Footer.html'); ?>
