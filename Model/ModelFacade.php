@@ -7,6 +7,7 @@ require "Category.php";
 require "Subcategory.php";
 require "Categories.php";
 require "Posts.php";
+require_once "Post.php";
 
 class ModelFacade {
     
@@ -95,7 +96,7 @@ class ModelFacade {
 	//get subcategory by its id
 	public static function getSubCategory($id) {
 		$subcategory = new Subcategory();
-		$subcategory->getSubcategory($id);
+		$subcategory = $subcategory->getSubcategory($id);
 		return $subcategory;
 	}
 
@@ -119,6 +120,13 @@ class ModelFacade {
       return $users->GetAllUsers();
   }
 
+	public static function insertPost($title, $content, $subcategory, $user) {
+		$post = new Post($title, $content, $subcategory,  $user);
+		return $post->addPost();
+
+
+
+	}
 
 
 
