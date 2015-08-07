@@ -14,7 +14,7 @@ function OnRequest() {
         $page = '/Views/Admin/' . $_GET['page'] . '.html';
     }
     else {
-        $page = '/Views/Admin/Index.html';
+        $page = '/Views/Admin/Boards.html';
     }
 
     include_once('/Views/Admin.html');
