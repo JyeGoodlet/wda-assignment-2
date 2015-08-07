@@ -1,6 +1,8 @@
 <?php include_once('Include/Header.html'); ?>
+<div class="panel panel-primary">
+    <div class="panel-heading"><h4><?php echo $subcategory->subcategory; ?> Questions</h4></div>
 
-<h2><?php echo $subcategory->subcategory; ?> Questions</h2>
+    <div class="panel-body">
 
 <table style="width:1100px" class="table">
     <thead>
@@ -24,5 +26,6 @@
     </tbody>
 </table>
 <a href="NewThread.php?subcategory=<?php echo $_GET['id']; ?>" type="button" class="btn btn-primary">  New Thread</a>
-
+    </div>
+</div>
 <?php include_once('Include/Footer.html'); ?>

@@ -43,8 +43,8 @@ class Post
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $query = "insert into posts ( title, content, user, subcategory)
-                    values ( :title, :content, :user, :subcategory)";
+        $query = "insert into posts (date, title, content, user, subcategory)
+                    values (now(), :title, :content, :user, :subcategory)";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':title', $this->title);
         $stmt->bindParam(':content', $this->content);
