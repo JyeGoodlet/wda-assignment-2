@@ -107,11 +107,17 @@ class ModelFacade {
 		return $posts;
 
 	}
+  
+  public static function getPost($id) {
+    $posts = new Posts();
+    $posts = $posts->getPost($id);
+    return $posts;
+  }
 
-    public static function GetAllUsers() {
-        $users = new Users();
-        return $users->GetAllUsers();
-    }
+  public static function GetAllUsers() {
+      $users = new Users();
+      return $users->GetAllUsers();
+  }
 
 
 

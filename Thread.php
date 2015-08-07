@@ -15,8 +15,8 @@ OnRequest();
 
 function OnRequest()
 {
-
-
+  $post = ModelFacade::getPost($_GET["id"]);
+  include_once('/Views/Thread.html');
 }
 
 

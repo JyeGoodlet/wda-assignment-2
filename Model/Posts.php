@@ -41,5 +41,19 @@ class Posts
 
     }
 
+	public function getPost($id) {
+		$connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "select id, title, content FROM posts
+                    WHERE id = :id
+                    LIMIT 1";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->setFetchMode(PDO::FETCH_OBJ);
+        $stmt->execute();
+        $post = $stmt->fetch();
+        return $post;
+	}
+
 
 }
