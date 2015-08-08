@@ -7,7 +7,9 @@ require "Category.php";
 require "Subcategory.php";
 require "Categories.php";
 require "Posts.php";
+
 require_once "Post.php";
+require "DirectMsg.class.php";
 
 class ModelFacade {
     
@@ -109,6 +111,17 @@ class ModelFacade {
 
 	}
   
+
+    // TODO JASON replace getAllMsgs used for testing with getUsersMsgs($userID)
+    public static function getAllMsgs() {
+
+        $messages = new DirectMessages();
+        $messages = $messages->getAllMsgs();
+        return $messages;
+
+
+
+    }
   public static function getPost($id) {
     $posts = new Posts();
     $posts = $posts->getPost($id);

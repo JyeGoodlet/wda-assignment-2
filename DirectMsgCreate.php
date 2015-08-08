@@ -1,7 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Jason
- * Date: 08/08/2015
- * Time: 10:47
- */
+/**  -_-_- AUTHOR: jAsOnD -_-_- */
+
+require "/Model/ModelFacade.php";
+//redirect if user not logged in
+ModelFacade::redirectUnauthorised();
+
+OnRequest();
+
+function OnRequest()
+{
+    $post = ModelFacade::getPost($_GET["id"]);
+    include_once('/Views/DirectMsgCreate.html');
+}

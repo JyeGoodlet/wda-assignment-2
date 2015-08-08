@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sinisterdeath
- * Date: 8/6/2015
- * Time: 10:28 PM
- */
-
+/**  -_-_- AUTHOR: jAsOnD -_-_- */
 
 require "/Model/ModelFacade.php";
 //redirect if user not logged in
@@ -16,7 +10,7 @@ OnRequest();
 function OnRequest()
 {
   $post = ModelFacade::getPost($_GET["id"]);
-  include_once('/Views/Thread.html');
+  include_once('/Views/DirectMsg.html');
 }
 
 

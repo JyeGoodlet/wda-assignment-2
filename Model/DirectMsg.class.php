@@ -1,14 +1,24 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: jasonD
- * Date: 8/8/2015
- * Time: 9:05 AM
- */
+/**  -_-_- AUTHOR: jAsOnD -_-_- */
+
 class DirectMessages
 {
+    /*
+    TODO JASON - create function and query to show only individual users messages
+    TODO JASON - Create function and query to create user new Message
+    TODO JASON - create function and query to delete message
 
+    OPTIONAL EXTRA FUNCTIONALITY
+
+        SORT    - by sender
+                - by time
+                -- by subject
+
+        FILTER  - by sender
+                - by date range
+                - by unread
+    */
     public function getAllMsgs() {
         $connection = new DbConnect();
         $pdo = $connection->connect();

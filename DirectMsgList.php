@@ -1,11 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jasonD
- * Date: 8/8/2015
- * Time: 9:10 AM
- */
-
+/**  -_-_- AUTHOR: jAsOnD -_-_- */
 
 require "/Model/ModelFacade.php";
 //redirect if user not logged in
@@ -15,9 +9,8 @@ OnRequest();
 
 function OnRequest()
 {
-  $messages = ModelFacade::getDirectMessages($_GET["id"]);
-  include_once('/Views/Thread.html');
+  $messages = ModelFacade::getAllMsgs();
+  include_once('/Views/DirectMsgList.html');
 }
 
 
-?>
