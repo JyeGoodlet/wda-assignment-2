@@ -1,0 +1,31 @@
+<?php include_once('Include/Header.html'); ?>
+
+<div class="col-lg-12">
+
+    <button>CREATE NEW MESSAGE</button>
+
+    <table style="width:1100px" class="table">
+        <thead>
+        <tr>
+            <th style="width:700px">Message</th>
+            <th  style="text-align: center;">Read</th>
+            <th  style="text-align: center;">Sender</th>
+            <th  style="text-align: center;">Time Sent</th></tr>
+        </thead>
+        <?php foreach($messages as $message):;?>
+        <tr>
+            <td><a href="Thread.php?id=<?php echo $post->id; ?>"><?php echo $post->title; ?></a></td>
+            <td style="font-size: 14px;text-align: center;"><?php echo $post->commentcount; ?></td>
+            <td style="font-size: 14px;text-align: center;"><?php echo $post->username?><br>
+                <?php echo $post->date?>
+            </td>
+            <td style="font-size: 14px;text-align: center;"><?php echo $post->lastuser?><br>
+                <?php echo $post->lastdate?></td>
+        </tr>
+        <?php endforeach;?>
+        </tbody>
+    </table>
+
+</div>
+
+<?php include_once('Include/Footer.html'); ?>
