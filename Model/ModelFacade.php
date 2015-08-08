@@ -119,6 +119,16 @@ class ModelFacade {
 
     }
 
+    public static function displayUsersMsg($msgId) {
+        $userId = ModelFacade::getLoggedInUser()->id;
+        $messages = new DirectMessages();
+        $messages = $messages->displayMsg($msgId);
+        if ($messages->reciever != $userId)
+            ModelFacade::redirectUnauthorised();
+        return $messages;
+
+    }
+
     public static function countUnreadMsgs() {
         $userId = ModelFacade::getLoggedInUser()->id;
         $messages = new DirectMessages();

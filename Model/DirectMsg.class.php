@@ -28,7 +28,17 @@ class DirectMessages
         $count = $stmt->fetch();
         return $count->unread;
     }
-
+    public function displayMsg($msgId) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "SELECT * FROM direct_message WHERE id = :id LIMIT 1";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':id', $msgId);
+        $stmt->setFetchMode(PDO::FETCH_OBJ);
+        $stmt->execute();
+        $selectedMessage = $stmt->fetch();
+        return $selectedMessage;
+    }
 
     //TODO JASON - Create function and query to create user new Message
     public function createMsg() {

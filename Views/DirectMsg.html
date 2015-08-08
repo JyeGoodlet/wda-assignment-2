@@ -3,9 +3,10 @@
 
 <div class="col-lg-12">
 
-    <!-- TODO JASON LAYOUT PAGE CONTENT FOR INDIVIDUAL MESSAGES-->
-    <!-- TODO JASON USING $_GET or $_POST to show selected message with php echo -->
-    <h2>TODO THIS PAGE SHOWS INDIVIDUAL DIRECT MESSAGE CONTENT</h2>
+    <!-- TODO JASON LAYOUT PAGE CONTENT FOR INDIVIDUAL MESSAGES AS PER LAYOUT OF THREAD POSTS-->
+    <h2>SUBJECT: <?php  echo $selectedMsg->subject; ?> </h2>
+    <p>MESSAGE: <?php  echo $selectedMsg->message; ?></p>
+    <p>SENDER: <?php  echo $selectedMsg->sender; ?></p>
 
 </div>
 
