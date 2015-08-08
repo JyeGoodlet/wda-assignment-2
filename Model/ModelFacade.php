@@ -152,10 +152,17 @@ class ModelFacade {
 }
 
 
-
+  //Get all registered users from the database
   public static function GetAllUsers() {
       $users = new Users();
       return $users->GetAllUsers();
+  }
+
+  // Get a user from the database by Id
+  public static function GetUserById($id) {
+      $users = new Users();
+      $user = $users->GetUserById($id);
+      return $user;
   }
 
 	public static function insertPost($title, $content, $subcategory, $user) {
