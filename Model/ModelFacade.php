@@ -124,7 +124,7 @@ class ModelFacade {
         $messages = new DirectMessages();
         $messages = $messages->displayMsg($msgId);
         if ($messages->reciever != $userId)
-            ModelFacade::redirectUnauthorised();
+            header("Location: /DirectMsgList.php");
         return $messages;
 
     }
