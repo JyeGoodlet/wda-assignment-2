@@ -15,12 +15,41 @@ OnRequest();
 
 function OnRequest()
 {
+
+  $requestMethod = $_SERVER['REQUEST_METHOD'];
+  if ($requestMethod == "GET") {
+    threadGet();
+  }
+  else {
+    //loginPost("", "");
+    threadPost();
+  }
+
+
+}
+
+
+function threadGet() {
   //gets Post
   $post = ModelFacade::getPost($_GET["id"]);
   //get Post Comments
   $comments = ModelFacade::getPostComments($_GET["id"]);
   include_once('/Views/Thread.html');
+
 }
+
+function threadPost(){
+
+  $post = ModelFacade::getPost($_GET["id"]);
+  //get Post Comments
+
+
+  //add comment
+  ModelFacade::addComment($_GET["id"], $_POST["newComment"], ModelFacade::getLoggedInUser()->id);
+  $comments = ModelFacade::getPostComments($_GET["id"]);
+  include_once('/Views/Thread.html');
+}
+
 
 
 ?>

@@ -166,6 +166,12 @@ class ModelFacade {
 
 	}
 
+    public static function addComment($postId, $comment, $userId) {
+
+        $post = new Posts();
+        $post->addComment($postId, $comment, $userId);
+    }
+
 
 
 
