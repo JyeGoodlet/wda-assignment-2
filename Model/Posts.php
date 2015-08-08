@@ -18,15 +18,15 @@ class Posts
         $connection = new DbConnect();
         $pdo = $connection->connect();
         //monster query - i might need to refactor this
-        $query = "select posts.id, posts.date, posts.title, users.username, COALESCE(comment.commentcount,0) as commentcount,
-                    lastpost.username as lastuser, lastpost.date as lastdate, posts.last_activity_timestamp from posts
+        $query = "select posts.id, posts.date, posts.title, users.id as posterId, users.username, COALESCE(comment.commentcount,0) as commentcount,
+                    lastpost.id as lastUserId, lastpost.username as lastuser, lastpost.date as lastdate, posts.last_activity_timestamp from posts
                     left join users on posts.user = users.id
                     /* get comment count */
                     left join (
                     select post, count(*) as commentcount from comments
                     ) as comment on comment.post = posts.id
                     left join (
-                    select post, username, date from comments
+                    select users.id, post, username, date from comments
                     join users on comments.user = users.id
                     order by date desc
                     limit 1) as lastpost on lastpost.post = posts.id
@@ -44,8 +44,9 @@ class Posts
 	public function getPost($id) {
 		$connection = new DbConnect();
         $pdo = $connection->connect();
-        $query = "select id, title, content FROM posts
-                    WHERE id = :id
+        $query = "select * FROM posts
+                  left join users on users.id = posts.user
+                    WHERE posts.id = :id
                     LIMIT 1";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':id', $id);
@@ -54,6 +55,21 @@ class Posts
         $post = $stmt->fetch();
         return $post;
 	}
+
+    public function getPostComment($postId) {
+
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "select * from comments
+                  join users on users.id = comments.user
+                  where post = :post";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':post', $postId);
+        $stmt->setFetchMode(PDO::FETCH_OBJ);
+        $stmt->execute();
+        $comments = $stmt->fetchAll();
+        return $comments;
+    }
 
 
 }

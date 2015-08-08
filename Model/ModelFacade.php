@@ -128,6 +128,16 @@ class ModelFacade {
     return $posts;
   }
 
+
+  public static function getPostComments($postId) {
+
+	return (new Posts())->getPostComment($postId);
+
+
+}
+
+
+
   public static function GetAllUsers() {
       $users = new Users();
       return $users->GetAllUsers();
@@ -141,6 +151,16 @@ class ModelFacade {
 
 	}
 
+
+
+
+	public static function friendlyDate($date) {
+		if ($date == null) {
+			return "";
+		}
+		$date = date_create($date);
+		return date_format($date, 'l jS \of F Y h:i A');
+	}
 
 
 

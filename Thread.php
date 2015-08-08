@@ -15,7 +15,10 @@ OnRequest();
 
 function OnRequest()
 {
+  //gets Post
   $post = ModelFacade::getPost($_GET["id"]);
+  //get Post Comments
+  $comments = ModelFacade::getPostComments($_GET["id"]);
   include_once('/Views/Thread.html');
 }
 

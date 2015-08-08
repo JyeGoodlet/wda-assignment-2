@@ -1,11 +1,27 @@
+
 <?php include_once('Include/Header.html'); ?>
 
-<div class="col-lg-12">
+<div class="panel panel-primary">
+    <div class="panel-heading"><h4 class="inline"><?php echo $post->title ?></h4></div>
+    <div class="panel-body">
+        <table style="width:1100px" class="table">
+        <thead>
+            <tr><th></th></tr>
+        </thead>
+        <tbody>
+        <td style="width:150px;text-align: center;background-color: #F1F1F1"><p><a href="user.php?id=<?php  echo $post->user; ?>"><?php echo $post->username ?></a></p> <br/>
+            <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($post->date); ?></p></td>
+        <td><?php echo $post->content ?></td>
 
-    <h2><?php echo $post->title ?></h2>
-
-    <p><?php echo $post->content ?></p>
-
+        <?php foreach($comments as $comment): ?>
+        <tr><td style="width:150px;text-align: center;background-color: #F1F1F1"><p><a href="user.php?id=<?php  echo $comment->user; ?>"><?php echo $comment->username ?></a></p> <br/>
+            <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($comment->date); ?></p></td>
+            <td><?php echo $comment->comment ?></td></tr>
+        <?php endforeach;?>
+        </tbody>
+        </table>
+    <p></p>
+    </div>
 </div>
 
 <?php include_once('Include/Footer.html'); ?>
