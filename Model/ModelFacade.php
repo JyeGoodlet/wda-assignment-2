@@ -111,17 +111,32 @@ class ModelFacade {
 
 	}
   
-
-    // TODO JASON replace getAllMsgs used for testing with getUsersMsgs($userID)
-    public static function getAllMsgs() {
-
+    public static function getUsersMsgs() {
+        $userId = ModelFacade::getLoggedInUser()->id;
         $messages = new DirectMessages();
-        $messages = $messages->getAllMsgs();
+        $messages = $messages->getUsersMsgs($userId);
         return $messages;
 
+    }
 
+    public static function displayUsersMsg($msgId) {
+        $userId = ModelFacade::getLoggedInUser()->id;
+        $messages = new DirectMessages();
+        $messages = $messages->displayMsg($msgId);
+        if ($messages->reciever != $userId)
+            header("Location: /DirectMsgList.php");
+        return $messages;
 
     }
+
+    public static function countUnreadMsgs() {
+        $userId = ModelFacade::getLoggedInUser()->id;
+        $messages = new DirectMessages();
+        $messages = $messages->countUnreadMsgs($userId);
+        return $messages;
+
+    }
+
   public static function getPost($id) {
     $posts = new Posts();
     $posts = $posts->getPost($id);

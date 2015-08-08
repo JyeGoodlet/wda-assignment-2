@@ -17,7 +17,7 @@
         <?php foreach($messages as $message):; ?>
         <tr>
 
-            <td><a href="DirectMsg.php?id=<?php echo $message->id; ?>"><?php echo $message->subject; ?></a></td>
+            <td><a href="DirectMsg.php?msgId=<?php echo $message->id; ?>"><?php echo $message->subject; ?></a></td>
             <td style="font-size: 14px;text-align: center;"><?php echo $message->isRead; ?></td>
             <td style="font-size: 14px;text-align: center;"><?php echo $message->sender; ?></td>
             <td style="font-size: 14px;text-align: center;"><?php echo $message->timeSent; ?><br>
