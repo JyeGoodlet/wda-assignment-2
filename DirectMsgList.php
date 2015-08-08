@@ -9,8 +9,8 @@ OnRequest();
 
 function OnRequest()
 {
-  $messages = ModelFacade::getAllMsgs();
-  include_once('/Views/DirectMsgList.html');
+    $messages = ModelFacade::getUsersMsgs();
+    include_once('/Views/DirectMsgList.html');
 }
 
 
