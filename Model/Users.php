@@ -29,6 +29,20 @@ class Users {
         return $user;
     }
 
+    public function UpdateUser($user) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = 'UPDATE users
+                    SET is_banned = :is_banned,
+                        is_admin = :is_admin
+                    WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':is_banned', $user->is_banned);
+        $stmt->bindParam(':is_admin', $user->is_admin);
+        $stmt->bindParam(':id', $user->id);
+        $stmt->execute();
+    }
+
 }
 
 ?>

@@ -10,7 +10,7 @@ OnRequest();
 
 function OnRequest() {
     
-    include_once('/Views/Admin/Index.html');
+    include_once('/Views/Admin/Users.html');
 
 }
 

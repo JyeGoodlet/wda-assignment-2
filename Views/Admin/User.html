@@ -1,8 +1,4 @@
-<?php
- $user = GetUserById($_GET['id']);
-?>
-
-<div class="panel panel-primary">
+<?php include_once('AdminHeader.html'); ?>
 
     <div class="panel-heading">
         <h4 class="panel-title"><i class="fa fa-user"></i> Viewing user <?php echo $user->username; ?></h4>
@@ -10,7 +6,7 @@
 
     <div class="panel-body">
         
-        <form>
+        <form action="../../Admin/UpdateUser.php" method="get" id="user">
 
             <div class="form-group">
 
@@ -21,9 +17,9 @@
 
             <div class="form-group">
 
-                <label for="banned">Account Banned</label>
+                <label for="is_banned">Account Banned</label>
 
-                <select class="form-control" id="banned">
+                <select name="is_banned" class="form-control" id="is_banned">
                     <option value="0" <?php if(!$user->is_banned) echo 'selected'; ?>>No</option>
                     <option value="1" <?php if($user->is_banned)  echo 'selected'; ?>>Yes</option>
                 </select>
@@ -32,19 +28,19 @@
 
             <div class="form-group">
 
-                <label for="admin">Administrator</label>
+                <label for="is_admin">Administrator</label>
 
-                <select class="form-control" id="admin">
+                <select name="is_admin" class="form-control" id="is_admin">
                     <option value="0" <?php if(!$user->is_admin) echo 'selected'; ?>>No</option>
                     <option value="1" <?php if($user->is_admin)  echo 'selected'; ?>>Yes</option>
                 </select>
 
             </div>
 
-            <button class="btn btn-primary">Update</button>
+            <button class="btn btn-primary" type="submit">Update</button>
 
         </form>        
 
     </div>
 
-</div>
+<?php include_once('AdminFooter.html'); ?>
