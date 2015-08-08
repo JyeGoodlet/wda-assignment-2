@@ -26,6 +26,9 @@ class DirectMessages
         $stmt->setFetchMode(PDO::FETCH_OBJ);
         $stmt->execute();
         $count = $stmt->fetch();
+        if ($count == null) {
+            return 0;
+        }
         return $count->unread;
     }
     public function displayMsg($msgId) {
