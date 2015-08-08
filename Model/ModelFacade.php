@@ -124,7 +124,7 @@ class ModelFacade {
         $messages = new DirectMessages();
         $messages = $messages->displayMsg($msgId);
         if ($messages->reciever != $userId)
-            header("Location: /DirectMsgList.php");
+            header("Location: /DirectMsgInbox.php");
         return $messages;
 
     }

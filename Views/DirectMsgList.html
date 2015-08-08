@@ -3,7 +3,7 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading"><h4 class="inline"><?php echo ModelFacade::getLoggedInUser()->username ?>'s Direct Messages</h4>
-        <a href="#" type="button" class="btn btn-default pull-right"> Create New Message</a>
+        <a href="#" type="button" class="btn btn-default pull-right"> View Sent Messages</a>
     </div>
 
     <div class="panel-body">
@@ -19,7 +19,7 @@
             <?php foreach($messages as $message):;?>
             <tr>
                 <td><a href="DirectMsg.php?msgId=<?php echo $message->id; ?>"><?php echo $message->subject; ?></a></td>
-                <td style="font-size: 14px;text-align: center;"><?php echo $message->isRead; ?></td>
+                <td style="font-size: 14px;text-align: center;"><?php echo ($message->isRead ? "read" : "unread") ; ?></td>
                 <td style="font-size: 14px;text-align: center;"><a href="user.php?id=<?php echo $message->sender; ?>"><?php echo $message->sendername; ?></a>
                 </td>
                 <td style="font-size: 14px;text-align: center;">
@@ -28,7 +28,7 @@
             <?php endforeach;?>
             </tbody>
         </table>
-        <a href="#" type="button" class="btn btn-primary"> Create New Message</a>
+        <a href="/DirectMsgCreate.php" type="button" class="btn btn-primary"> Create New Message</a>
     </div>
 </div>
 <?php include_once('Include/Footer.html'); ?>
