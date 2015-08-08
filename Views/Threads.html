@@ -1,6 +1,8 @@
 <?php include_once('Include/Header.html'); ?>
 <div class="panel panel-primary">
-    <div class="panel-heading"><h4><?php echo $subcategory->subcategory; ?> Questions</h4></div>
+    <div class="panel-heading"><h4 class="inline"><?php echo $subcategory->subcategory; ?> Questions</h4>
+        <a href="NewThread.php?subcategory=<?php echo $_GET['id']; ?>" type="button" class="btn btn-default pull-right">  New Thread</a>
+    </div>
 
     <div class="panel-body">
 
