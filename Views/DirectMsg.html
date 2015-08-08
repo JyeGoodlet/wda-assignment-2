@@ -1,13 +1,24 @@
 <!--   -_-_- AUTHOR: jAsOnD -_-_- -->
 <?php include_once('Include/Header.html'); ?>
 
-<div class="col-lg-12">
+<div class="panel panel-primary">
+    <div class="panel-heading"><h4 class="inline"><?php echo $selectedMsg->subject ?></h4>
+        <a href="" type="button" class="btn btn-default pull-right">Reply</a></div>
+    <div class="panel-body">
+        <table style="width:1100px" class="table">
+            <thead>
+            <tr><th></th></tr>
+            </thead>
+            <tbody>
+            <td style="width:150px;text-align: center;background-color: #F1F1F1"><p><a href="user.php?id=<?php  echo $selectedMsg->sender; ?>"><?php echo $selectedMsg->sendername ?></a></p> <br/>
+                <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($selectedMsg->timeSent); ?></p></td>
+            <td><?php echo $selectedMsg->message ?></td>
 
-    <!-- TODO JASON LAYOUT PAGE CONTENT FOR INDIVIDUAL MESSAGES AS PER LAYOUT OF THREAD POSTS-->
-    <h2>SUBJECT: <?php  echo $selectedMsg->subject; ?> </h2>
-    <p>MESSAGE: <?php  echo $selectedMsg->message; ?></p>
-    <p>SENDER: <?php  echo $selectedMsg->sender; ?></p>
-
+            </tbody>
+        </table>
+        <a href="" type="button" class="btn btn-primary"> Reply</a>
+    </div>
 </div>
+
 
 <?php include_once('Include/Footer.html'); ?>

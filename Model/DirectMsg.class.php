@@ -8,9 +8,9 @@ class DirectMessages
     public function getUsersMsgs($userId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        $query = "SELECT * FROM direct_message WHERE reciever = :id ";
+        $query = "SELECT dm.id, dm.sender, dm.reciever, dm.isRead, dm.timeSent, dm.subject, dm.message, u.username as sendername FROM direct_message AS dm, users AS u WHERE reciever = :receiverId  AND dm.sender = u.id";
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':id', $userId);
+        $stmt->bindParam(':receiverId', $userId);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
         $stmt->execute();
         $allMessages = $stmt->fetchAll();
@@ -34,7 +34,7 @@ class DirectMessages
     public function displayMsg($msgId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        $query = "SELECT * FROM direct_message WHERE id = :id LIMIT 1";
+        $query = "SELECT dm.id, dm.sender, dm.reciever, dm.isRead, dm.timeSent, dm.subject, dm.message, u.username as sendername FROM direct_message AS dm, users AS u WHERE dm.id = :id AND dm.sender = u.id LIMIT 1";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':id', $msgId);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
