@@ -2,7 +2,8 @@
 <?php include_once('Include/Header.html'); ?>
 
 <div class="panel panel-primary">
-    <div class="panel-heading"><h4 class="inline"><?php echo $post->title ?></h4></div>
+    <div class="panel-heading"><h4 class="inline"><?php echo $post->title ?></h4>
+        <a href="" type="button" class="btn btn-default pull-right">Add Comment</a></div>
     <div class="panel-body">
         <table style="width:1100px" class="table">
         <thead>
@@ -20,7 +21,7 @@
         <?php endforeach;?>
         </tbody>
         </table>
-    <p></p>
+        <a href="" type="button" class="btn btn-primary"> Add Comment</a>
     </div>
 </div>
 
