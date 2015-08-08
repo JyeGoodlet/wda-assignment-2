@@ -35,6 +35,7 @@ function newThreadGet() {
 }
 
 function newThreadPost() {
+    $subcategory = $_GET["subcategory"];
     $title = trim($_POST["title"]);
     $content = trim($_POST["content"]);
 
@@ -44,7 +45,10 @@ function newThreadPost() {
         checkEmptyValues($title, $content);
     }
     else {
-        echo "TODO post thread to mysql and then redirect";
+        echo "here";
+        $postId = ModelFacade::insertPost($title, $content, $subcategory, 2);
+        header("location:Thread.php?id=" . $postId);
+
     }
 
 }

@@ -1,6 +1,10 @@
 <?php include_once('Include/Header.html'); ?>
+<div class="panel panel-primary">
+    <div class="panel-heading"><h4 class="inline"><?php echo $subcategory->subcategory; ?> Questions</h4>
+        <a href="NewThread.php?subcategory=<?php echo $_GET['id']; ?>" type="button" class="btn btn-default pull-right">  New Thread</a>
+    </div>
 
-<h2><?php echo $subcategory->subcategory; ?> Questions</h2>
+    <div class="panel-body">
 
 <table style="width:1100px" class="table">
     <thead>
@@ -23,6 +27,7 @@
     <?php endforeach;?>
     </tbody>
 </table>
-<a href="NewThread.php?subcategory=<?php echo $post->id; ?>" type="button" class="btn btn-primary">  New Thread</a>
-
+<a href="NewThread.php?subcategory=<?php echo $_GET['id']; ?>" type="button" class="btn btn-primary">  New Thread</a>
+    </div>
+</div>
 <?php include_once('Include/Footer.html'); ?>

@@ -28,4 +28,35 @@ class Post
     public $lastActivity;
 
 
+
+
+
+    public function __construct($title, $content, $subcategory, $user) {
+        $this->title = $title;
+        $this->content = $content;
+        $this->subcategory = $subcategory;
+        $this->user = $user;
+    }
+
+    public function addPost() {
+
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $query = "insert into posts (date, title, content, user, subcategory)
+                    values (now(), :title, :content, :user, :subcategory)";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':title', $this->title);
+        $stmt->bindParam(':content', $this->content);
+        $stmt->bindParam(':user', $this->user);
+        $stmt->bindParam(':subcategory', $this->subcategory);
+
+        //$stmt->setFetchMode(PDO::FETCH_OBJ);
+        $stmt->execute();
+        return $pdo->lastInsertId();
+
+
+    }
+
+
 }

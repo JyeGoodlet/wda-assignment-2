@@ -11,14 +11,17 @@ Class Subcategory{
     public $category_id;
     public $subcategory;
 
+
     public function __construct() {
 
     }
+
 
     public function getSubcategory( $id) {
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $query = "select * from subcategories
                   where id = :id";
         $stmt = $pdo->prepare($query);
@@ -26,11 +29,10 @@ Class Subcategory{
         $stmt->setFetchMode(PDO::FETCH_CLASS, 'Subcategory');
         $stmt->execute();
         $subcategory = $stmt->fetch();
-        $this->id = $subcategory->id;
-        $this->category_id = $subcategory->category_id;
-        $this->subcategory = $subcategory->subcategory;
+
 
         return $subcategory;
+        //return $this;
     }
 }
 
