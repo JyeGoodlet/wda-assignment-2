@@ -46,7 +46,7 @@ function newThreadPost() {
     }
     else {
         echo "here";
-        $postId = ModelFacade::insertPost($title, $content, $subcategory, 2);
+        $postId = ModelFacade::insertPost($title, $content, $subcategory, ModelFacade::getLoggedInUser()->id);
         header("location:Thread.php?id=" . $postId);
 
     }
