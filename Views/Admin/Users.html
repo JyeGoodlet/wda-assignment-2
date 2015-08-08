@@ -16,7 +16,7 @@
             <tbody>
                 <?php foreach(ModelFacade::GetAllUsers() as $user) { ?>
                 <tr>                    
-                    <td><a href="/admin/user.php?id=<?php echo $user['id'];?>"><?php echo $user['username']; ?></a></td>
+                    <td><a href="/admin.php?page=User&id=<?php echo $user['id'];?>"><?php echo $user['username']; ?></a></td>
                     <td></td>
                     <td><?php echo $user['is_banned'] ? 'Yes' : 'No'; ?></td>
                     <td><?php echo $user['is_admin'] ? 'Yes' : 'No'; ?></td>
