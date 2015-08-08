@@ -11,8 +11,8 @@ class User {
 	public $password;
 	//bool isAdmin
 	public $isAdmin;
-  //bool isBanned
-  public $isBanned;
+    //bool isBanned
+    public $isBanned;
 
 
 
@@ -51,12 +51,10 @@ class User {
 			//get users id
 			$this->id = $user->id;
 			$this->isAdmin = $user->is_admin;
-      $this->isBanned = $user->is_banned;
-			//echo "true";
+            $this->isBanned = $user->is_banned;			
 			return true;
 		}
-		else {
-			//echo "false";
+		else {			
 			return false;
 		}
 

@@ -12,6 +12,7 @@ function OnRequest() {
 
     if(isset($_GET['page'])) {
         $page = '/Views/Admin/' . $_GET['page'] . '.html';
+
     }
     else {
         $page = '/Views/Admin/Boards.html';
@@ -19,6 +20,11 @@ function OnRequest() {
 
     include_once('/Views/Admin.html');
 
+}
+
+function GetUserById($id) {
+    $user = ModelFacade::GetUserById($id);
+    return $user;
 }
 
 

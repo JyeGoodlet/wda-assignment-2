@@ -16,6 +16,19 @@ class Users {
         return $users;
     }
 
+    public function GetUserById($id) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "SELECT * FROM users
+                    WHERE id = :id
+                    LIMIT 1";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_OBJ);
+        return $user;
+    }
+
 }
 
 ?>
