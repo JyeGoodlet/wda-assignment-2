@@ -147,6 +147,7 @@ class ModelFacade {
         return $messages;
 
     }
+
     public static function createMsg($sendTo, $subject, $message) {
         if (ModelFacade::getUserByName($sendTo) == null)
             return false;
@@ -155,11 +156,26 @@ class ModelFacade {
         $newMessage = new DirectMessages();
 
         $newMessage = $newMessage->createMsg($receiver,$sender,$subject, $message);
-            //TODO add visual feedback that message is sent
         return true;
 
     }
 
+    public static function deleteMsg($msgId) {
+ //       if (ModelFacade::getUserByName($sendTo) == null)
+   //         return false;
+        $messages = new DirectMessages();
+        $messages->deleteMsg($msgId);
+        //TODO add visual feedback that message is delete
+        return true;
+
+    }
+
+    public static function markMsgRead($msgId) {
+        $messages = new DirectMessages();
+        $messages->markAsRead($msgId);
+
+
+    }
 
   public static function getPost($id) {
     $posts = new Posts();

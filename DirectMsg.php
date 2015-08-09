@@ -10,6 +10,8 @@ OnRequest();
 function OnRequest()
 {
   $selectedMsg = ModelFacade::displayUsersMsg($_GET["msgId"]);
+    if (!$selectedMsg->isRead)
+    ModelFacade::markMsgRead($selectedMsg->id);
   include_once('/Views/DirectMsg.html');
 }
 

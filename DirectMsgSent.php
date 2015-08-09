@@ -9,6 +9,12 @@ OnRequest();
 
 function OnRequest()
 {
+    if (isset($_POST['delMsg'])) {
+        foreach ($_POST['delMsg'] as $eachDelMsg)
+            ModelFacade::deleteMsg($eachDelMsg);
+        header('Location: /DirectMsgSent.php');
+    }
+
     $messages = ModelFacade::getMsgSent();
 
     if (isset($_GET['newMsgSent'])) {

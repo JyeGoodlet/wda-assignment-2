@@ -71,15 +71,23 @@ class DirectMessages
         //TODO use try catch block for errors
     }
 
-    //TODO JASON - create function and query to delete message
     public function deleteMsg($msgId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        //TODO create statement to DELETE FROM direct_message
-        $query = "SELECT * FROM direct_message";
+        $query = "DELETE FROM direct_message WHERE id = :msgId";
         $stmt = $pdo->prepare($query);
-        //TODO bind values
-        $stmt->setFetchMode(PDO::FETCH_OBJ);
+        $stmt->bindParam(':msgId', $msgId);
+        $stmt->execute();
+        //TODO use try catch block for errors
+    }
+
+
+    public function markAsRead($msgId) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "UPDATE direct_message SET isRead = 1 WHERE id = :msgId";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':msgId', $msgId);
         $stmt->execute();
         //TODO use try catch block for errors
     }
