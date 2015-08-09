@@ -44,7 +44,14 @@ function SignupPost() {
         $message = "passwords do not match";
     }
     else {
+        //signup user
         ModelFacade::signup($_POST["username"], $_POST["password"]);
+        //log user in
+        ModelFacade::login($_POST["username"], $_POST["password"] );
+        header( 'Location: Index.php' ) ;
+        exit();
+
+
     }
 
 
