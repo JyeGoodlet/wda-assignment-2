@@ -13,10 +13,10 @@ function OnRequest()
 
     if (isset($_GET['newMsgSent'])) {
         $newMsgSent = $_GET['newMsgSent'];
-        if ($newMsgSent)
+        if ($newMsgSent === 'true')
             $newMsgSent = "MESSAGE SENT SUCCESSFULLY";
         else
-            $newMsgSent = "MESSAGE SEND FAILED";
+            $newMsgSent = "MESSAGE SEND FAILED - NO SUCH USER EXISTS";
     }
     else
         $newMsgSent = "";

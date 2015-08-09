@@ -61,6 +61,8 @@ function newMessagePost() {
     else {
         if (ModelFacade::createMsg($receiver,$subject, $message))
             header("location:DirectMsgSent.php?newMsgSent=true");
+        else
+            header("location:DirectMsgSent.php?newMsgSent=false");
     }
 
 }
