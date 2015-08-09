@@ -192,7 +192,7 @@ class ModelFacade {
 
     public static function UpdateUser($user) {
         $users = new Users();
-        $users->UpdateUser($user);
+        return $users->UpdateUser($user);
     }
 
 

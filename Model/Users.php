@@ -41,6 +41,7 @@ class Users {
         $stmt->bindParam(':is_admin', $user['is_admin']);
         $stmt->bindParam(':id', $user['id']);
         $stmt->execute();
+        return $stmt->errorInfo();
     }
 
 }

@@ -1,6 +1,6 @@
-<?php 
+<?php
 $pageTitle = 'Welcome';
-include_once('Include/Header.html'); 
+include_once('Include/Header.html');
 ?>
 
 <div class="container">
@@ -18,8 +18,11 @@ include_once('Include/Header.html');
                     <table>
                         <?php foreach($category->subcategories as $subcategory): ?>
                         <tr>
-                            <td><a href="/Threads.php?id=<?php echo $subcategory->id; ?>"><?php echo $subcategory->
-                                subcategory; ?></a></td>
+                            <td>
+                                <a href="/Threads.php?id=<?php echo $subcategory->id; ?>">
+                                    <?php echo $subcategory->subcategory; ?>
+                                </a>
+                            </td>
                         </tr>
                         <?php endforeach;?>
                     </table>

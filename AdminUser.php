@@ -38,8 +38,20 @@ function UpdateUser() {
                       'is_admin' => $_POST['is_admin'],
                       'is_banned' => $_POST['is_banned']);
 
-        ModelFacade::UpdateUser($userArray);   
-        header("Location: /AdminUsers.php");
+        $result = ModelFacade::UpdateUser($userArray);
+
+        switch($result[0]) {
+            case 0:
+                $success = 'User ' . $user->username . ' updated successfully';
+                break;
+            default:
+                $error = 'There was an error updating the users database';
+                break;
+        }
+           
+        $user = GetUserById($_GET['id']);        
+        include_once('/Views/Admin/User.html');
+
     }
     else {
         header("Location: /AdminUsers.php");
