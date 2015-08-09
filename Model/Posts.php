@@ -46,8 +46,9 @@ class Posts
 		$connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $query = "select * FROM posts
+        $query = "select posts.id, posts.date, posts.title, posts.subcategory as subCatId, posts.user, posts.content, users.username, subcategories.subcategory FROM posts
                   left join users on users.id = posts.user
+                  left join subcategories on subcategories.id = posts.subcategory
                     WHERE posts.id = :id
                     LIMIT 1";
         $stmt = $pdo->prepare($query);
