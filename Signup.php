@@ -48,6 +48,9 @@ function SignupPost() {
         ModelFacade::signup($_POST["username"], $_POST["password"]);
         //log user in
         ModelFacade::login($_POST["username"], $_POST["password"] );
+        //store that this is a new signup so user gets nice notification
+        $_SESSION['newsignup'] = true;
+        //redirect to index
         header( 'Location: Index.php' ) ;
         exit();
 

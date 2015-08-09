@@ -5,7 +5,7 @@ include_once('Include/Header.html');
 
 <div class="container">
 
-
+    <?php if (isset($_SESSION['newsignup'])): ?> <div class="alert alert-success" role="alert">Thank you for signing up</div><?php unset($_SESSION["newsignup"]);?> <?php endif;?>
     <div id="boards" class="row">
         <?php foreach($categories as $category): ?>
         <div class="col-lg-6 ">
