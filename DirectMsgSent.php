@@ -10,6 +10,17 @@ OnRequest();
 function OnRequest()
 {
     $messages = ModelFacade::getMsgSent();
+
+    if (isset($_GET['newMsgSent'])) {
+        $newMsgSent = $_GET['newMsgSent'];
+        if ($newMsgSent)
+            $newMsgSent = "MESSAGE SENT SUCCESSFULLY";
+        else
+            $newMsgSent = "MESSAGE SEND FAILED";
+    }
+    else
+        $newMsgSent = "";
+
     include_once('/Views/DirectMsgSent.html');
 }
 
