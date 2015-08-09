@@ -43,9 +43,18 @@ function threadPost(){
   $post = ModelFacade::getPost($_GET["id"]);
   //get Post Comments
 
+  //check if comment has text
+  $emptyComment = false;
+  if (trim($_POST["newComment"]) == "") {
+    $emptyComment = true;
+  }
+  else {
+    //add comment
+    ModelFacade::addComment($_GET["id"], $_POST["newComment"], ModelFacade::getLoggedInUser()->id);
+  }
 
-  //add comment
-  ModelFacade::addComment($_GET["id"], $_POST["newComment"], ModelFacade::getLoggedInUser()->id);
+
+
   $comments = ModelFacade::getPostComments($_GET["id"]);
   include_once('/Views/Thread.html');
 }
