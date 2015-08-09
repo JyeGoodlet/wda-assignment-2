@@ -22,7 +22,8 @@
         </tbody>
         </table>
 
-        <div  style="width:600px" >
+        <?php if(ModelFacade::checkLoggedIn()) :?>
+        <div style="width:600px" >
         <form method="post" >
             <div class="form-group">
                 <textarea required="required" rows="6" class="form-control" name="newComment" id="newComment" ></textarea>
@@ -34,6 +35,7 @@
             </div>
         </form>
         </div>
+         <?php endif; ?>
 
       <!-- pending remove  <a href="AddComment.php?threadId=<?php echo $_GET['id']; ?>" type="button" class="btn btn-primary"> Add Comment</a> -->
     </div>
