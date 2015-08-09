@@ -13,6 +13,7 @@ OnRequest();
 
 function OnRequest() {
 
+
     $requestMethod = $_SERVER['REQUEST_METHOD'];
     if ($requestMethod == "GET") {
         newMessageGet();
@@ -33,6 +34,7 @@ function newMessageGet() {
 }
 
 function newMessagePost() {
+
     $receiver = trim($_POST["receiver"]);
     $subject = trim($_POST["subject"]);
     $message = trim($_POST["message"]);
@@ -44,8 +46,8 @@ function newMessagePost() {
         checkEmptyValues($receiver, $subject, $message);
     }
     else {
-        // insert into direct_message
-        header("location:DirectMsgInbox.php");
+        if (ModelFacade::createMsg($receiver,$subject, $message))
+            header("location:DirectMsgInbox.php");
     }
 
 }

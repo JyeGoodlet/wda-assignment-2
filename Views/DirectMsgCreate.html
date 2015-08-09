@@ -6,8 +6,10 @@
 
     <form method="post">
         <div class="form-group <?php echo (isset($receiverReq) ? $receiverReq : '' ); ?>   ">
+
             <label for="receiver"> Send To </label>
             <input  class="form-control" name="receiver" id="receiver" type="text"> </input>
+            <p>TEXT INPUT USED FOR TESTING PURPOSES. must enter full username</p>
             <?php if(isset($receiverReq)): ?>
             <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
             <span id="inputWarning1Status" class="sr-only">(warning)</span>

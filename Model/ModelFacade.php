@@ -111,10 +111,18 @@ class ModelFacade {
 
 	}
   
-    public static function getUsersMsgs() {
+    public static function getMsgInbox() {
         $userId = ModelFacade::getLoggedInUser()->id;
         $messages = new DirectMessages();
-        $messages = $messages->getUsersMsgs($userId);
+        $messages = $messages->getMsgInbox($userId);
+        return $messages;
+
+    }
+
+    public static function getMsgSent() {
+        $userId = ModelFacade::getLoggedInUser()->id;
+        $messages = new DirectMessages();
+        $messages = $messages->getMsgSent($userId);
         return $messages;
 
     }
@@ -136,6 +144,17 @@ class ModelFacade {
         return $messages;
 
     }
+    public static function createMsg($sendTo, $subject, $message) {
+        $receiver = ModelFacade::getUserByName($sendTo)->id;
+        $sender = ModelFacade::getLoggedInUser()->id;
+        $newMessage = new DirectMessages();
+
+        $newMessage = $newMessage->createMsg($receiver,$sender,$subject, $message);
+            //TODO add visual feedback that message is sent
+        return $newMessage;
+
+    }
+
 
   public static function getPost($id) {
     $posts = new Posts();
@@ -165,6 +184,12 @@ class ModelFacade {
       return $user;
   }
 
+    // Get a user from the database by Name
+    public static function getUserByName($name) {
+        $users = new Users();
+        $user = $users->getUserByName($name);
+        return $user;
+    }
 	public static function insertPost($title, $content, $subcategory, $user) {
 		$post = new Post($title, $content, $subcategory,  $user);
 		return $post->addPost();

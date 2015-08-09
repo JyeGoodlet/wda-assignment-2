@@ -1,11 +1,11 @@
 <?php
-
 /**  -_-_- AUTHOR: jAsOnD -_-_- */
 
 class DirectMessages
 
 {
-    public function getUsersMsgs($userId) {
+
+    public function getMsgInbox($userId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "SELECT dm.id, dm.sender, dm.reciever, dm.isRead, dm.timeSent, dm.subject, dm.message, u.username as sendername FROM direct_message AS dm, users AS u WHERE reciever = :receiverId  AND dm.sender = u.id";
@@ -16,6 +16,18 @@ class DirectMessages
         $allMessages = $stmt->fetchAll();
         return $allMessages;
     }
+    public function getMsgSent($senderId) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "SELECT dm.id, dm.sender, dm.reciever, dm.isRead, dm.timeSent, dm.subject, dm.message, u.username as receiverName FROM direct_message AS dm, users AS u WHERE sender = :senderId  AND dm.reciever = u.id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':senderId', $senderId);
+        $stmt->setFetchMode(PDO::FETCH_OBJ);
+        $stmt->execute();
+        $allMessages = $stmt->fetchAll();
+        return $allMessages;
+    }
+
 
     public function countUnreadMsgs($userId) {
         $connection = new DbConnect();
@@ -43,16 +55,21 @@ class DirectMessages
         return $selectedMessage;
     }
 
-    //TODO JASON - Create function and query to create user new Message
-    public function createMsg() {
+    public function createMsg($receiver, $sender, $subject, $message) {
+
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        //TODO create statement to INSERT INTO direct_message
-        $query = "SELECT * FROM direct_message";
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $query = "INSERT INTO direct_message (timeSent, sender,reciever,subject,message)"
+                    ."VALUES ( now() , :sender, :receiver, :subject, :message)";
+
         $stmt = $pdo->prepare($query);
-        //TODO bind values
-        $stmt->setFetchMode(PDO::FETCH_OBJ);
+        $stmt->bindParam(':sender', $sender);
+        $stmt->bindParam(':receiver', $receiver);
+        $stmt->bindParam(':subject', $subject);
+        $stmt->bindParam(':message', $message);
         $stmt->execute();
+        return true;
         //TODO use try catch block for errors
     }
 

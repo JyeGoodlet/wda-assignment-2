@@ -9,8 +9,8 @@ OnRequest();
 
 function OnRequest()
 {
-    $messages = ModelFacade::getMsgInbox();
-    include_once('/Views/DirectMsgInbox.html');
+    $messages = ModelFacade::getMsgSent();
+    include_once('/Views/DirectMsgSent.html');
 }
 
 

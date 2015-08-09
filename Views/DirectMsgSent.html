@@ -2,8 +2,8 @@
 <?php include_once('Include/Header.html'); ?>
 
 <div class="panel panel-primary">
-    <div class="panel-heading"><h4 class="inline"><?php echo ModelFacade::getLoggedInUser()->username ?>'s Direct Messages</h4>
-        <a href="#" type="button" class="btn btn-default pull-right"> View Sent Messages</a>
+    <div class="panel-heading"><h4 class="inline"><?php echo ModelFacade::getLoggedInUser()->username ?>'s Sent Messages</h4>
+        <a href="/DirectMsgInbox.php" type="button" class="btn btn-default pull-right"> View Inbox</a>
     </div>
 
     <div class="panel-body">
@@ -12,15 +12,13 @@
             <thead>
             <tr>
                 <th style="width:700px">Message Subject</th>
-                <th  style="text-align: center;">Read</th>
-                <th  style="text-align: center;">Sender</th>
+                <th  style="text-align: center;">Sent To</th>
                 <th  style="text-align: center;">Time Sent</th></tr>
             </thead>
             <?php foreach($messages as $message):;?>
             <tr>
                 <td><a href="DirectMsg.php?msgId=<?php echo $message->id; ?>"><?php echo $message->subject; ?></a></td>
-                <td style="font-size: 14px;text-align: center;"><?php echo ($message->isRead ? "read" : "unread") ; ?></td>
-                <td style="font-size: 14px;text-align: center;"><a href="user.php?id=<?php echo $message->sender; ?>"><?php echo $message->sendername; ?></a>
+                <td style="font-size: 14px;text-align: center;"><a href="user.php?id=<?php echo $message->sender; ?>"><?php echo $message->receiverName; ?></a>
                 </td>
                 <td style="font-size: 14px;text-align: center;">
                     <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($message->timeSent)?></p></td>
