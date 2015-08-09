@@ -2,7 +2,7 @@
 <html>
     <head>
         <link rel="shortcut icon" type="image/png" href="../../Content/images/logo.ico"/>
-        <title><?php if(isset($pageTitle)){echo $pageTitle . " | ";} ?>Message Board</title>
+        <title><?php if(isset($pageTitle)){ echo $pageTitle . " | "; } echo ModelFacade::GetAppTitle(); ?> </title>
         <link rel="stylesheet" href="../../Content/css/bootstrap.min.css" />
         <link rel="stylesheet" href="../../Content/css/font-awesome.min.css" />
         <link rel="stylesheet" href="../../Content/css/style.css" />
@@ -25,7 +25,7 @@
 
                 <ul class="nav navbar-nav navbar-right">
 
-                    <li><a href="/"><i class="fa fa-home"></i> Message Boards</a></li>
+                    <li><a href="/"><i class="fa fa-list"></i> Message Boards</a></li>
 
                     <?php if(ModelFacade::checkLoggedIn()) { ?>
                     
@@ -47,32 +47,9 @@
                     <?php }
                     else { ?>
 
-                        <li class="dropdown" id="login">
+                        <li><a href="/Login.php"><i class="fa fa-sign-in"></i> Login</a></li>
 
-                            <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="login"><i class="fa fa-sign-in"></i> Login</a>
-
-                            <div class="dropdown-menu">
-
-                                <form action="../../Login.php" method="post" class="navbar-form">
-                                    <div class="form-group">
-                                        <label for="username">User Name </label>
-                                        <input class="form-control" type="text" id="username" name="username" placeholder="Username">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="password">Password </label>
-                                        <input class="form-control" type="password" id="password" name="password" placeholder="Password">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-default">Submit</button>
-                                    </div>
-
-                                </form>
-
-                            </div>
-
-                        </li>
+                        <li><a href="/Signup.php"><i class="fa fa-user-plus"></i> Sign Up</a></li>
 
                     <?php } ?>
                 </ul>
