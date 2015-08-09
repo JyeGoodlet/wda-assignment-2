@@ -26,9 +26,9 @@
         <div  style="width:600px" >
         <form method="post" >
             <div class="form-group">
-                <textarea rows="6" class="form-control" name="newComment" id="newComment" ></textarea>
+                <textarea required="required" rows="6" class="form-control" name="newComment" id="newComment" ></textarea>
             </div>
-            <?php if ($emptyComment): ?> <p class="alert alert-warning" role="alert">Error: Comment Empty</p> <?php endif; ?>
+            <?php if (isset($emptyComment) && $emptyComment): ?> <p class="alert alert-warning" role="alert">Error: Comment Empty</p> <?php endif; ?>
             <div class="form-group fa-pull-right">
 
                 <button class="btn btn-primary">Add Comment</button>

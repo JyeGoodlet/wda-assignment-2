@@ -7,7 +7,7 @@
    <form method="post">
        <div class="form-group <?php echo (isset($titleReq) ? $titleReq : '' ); ?>   ">
            <label for="username"> Title </label>
-           <input  class="form-control" name="title" id="title" type="text" placeholder="Title" aria-describedby="inputWarning1Status" value="<?php echo (isset($title) ? $title : ''); ?>"> </input>
+           <input required="required"  class="form-control" name="title" id="title" type="text" placeholder="Title" aria-describedby="inputWarning1Status" value="<?php echo (isset($title) ? $title : ''); ?>"> </input>
            <?php if(isset($titleReq)): ?>
            <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
            <span id="inputWarning1Status" class="sr-only">(warning)</span>
@@ -15,7 +15,7 @@
        </div>
        <div class="form-group <?php echo (isset($contentReq) ? $contentReq : '' ); ?>">
            <label for="content">Content</label>
-           <textarea   rows="6" class="form-control" name="content" id="content" type="text"  ><?php echo (isset($content) ? $content : ''); ?></textarea>
+           <textarea required="required"   rows="6" class="form-control" name="content" id="content" type="text"  ><?php echo (isset($content) ? $content : ''); ?></textarea>
            <?php if(isset($contentReq)): ?>
            <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
            <span id="inputWarning2Status" class="sr-only">(warning)</span>
