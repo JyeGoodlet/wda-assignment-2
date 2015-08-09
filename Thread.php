@@ -50,7 +50,7 @@ function threadPost(){
   }
   else {
     //add comment
-    ModelFacade::addComment($_GET["id"], $_POST["newComment"], ModelFacade::getLoggedInUser()->id);
+    ModelFacade::addComment($_GET["id"], htmlspecialchars($_POST["newComment"]), ModelFacade::getLoggedInUser()->id);
   }
 
 
