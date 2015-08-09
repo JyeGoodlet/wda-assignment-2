@@ -34,7 +34,7 @@ class Posts
                     order by date desc
                     ) as lastpost on lastpost.post = posts.id
                     where subcategory = :id
-                    order by last_activity_timestamp";
+                    order by last_activity_timestamp desc";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':id', $subCategoryId);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
@@ -97,6 +97,19 @@ class Posts
         return $pdo->lastInsertId();
 
 
+    }
+    /* when a user adds a comment to a post it will alter the posts last activity. that
+    way active posts stay at the top of the forum */
+    public function updateLastActivity($postId) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $query = "update posts
+                  set last_activity_timestamp = now()
+                  where id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':id', $postId);
+        $stmt->execute();
     }
 
 

@@ -180,7 +180,9 @@ class ModelFacade {
 
         $post = new Posts();
         $post->addComment($postId, $comment, $userId);
+        $post->updateLastActivity($postId);
     }
+
 
 
 
