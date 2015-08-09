@@ -30,7 +30,7 @@
                     <?php if(ModelFacade::checkLoggedIn()) { ?>
                     
                     <li>
-                        <a href="/users/<?php echo ModelFacade::getLoggedInUser()->id?>"><i class="fa fa-user"></i> <?php echo ModelFacade::getLoggedInUser()->username ?></a>
+                        <a href="/users/<?php echo ModelFacade::getLoggedInUser()->id?>"><i class="fa fa-user"></i> <?php echo htmlspecialchars(ModelFacade::getLoggedInUser()->username) ?></a>
                     </li>                    
 
                     <?php if(ModelFacade::getLoggedInUser()->isAdmin) { ?>

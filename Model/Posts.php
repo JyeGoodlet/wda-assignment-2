@@ -25,14 +25,16 @@ class Posts
                     /* get comment count */
                     left join (
                     select post, count(*) as commentcount from comments
+                    group by post
                     ) as comment on comment.post = posts.id
                     left join (
-                    select users.id, post, username, date from comments
+          select users.id, post, username, date from comments
                     join users on comments.user = users.id
+			 group by post
                     order by date desc
-                    limit 1) as lastpost on lastpost.post = posts.id
+                    ) as lastpost on lastpost.post = posts.id
                     where subcategory = :id
-                    order by last_activity_timestamp";
+                    order by last_activity_timestamp desc";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':id', $subCategoryId);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
@@ -46,8 +48,9 @@ class Posts
 		$connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $query = "select * FROM posts
+        $query = "select posts.id, posts.date, posts.title, posts.subcategory as subCatId, posts.user, posts.content, users.username, subcategories.subcategory FROM posts
                   left join users on users.id = posts.user
+                  left join subcategories on subcategories.id = posts.subcategory
                     WHERE posts.id = :id
                     LIMIT 1";
         $stmt = $pdo->prepare($query);
@@ -94,6 +97,19 @@ class Posts
         return $pdo->lastInsertId();
 
 
+    }
+    /* when a user adds a comment to a post it will alter the posts last activity. that
+    way active posts stay at the top of the forum */
+    public function updateLastActivity($postId) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $query = "update posts
+                  set last_activity_timestamp = now()
+                  where id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':id', $postId);
+        $stmt->execute();
     }
 
 
