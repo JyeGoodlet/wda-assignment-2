@@ -25,12 +25,14 @@ class Posts
                     /* get comment count */
                     left join (
                     select post, count(*) as commentcount from comments
+                    group by post
                     ) as comment on comment.post = posts.id
                     left join (
-                    select users.id, post, username, date from comments
+          select users.id, post, username, date from comments
                     join users on comments.user = users.id
+			 group by post
                     order by date desc
-                    limit 1) as lastpost on lastpost.post = posts.id
+                    ) as lastpost on lastpost.post = posts.id
                     where subcategory = :id
                     order by last_activity_timestamp";
         $stmt = $pdo->prepare($query);
