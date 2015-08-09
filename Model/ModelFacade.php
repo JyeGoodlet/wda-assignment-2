@@ -13,6 +13,9 @@ require "DirectMsg.class.php";
 
 class ModelFacade {
     
+    public static function GetAppTitle() {
+        return "Message Board";
+    }
 
 	public static function login($username, $password) {
 		//
@@ -193,16 +196,20 @@ class ModelFacade {
 	public static function insertPost($title, $content, $subcategory, $user) {
 		$post = new Post($title, $content, $subcategory,  $user);
 		return $post->addPost();
-
-
-
 	}
+
+    public static function DeleteUser($id) {
+        $users = new Users();
+        return $users->DeleteUser($id);
+    }
 
     public static function addComment($postId, $comment, $userId) {
 
         $post = new Posts();
         $post->addComment($postId, $comment, $userId);
+        $post->updateLastActivity($postId);
     }
+
 
 
 

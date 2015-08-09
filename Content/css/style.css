@@ -1,6 +1,7 @@
 ﻿body {
 }
 
-.inline {
-    display: inline-block;
-}
+.inline { display: inline-block; }
+
+.margin-bottom-none { margin-bottom: 0px;}
+.margin-top-15 { margin-top: 15px; }

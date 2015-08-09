@@ -7,11 +7,11 @@
     <div class="panel-body">
         
          <?php if(isset($error)): ?>
-            <div class="alert alert-danger" role="alert"><?php echo $message; ?></div>
+            <div class="alert alert-danger" role="alert"><i class="fa fa-times-circle"></i> <?php echo $error; ?></div>
         <?php endif; ?>
 
         <?php if(isset($success)): ?>
-            <div class="alert alert-success"><?php echo $success; ?></div>
+            <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
         <?php endif; ?>
         
         <form method="post">
@@ -45,7 +45,8 @@
 
             </div>
 
-            <button class="btn btn-primary" type="submit">Update</button>
+            <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-pencil"></i> Update</button>
+            <a href="/AdminDeleteUser.php?id=<?php echo $user->id;?>" class="btn btn-danger"><i class="fa fa-trash"></i> Delete User</a>
 
         </form>        
 

@@ -1,6 +1,5 @@
-
 <?php include_once('Include/Header.html'); ?>
-
+<h4><a href="index.php">Home</a> <i class="fa fa-angle-double-right"></i> <a href="threads.php?id=<?php echo $post->subCatId; ?>"> <?php echo $post->subcategory ?></a></h4>
 <div class="panel panel-primary">
     <div class="panel-heading"><h4 class="inline"><?php echo $post->title ?></h4>
         <!-- pending remove <a href="AddComment.php?threadId=<?php echo $_GET['id']; ?>" type="button" class="btn btn-default pull-right">Add Comment</a> -->
@@ -11,19 +10,20 @@
             <tr><th></th></tr>
         </thead>
         <tbody>
-        <td style="width:150px;text-align: center;background-color: #F1F1F1"><p><a href="user.php?id=<?php echo $post->user; ?>"><?php echo $post->username ?></a></p> <br/>
+        <td style="width:150px;text-align: center;background-color: #F1F1F1"><p><a href="user.php?id=<?php echo $post->user; ?>"><?php echo htmlspecialchars($post->username) ?></a></p> <br/>
             <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($post->date); ?></p></td>
         <td><?php echo $post->content ?></td>
 
         <?php foreach($comments as $comment): ?>
-        <tr><td style="width:150px;text-align: center;background-color: #F1F1F1"><p><a href="user.php?id=<?php  echo $comment->user; ?>"><?php echo $comment->username ?></a></p> <br/>
+        <tr><td style="width:150px;text-align: center;background-color: #F1F1F1"><p><a href="user.php?id=<?php  echo $comment->user; ?>"><?php echo htmlspecialchars($comment->username) ?></a></p> <br/>
             <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($comment->date); ?></p></td>
-            <td><?php echo $comment->comment ?></td></tr>
+            <td><?php echo htmlspecialchars($comment->comment) ?></td></tr>
         <?php endforeach;?>
         </tbody>
         </table>
 
-        <div  style="width:600px" >
+        <?php if(ModelFacade::checkLoggedIn()) :?>
+        <div style="width:600px" >
         <form method="post" >
             <div class="form-group">
                 <textarea required="required" rows="6" class="form-control" name="newComment" id="newComment" ></textarea>
@@ -35,6 +35,7 @@
             </div>
         </form>
         </div>
+         <?php endif; ?>
 
       <!-- pending remove  <a href="AddComment.php?threadId=<?php echo $_GET['id']; ?>" type="button" class="btn btn-primary"> Add Comment</a> -->
     </div>
