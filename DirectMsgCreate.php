@@ -14,6 +14,7 @@ OnRequest();
 function OnRequest() {
 
 
+
     $requestMethod = $_SERVER['REQUEST_METHOD'];
     if ($requestMethod == "GET") {
         newMessageGet();
@@ -29,6 +30,17 @@ function OnRequest() {
 }
 
 function newMessageGet() {
+
+    if (isset($_GET['replyTo']))
+        $replyTo = $_GET['replyTo'];
+    else
+        $replyTo = "";
+
+    if (isset($_GET['replySubject']))
+        $replySubject = $_GET['replySubject'];
+    else
+        $replySubject = "";
+
     include_once('/Views/DirectMsgCreate.html');
 
 }

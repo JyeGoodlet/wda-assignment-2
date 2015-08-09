@@ -8,7 +8,7 @@
         <div class="form-group <?php echo (isset($receiverReq) ? $receiverReq : '' ); ?>   ">
 
             <label for="receiver"> Send To </label>
-            <input  class="form-control" name="receiver" id="receiver" type="text"> </input>
+            <input  class="form-control" name="receiver" id="receiver" value="<?php echo $replyTo; ?>" type="text"> </input>
             <p>TEXT INPUT USED FOR TESTING PURPOSES. must enter full username</p>
             <?php if(isset($receiverReq)): ?>
             <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
@@ -18,7 +18,7 @@
         </div>
         <div class="form-group <?php echo (isset($subjectReq) ? $subjectReq : '' ); ?> ">
             <label for="subject"> Subject </label>
-            <input  class="form-control" name="subject" id="subject" type="text"> </input>
+            <input  class="form-control" name="subject" id="subject" value="<?php echo $replySubject; ?>" type="text"> </input>
             <?php if(isset($subjectReq)): ?>
             <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
             <span id="inputWarning2Status" class="sr-only">(warning)</span>
