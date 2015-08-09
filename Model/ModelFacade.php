@@ -148,13 +148,15 @@ class ModelFacade {
 
     }
     public static function createMsg($sendTo, $subject, $message) {
+        if (ModelFacade::getUserByName($sendTo) == null)
+            return false;
         $receiver = ModelFacade::getUserByName($sendTo)->id;
         $sender = ModelFacade::getLoggedInUser()->id;
         $newMessage = new DirectMessages();
 
         $newMessage = $newMessage->createMsg($receiver,$sender,$subject, $message);
             //TODO add visual feedback that message is sent
-        return $newMessage;
+        return true;
 
     }
 

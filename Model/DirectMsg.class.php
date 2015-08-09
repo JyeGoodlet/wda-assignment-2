@@ -56,10 +56,8 @@ class DirectMessages
     }
 
     public function createMsg($receiver, $sender, $subject, $message) {
-
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $query = "INSERT INTO direct_message (timeSent, sender,reciever,subject,message)"
                     ."VALUES ( now() , :sender, :receiver, :subject, :message)";
 
