@@ -9,24 +9,26 @@ ModelFacade::redirectUnauthorisedNotAdmin();
 OnRequest();
 
 function OnRequest() {
-   
-    if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        UpdateUser();
-    }
-    else {
-        DisplayUser();
-    }    
+    
+    if ($_SERVER['REQUEST_METHOD'] == "GET") {
+        if(isset($_GET['id'])) {
+            DeleteUser($_GET['id']);
+        }
+    } 
 
 }
 
-function DisplayUser() {
+function DeleteUser($id) {
 
-    if(!isset($_GET['id'])) {
-        header("Location: /AdminUsers.php");
-    }  
+    $result = ModelFacade::DeleteUser($id);
+    if($result[0] == 0) {        
+        header('Location: /AdminUsers.php');
+    }
+    else {
+        header('Location: /AdminUser.php?id='.$id);
+    }
 
-    $user = GetUserById($_GET['id']);
-    include_once('/Views/Admin/User.html');
+    
 }
 
 function UpdateUser() {

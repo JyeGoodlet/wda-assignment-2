@@ -171,10 +171,12 @@ class ModelFacade {
 	public static function insertPost($title, $content, $subcategory, $user) {
 		$post = new Post($title, $content, $subcategory,  $user);
 		return $post->addPost();
-
-
-
 	}
+
+    public static function DeleteUser($id) {
+        $users = new Users();
+        return $users->DeleteUser($id);
+    }
 
     public static function addComment($postId, $comment, $userId) {
 

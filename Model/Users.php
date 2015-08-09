@@ -44,6 +44,17 @@ class Users {
         return $stmt->errorInfo();
     }
 
+    public function DeleteUser($id) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = 'DELETE FROM users
+                    WHERE id = :id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->errorInfo();
+    }
+
 }
 
 ?>
