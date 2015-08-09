@@ -37,9 +37,9 @@ class Users {
                         is_admin = :is_admin
                     WHERE id = :id';
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':is_banned', $user->is_banned);
-        $stmt->bindParam(':is_admin', $user->is_admin);
-        $stmt->bindParam(':id', $user->id);
+        $stmt->bindParam(':is_banned', $user['is_banned']);
+        $stmt->bindParam(':is_admin', $user['is_admin']);
+        $stmt->bindParam(':id', $user['id']);
         $stmt->execute();
     }
 

@@ -6,7 +6,11 @@
 
     <div class="panel-body">
         
-        <form action="../../Admin/UpdateUser.php" method="get" id="user">
+         <?php if(isset($message)): ?>
+            <div class="alert alert-danger" role="alert"><?php echo $message; ?></div>
+        <?php endif; ?>
+        
+        <form method="post">
 
             <div class="form-group">
 

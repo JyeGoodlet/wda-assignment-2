@@ -190,6 +190,11 @@ class ModelFacade {
 		return date_format($date, 'l jS \of F Y h:i A');
 	}
 
+    public static function UpdateUser($user) {
+        $users = new Users();
+        $users->UpdateUser($user);
+    }
+
 
 
 }
