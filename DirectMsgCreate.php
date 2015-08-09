@@ -36,10 +36,21 @@ function newMessageGet() {
     else
         $replyTo = "";
 
-    if (isset($_GET['replySubject']))
-        $replySubject = $_GET['replySubject'];
+    if (isset($_GET['subject']))
+        $replySubject = $_GET['subject'];
     else
         $replySubject = "";
+
+    if  (isset($_GET['forwardMsgId'])) {
+        $getMessage = ModelFacade::getMsg($_GET['forwardMsgId']);
+        $fwdSubject = 'FW:' . $getMessage->subject;
+        $fwdMessage = $getMessage->message;
+        unset($getMessage);
+    }
+    else {
+        $fwdSubject = "";
+        $fwdMessage = "";
+    }
 
     include_once('/Views/DirectMsgCreate.html');
 

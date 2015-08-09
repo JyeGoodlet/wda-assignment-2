@@ -17,6 +17,8 @@
             </tbody>
         </table>
         <a href="/DirectMsgCreate.php?replyTo=<?php echo $selectedMsg->sendername ?>&replySubject=re:<?php echo $selectedMsg->subject ?>" type="button" class="btn btn-primary"> Reply</a>
+        <a href="/DirectMsgCreate.php?forwardMsgId=<?php echo $selectedMsg->id ?>" type="button" class="btn btn-primary"> Forward</a>
+
     </div>
 </div>
 
