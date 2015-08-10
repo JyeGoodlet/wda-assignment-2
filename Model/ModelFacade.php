@@ -62,6 +62,22 @@ class ModelFacade {
 			return false;
 		}
 	}
+  
+  public static function checkIfBanned($user) {
+    $userObj = new User($user, '');
+    return $userObj->checkIfBanned($user);
+  }
+
+    public static function kickIfBanned() {
+        if (ModelFacade::checkLoggedIn()) {
+            $userObj = ModelFacade::getLoggedInUser();
+            if ($userObj->checkIfBanned()) {
+                ModelFacade::logout();
+                header("Location: /Login.php");
+            }
+        }
+    }
+
 
 	public static function redirectUnauthorised() {
         if (session_status() == PHP_SESSION_NONE) {
@@ -130,11 +146,11 @@ class ModelFacade {
 
     }
 
-    public static function displayUsersMsg($msgId) {
+    public static function getMsg($msgId) {
         $userId = ModelFacade::getLoggedInUser()->id;
         $messages = new DirectMessages();
         $messages = $messages->displayMsg($msgId);
-        if ($messages->reciever != $userId)
+        if (($messages->reciever != $userId)&&($messages->sender != $userId))
             header("Location: /DirectMsgInbox.php");
         return $messages;
 
@@ -147,19 +163,31 @@ class ModelFacade {
         return $messages;
 
     }
-    public static function createMsg($sendTo, $subject, $message) {
-        if (ModelFacade::getUserByName($sendTo) == null)
-            return false;
-        $receiver = ModelFacade::getUserByName($sendTo)->id;
+
+    public static function createMsg($receiver, $subject, $message) {
         $sender = ModelFacade::getLoggedInUser()->id;
         $newMessage = new DirectMessages();
 
         $newMessage = $newMessage->createMsg($receiver,$sender,$subject, $message);
-            //TODO add visual feedback that message is sent
         return true;
 
     }
 
+    public static function deleteMsg($msgId) {
+        $userId = ModelFacade::getLoggedInUser()->id;
+        $messages = new DirectMessages();
+        $messages->deleteMsg($msgId, $userId);
+        //TODO add visual feedback that message is delete
+        return true;
+
+    }
+
+    public static function markMsgRead($msgId) {
+        $messages = new DirectMessages();
+        $messages->markAsRead($msgId);
+
+
+    }
 
   public static function getPost($id) {
     $posts = new Posts();

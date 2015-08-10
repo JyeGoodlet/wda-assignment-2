@@ -13,6 +13,7 @@ OnRequest();
 
 function OnRequest() {
 
+    ModelFacade::kickIfBanned();
 
 
     $requestMethod = $_SERVER['REQUEST_METHOD'];
@@ -36,11 +37,23 @@ function newMessageGet() {
     else
         $replyTo = "";
 
-    if (isset($_GET['replySubject']))
-        $replySubject = $_GET['replySubject'];
+    if (isset($_GET['subject']))
+        $replySubject = $_GET['subject'];
     else
         $replySubject = "";
 
+    if  (isset($_GET['forwardMsgId'])) {
+        $getMessage = ModelFacade::getMsg($_GET['forwardMsgId']);
+        $fwdSubject = 'FW:' . $getMessage->subject;
+        $fwdMessage = $getMessage->message;
+        unset($getMessage);
+    }
+    else {
+        $fwdSubject = "";
+        $fwdMessage = "";
+    }
+
+    $allUsers= ModelFacade::GetAllUsers();
     include_once('/Views/DirectMsgCreate.html');
 
 }
@@ -68,10 +81,7 @@ function newMessagePost() {
 }
 
 function checkEmptyValues($receiver, $subject, $message) {
-    if (empty($receiver) ) {
-        $receiverReq = "has-warning has-feedback";
-        $errorMessage = true;
-    }
+
     if (empty($subject)) {
         $subjectReq = "has-warning has-feedback";
         $errorMessage = true;
