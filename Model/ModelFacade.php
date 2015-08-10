@@ -62,6 +62,11 @@ class ModelFacade {
 			return false;
 		}
 	}
+  
+  public static function checkIfBanned($user) {
+    $userObj = new User($user, '');
+    return $userObj->checkIfBanned($user);
+  }
 
 	public static function redirectUnauthorised() {
         if (session_status() == PHP_SESSION_NONE) {

@@ -11,8 +11,8 @@ class User {
 	public $password;
 	//bool isAdmin
 	public $isAdmin;
-    //bool isBanned
-    public $isBanned;
+  //bool isBanned
+  public $isBanned;
 
 
 
@@ -23,10 +23,6 @@ class User {
 
 		$this->username = $username;
 		$this->password = $password;
-
-
-
-
 	}
 
 	//returns true if exists, false if doesnt
@@ -34,9 +30,10 @@ class User {
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
-		$query = "SELECT * from users
+		    $query = "SELECT * from users
 				  where username = :username
 				  and password =:password
+          and is_banned = 0
 				  limit 1	";
 
 
@@ -51,7 +48,7 @@ class User {
 			//get users id
 			$this->id = $user->id;
 			$this->isAdmin = $user->is_admin;
-            $this->isBanned = $user->is_banned;			
+      $this->isBanned = $user->is_banned;			
 			return true;
 		}
 		else {			
@@ -93,6 +90,22 @@ class User {
 		$stmt->execute();
 
 	}
+  
+  public function checkIfBanned() {
+     $connection = new DbConnect();
+     $pdo = $connection->connect();
+		 $query = "SELECT is_banned 
+                FROM users
+                WHERE username = :username";
+		$stmt = $pdo->prepare($query);
+		$stmt->bindParam(':username', $this->username);
+		$stmt->execute();
+    $status = $stmt->fetch(PDO::FETCH_OBJ);
+    if($status->is_banned == 0)
+      return false;
+    else
+      return true;
+  }
 
 }
 
