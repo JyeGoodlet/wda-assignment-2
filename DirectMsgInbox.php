@@ -9,6 +9,7 @@ OnRequest();
 
 function OnRequest()
 {
+
     $messages = ModelFacade::getMsgInbox();
     if (isset($_POST['delMsg'])) {
         foreach ($_POST['delMsg'] as $eachDelMsg)
