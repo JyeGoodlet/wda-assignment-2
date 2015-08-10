@@ -14,7 +14,7 @@ require "DirectMsg.class.php";
 class ModelFacade {
     
     public static function GetAppTitle() {
-        return "Message Board";
+        return "ThreadIT";
     }
 
 	public static function login($username, $password) {
