@@ -101,6 +101,8 @@ class User {
 		$stmt->bindParam(':username', $this->username);
 		$stmt->execute();
     $status = $stmt->fetch(PDO::FETCH_OBJ);
+      if ($status == null)
+          return false;
     if($status->is_banned == 0)
       return false;
     else
