@@ -43,8 +43,9 @@ class ModelFacade {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-
-        return $_SESSION["user"] ;
+        $users = new Users();
+        $details = $users->GetUserDetails($userId);
+        return $details ;
         //TODO create getUserDetails in User.php
     }
 

@@ -11,10 +11,8 @@ function OnRequest()
 {
 
 
-    if (isset($_Get['id']))
-        $userDetails = ModelFacade::getUserDetails($_Get['id']);
-
-
+    if (isset($_GET['id']))
+        $userDetails = ModelFacade::getUserDetails($_GET['id']);
 
     include_once('/Views/UserProfile.html');
 }

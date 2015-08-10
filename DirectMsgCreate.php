@@ -32,10 +32,10 @@ function OnRequest() {
 
 function newMessageGet() {
 
-    if (isset($_GET['replyTo']))
-        $replyTo = $_GET['replyTo'];
+    if (isset($_GET['sendTo']))
+        $sendTo = $_GET['sendTo'];
     else
-        $replyTo = "";
+        $sendTo = "";
 
     if (isset($_GET['replySubject']))
         $replySubject = $_GET['replySubject'];

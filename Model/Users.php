@@ -44,14 +44,15 @@ class Users {
     }
 
     public function GetUserDetails($id) {
-        // TODO add total posts and comments count for user in sql query
-        // TODO Optional add time joined column to users table
-        // TODO optional add user profile table to database with general information about user
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        $query = "SELECT * FROM users
-                    WHERE id = :id
-                    LIMIT 1";
+        $query = "SELECT users.id, users.username, users.is_admin,p.totalPosts, c.totalComments
+                  FROM users
+                  LEFT JOIN ( SELECT COUNT(user) as totalPosts, user FROM posts GROUP BY user ) p
+	              ON users.id = p.user
+                  LEFT JOIN ( SELECT COUNT(user) as totalComments, user FROM comments GROUP BY user ) c
+	              ON users.id = c.user
+	              WHERE users.id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();

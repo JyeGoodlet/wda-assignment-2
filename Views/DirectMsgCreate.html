@@ -11,7 +11,7 @@
             <select class="form-control" name="receiver">
 
                 <?php foreach($allUsers as $eachUser): ?>
-                <?php $option = ($eachUser['id'] == $_GET['replyTo'])?
+                <?php $option = ($eachUser['id'] == $sendTo )?
                         '<option value="' . $eachUser['id']. '" selected >'.$eachUser['username']. '</option>'
                         : '<option value="' . $eachUser['id']. '" >'.$eachUser['username'] .'</option>' ; ?>
 
