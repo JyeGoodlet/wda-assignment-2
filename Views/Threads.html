@@ -20,10 +20,10 @@
     <tr>
         <td><a href="Thread.php?id=<?php echo $post->id; ?>"><?php echo $post->title; ?></a></td>
         <td style="font-size: 14px;text-align: center;"><?php echo $post->commentcount; ?></td>
-        <td style="font-size: 14px;text-align: center;"><a href="user.php?id=<?php echo $post->posterId; ?>"><?php echo $post->username?></a><br>
+        <td style="font-size: 14px;text-align: center;"><a href="UserProfile.php?id=<?php echo $post->posterId; ?>"><?php echo $post->username?></a><br>
             <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($post->date)?></p>
         </td>
-        <td style="font-size: 14px;text-align: center;"><a href="user.php?id=<?php echo $post->lastUserId; ?>"><?php echo $post->lastuser?></a><br>
+        <td style="font-size: 14px;text-align: center;"><a href="UserProfile.php?id=<?php echo $post->lastUserId; ?>"><?php echo $post->lastuser?></a><br>
             <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($post->lastdate)?></p></td>
     </tr>
     <?php endforeach;?>

@@ -32,7 +32,7 @@
                     <?php if(ModelFacade::checkLoggedIn()) { ?>
                     
                     <li>
-                        <a href="/users/<?php echo ModelFacade::getLoggedInUser()->id?>"><i class="fa fa-user"></i> <?php echo htmlspecialchars(ModelFacade::getLoggedInUser()->username) ?></a>
+                        <a href="UserProfile.php?id=<?php echo ModelFacade::getLoggedInUser()->id ?> "><i class="fa fa-user"></i> <?php echo htmlspecialchars(ModelFacade::getLoggedInUser()->username) ?></a>
                     </li>                    
 
                     <?php if(ModelFacade::getLoggedInUser()->isAdmin) { ?>
@@ -41,7 +41,6 @@
                               
                     <?php } ?>
 
-                    <!-- TODO JASON change Href to link to DIRECTMSG.PHP with id as get call -->
                     <li><a href="/DirectMsgInbox.php"><i class="fa fa-envelope"></i> <?php echo ModelFacade::countUnreadMsgs() ?> new messages</a></li>
 
                      <li class="active"><a href="/logout.php"><i class="fa fa-sign-out"></i> Logout</a></li>   

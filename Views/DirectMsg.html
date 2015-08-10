@@ -10,7 +10,7 @@
             <tr><th></th></tr>
             </thead>
             <tbody>
-            <td style="width:150px;text-align: center;background-color: #F1F1F1"><p><a href="user.php?id=<?php  echo $selectedMsg->sender; ?>"><?php echo $selectedMsg->sendername ?></a></p> <br/>
+            <td style="width:150px;text-align: center;background-color: #F1F1F1"><p><a href="UserProfile.php?id=<?php  echo $selectedMsg->sender; ?>"><?php echo $selectedMsg->sendername ?></a></p> <br/>
                 <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($selectedMsg->timeSent); ?></p></td>
             <td><?php echo $selectedMsg->message ?></td>
 
