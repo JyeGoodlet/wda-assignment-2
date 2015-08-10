@@ -9,7 +9,8 @@ ModelFacade::redirectUnauthorisedNotAdmin();
 OnRequest();
 
 function OnRequest() {
-    
+
+    ModelFacade::kickIfBanned();
     include_once('/Views/Admin/Index.html');
 
 }

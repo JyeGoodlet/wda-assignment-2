@@ -15,6 +15,7 @@ OnRequest();
 
 function OnRequest() {
 
+    ModelFacade::kickIfBanned();
     $requestMethod = $_SERVER['REQUEST_METHOD'];
     if ($requestMethod == "GET") {
         newThreadGet();

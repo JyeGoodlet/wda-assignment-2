@@ -40,6 +40,8 @@ function threadGet() {
 
 function threadPost(){
 
+    ModelFacade::kickIfBanned();
+
   $post = ModelFacade::getPost($_GET["id"]);
   //get Post Comments
 
