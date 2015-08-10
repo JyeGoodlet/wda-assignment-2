@@ -68,6 +68,17 @@ class ModelFacade {
     return $userObj->checkIfBanned($user);
   }
 
+    public static function kickIfBanned() {
+        if (ModelFacade::checkLoggedIn()) {
+            $userObj = ModelFacade::getLoggedInUser();
+            if ($userObj->checkIfBanned()) {
+                ModelFacade::logout();
+                header("Location: /Login.php");
+            }
+        }
+    }
+
+
 	public static function redirectUnauthorised() {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
