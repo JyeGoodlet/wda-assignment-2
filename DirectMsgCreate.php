@@ -52,6 +52,7 @@ function newMessageGet() {
         $fwdMessage = "";
     }
 
+    $allUsers= ModelFacade::GetAllUsers();
     include_once('/Views/DirectMsgCreate.html');
 
 }
@@ -79,10 +80,7 @@ function newMessagePost() {
 }
 
 function checkEmptyValues($receiver, $subject, $message) {
-    if (empty($receiver) ) {
-        $receiverReq = "has-warning has-feedback";
-        $errorMessage = true;
-    }
+
     if (empty($subject)) {
         $subjectReq = "has-warning has-feedback";
         $errorMessage = true;

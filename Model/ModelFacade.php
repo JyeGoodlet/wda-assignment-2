@@ -153,10 +153,7 @@ class ModelFacade {
 
     }
 
-    public static function createMsg($sendTo, $subject, $message) {
-        if (ModelFacade::getUserByName($sendTo) == null)
-            return false;
-        $receiver = ModelFacade::getUserByName($sendTo)->id;
+    public static function createMsg($receiver, $subject, $message) {
         $sender = ModelFacade::getLoggedInUser()->id;
         $newMessage = new DirectMessages();
 

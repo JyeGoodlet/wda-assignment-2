@@ -8,7 +8,7 @@ class DirectMessages
     public function getMsgInbox($userId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        $query = "SELECT dm.id, dm.sender, dm.reciever, dm.isRead, dm.timeSent, dm.subject, dm.message, u.username as sendername FROM direct_message AS dm, users AS u WHERE reciever = :receiverId  AND dm.isDeleted_receiver = 0 AND dm.sender = u.id";
+        $query = "SELECT dm.id, dm.sender, dm.reciever, dm.isRead, dm.timeSent, dm.subject, dm.message, u.username as sendername FROM direct_message AS dm, users AS u WHERE reciever = :receiverId  AND dm.isDeleted_receiver = 0 AND dm.sender = u.id ORDER BY dm.timeSent DESC";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':receiverId', $userId);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
@@ -19,7 +19,7 @@ class DirectMessages
     public function getMsgSent($senderId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        $query = "SELECT dm.id, dm.sender, dm.reciever, dm.isRead, dm.timeSent, dm.subject, dm.message, u.username as receiverName FROM direct_message AS dm, users AS u WHERE sender = :senderId  AND dm.isDeleted_sender =0 AND dm.reciever = u.id";
+        $query = "SELECT dm.id, dm.sender, dm.reciever, dm.isRead, dm.timeSent, dm.subject, dm.message, u.username as receiverName FROM direct_message AS dm, users AS u WHERE sender = :senderId  AND dm.isDeleted_sender =0 AND dm.reciever = u.id ORDER BY dm.timeSent DESC";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':senderId', $senderId);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
