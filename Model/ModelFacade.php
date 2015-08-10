@@ -161,10 +161,9 @@ class ModelFacade {
     }
 
     public static function deleteMsg($msgId) {
- //       if (ModelFacade::getUserByName($sendTo) == null)
-   //         return false;
+        $userId = ModelFacade::getLoggedInUser()->id;
         $messages = new DirectMessages();
-        $messages->deleteMsg($msgId);
+        $messages->deleteMsg($msgId, $userId);
         //TODO add visual feedback that message is delete
         return true;
 
