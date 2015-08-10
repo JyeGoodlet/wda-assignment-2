@@ -43,6 +43,22 @@ class Users {
         return $user;
     }
 
+    public function GetUserDetails($id) {
+        // TODO add total posts and comments count for user in sql query
+        // TODO Optional add time joined column to users table
+        // TODO optional add user profile table to database with general information about user
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "SELECT * FROM users
+                    WHERE id = :id
+                    LIMIT 1";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $userDetails = $stmt->fetch(PDO::FETCH_OBJ);
+        return $userDetails;
+    }
+
     public function UpdateUser($user) {
         $connection = new DbConnect();
         $pdo = $connection->connect();

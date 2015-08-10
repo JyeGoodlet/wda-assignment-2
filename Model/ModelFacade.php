@@ -38,7 +38,18 @@ class ModelFacade {
         return $_SESSION["user"] ;
     }
 
-	public static function logout() {
+    public static function getUserDetails($userId)
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        return $_SESSION["user"] ;
+        //TODO create getUserDetails in User.php
+    }
+
+
+    public static function logout() {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
