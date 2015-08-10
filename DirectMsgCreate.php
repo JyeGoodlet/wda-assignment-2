@@ -37,8 +37,8 @@ function newMessageGet() {
     else
         $replyTo = "";
 
-    if (isset($_GET['subject']))
-        $replySubject = $_GET['subject'];
+    if (isset($_GET['replySubject']))
+        $replySubject = $_GET['replySubject'];
     else
         $replySubject = "";
 

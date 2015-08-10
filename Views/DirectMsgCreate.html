@@ -7,11 +7,15 @@
     <form method="post">
         <div class="form-group <?php echo (isset($receiverReq) ? $receiverReq : '' ); ?>   ">
 
-            <label for="receiver"> Send To </label>
+            <label> Send To </label>
             <select class="form-control" name="receiver">
 
                 <?php foreach($allUsers as $eachUser): ?>
-                    <option value="<?php echo $eachUser['id'] ?>"><?php echo $eachUser['username'] ?></option>
+                <?php $option = ($eachUser['id'] == $_GET['replyTo'])?
+                        '<option value="' . $eachUser['id']. '" selected >'.$eachUser['username']. '</option>'
+                        : '<option value="' . $eachUser['id']. '" >'.$eachUser['username'] .'</option>' ; ?>
+
+                    <?php echo $option ?>
                 <?php endforeach; ?>
             </select>
 
