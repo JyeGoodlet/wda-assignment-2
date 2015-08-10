@@ -5,9 +5,9 @@
         <!-- pending remove <a href="AddComment.php?threadId=<?php echo $_GET['id']; ?>" type="button" class="btn btn-default pull-right">Add Comment</a> -->
     </div>
         <div class="panel-body">
-        <table style="width:1100px" class="table">
+        <table id="threadComments" style="width:1100px" class="table">
         <thead>
-            <tr><th></th></tr>
+            <tr><th></th><th></th></tr>
         </thead>
         <tbody>
         <td style="width:150px;text-align: center;background-color: #F1F1F1"><p><a href="user.php?id=<?php echo $post->user; ?>"><?php echo htmlspecialchars($post->username) ?></a></p> <br/>
