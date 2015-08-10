@@ -1,10 +1,35 @@
 <?php include_once('AdminHeader.html'); ?>
 
 <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-users"></i> Configure Message Boards</h4>
+    <h4 class="panel-title"><i class="fa fa-cog"></i> Configure Message Boards</h4>
 </div>
 
 <div class="panel-body">
+    <form>
+        <div class="form-group">
+            <label for="CategoryName">Add New Category</label>
+            <input id="CategoryName" class="form-control" placeholder="Category Name"/>
+            
+        </div>
+
+        <button class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add Category</button>
+        <div class="clearfix"></div>
+    </form>
+
+
+    <div class="form-group">
+        <label for="CategorySelection">Configure Category</label>
+        <select id="CategorySelection" class="form-control">
+            <option value="-1">Select Category</option>
+            <?php foreach(ModelFacade::getAllCategoriesWithSubcategories() as $category) { ?>
+                <option value="<? echo $category->id; ?>"><?php echo $category->category; ?></option>
+            <?php } ?>
+        </select>        
+    </div>
+    <div class="form-group">
+        <label for="SubcategoryName">Add New Subcategory</label>
+        <input id="SubcategoryName" class="form-control" placeholder="Subcategory Name" />
+    </div>
 
 </div>
 

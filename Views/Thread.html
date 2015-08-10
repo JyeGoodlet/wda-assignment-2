@@ -16,8 +16,11 @@
 
         <?php foreach($comments as $comment): ?>
         <tr><td style="width:150px;text-align: center;background-color: #F1F1F1"><p><a href="user.php?id=<?php  echo $comment->user; ?>"><?php echo htmlspecialchars($comment->username) ?></a></p> <br/>
-            <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($comment->date); ?></p></td>
-            <td><?php echo nl2br (htmlspecialchars($comment->comment)) ?></td></tr>
+            <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($comment->date); ?></p>
+            <p class="text-danger"><?php if(ModelFacade::getLoggedInUser()->isAdmin) { ?> <a href="/AdminDeleteComment.php?id=<?php echo $comment->id; ?>"><i class="fa fa-trash"></i> Remove</a><?php } ?></p>            
+            </td>
+            <td><?php echo nl2br (htmlspecialchars($comment->comment)) ?></td>
+            </tr>
         <?php endforeach;?>
         </tbody>
         </table>
