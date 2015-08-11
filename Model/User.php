@@ -38,8 +38,8 @@ class User {
 
 
 		$stmt = $pdo->prepare($query);
-		$stmt->bindParam(':username', $this->username);
-		$stmt->bindParam(':password', $this->password);
+		$stmt->bindParam(':username', htmlspecialchars($this->username));
+		$stmt->bindParam(':password', htmlspecialchars($this->password));
 		$stmt->execute();
 		$user = $stmt->fetch(PDO::FETCH_OBJ);
 
@@ -85,8 +85,8 @@ class User {
 		$query = "insert into users(username, password)
 				  values (:username, :password)";
 		$stmt = $pdo->prepare($query);
-		$stmt->bindParam(':username', $this->username);
-		$stmt->bindParam(':password', $this->password);
+		$stmt->bindParam(':username', htmlspecialchars($this->username));
+		$stmt->bindParam(':password', htmlspecialchars($this->password));
 		$stmt->execute();
 
 	}
