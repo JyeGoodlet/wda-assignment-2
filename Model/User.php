@@ -27,7 +27,8 @@ class User {
 
 	//returns true if exists, false if doesnt
 	public function attemptLogin() {
-
+        $this->username = htmlspecialchars($this->username);
+        $this->password = htmlspecialchars($this->password);
         $connection = new DbConnect();
         $pdo = $connection->connect();
 		    $query = "SELECT * from users
@@ -38,8 +39,8 @@ class User {
 
 
 		$stmt = $pdo->prepare($query);
-		$stmt->bindParam(':username', htmlspecialchars($this->username));
-		$stmt->bindParam(':password', htmlspecialchars($this->password));
+		$stmt->bindParam(':username', $this->username);
+		$stmt->bindParam(':password', $this->password);
 		$stmt->execute();
 		$user = $stmt->fetch(PDO::FETCH_OBJ);
 
