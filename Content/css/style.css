@@ -5,3 +5,10 @@
 
 .margin-bottom-none { margin-bottom: 0px;}
 .margin-top-15 { margin-top: 15px; }
+
+#accordion { margin-bottom: 0px; }
+
+h4 > a:link { text-decoration: none;}
+h4 > a:hover { text-decoration: none;}
+h4 > a:visited { text-decoration: none;}
+h4 > a:active { text-decoration: none;}
