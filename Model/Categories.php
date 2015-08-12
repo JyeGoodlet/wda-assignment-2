@@ -31,10 +31,7 @@ class Categories {
         //var_dump($categories);
         return $categories;
 
-
-
     }
-
 
     private function getSubcategories($categoryId) {
 
@@ -47,8 +44,54 @@ class Categories {
         $stmt->setFetchMode(PDO::FETCH_CLASS, 'Subcategory');
         $stmt->execute();
         $subcategories = $stmt->fetchAll();
-        return $subcategories;
+        return $subcategories;        
+    }
 
+    private function checkIfCategoryExists($categoryName) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "SELECT * from categories
+                  where category = :category";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam('category', $categoryName);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        return $result;
+    }
+
+    public function AddCategory($categoryName) {
+        if(!$this->checkIfCategoryExists($categoryName)) {
+            $connection = new DbConnect();
+            $pdo = $connection->connect();
+            $query = "INSERT INTO categories(category)
+                        VALUES(:categoryName)";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":categoryName", $categoryName);
+            $stmt->execute();
+            return $stmt->errorInfo();
+        }
+        else {
+            return null;
+        }
+
+    }
+
+    public function EditCategory($id, $categoryName) {
+        if(!$this->checkIfCategoryExists($categoryName)) {
+            $connection = new DbConnect();
+            $pdo = $connection->connect();
+            $query = "UPDATE categories
+                        SET category = :category
+                        WHERE id = :id";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":category", $categoryName);
+            $stmt->execute();
+            return $stmt->errorInfo();
+        }
+        else {
+            return null;
+        }
 
     }
 

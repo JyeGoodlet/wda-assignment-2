@@ -290,6 +290,16 @@ class ModelFacade {
         return $users->UpdateUser($user);
     }
 
+    public static function AdminAddBoard($categoryName) {
+        $categories = new Categories();
+        return $categories->AddCategory($categoryName);
+    }
+
+    public static function AdminEditBoard($id, $categoryName) {
+        $categories = new Categories();
+        return $categories->EditCategory($id, $categoryName);
+    }
+
 
 
 }
