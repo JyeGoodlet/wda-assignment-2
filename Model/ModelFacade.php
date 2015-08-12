@@ -18,8 +18,8 @@ class ModelFacade {
     }
 
 	public static function login($username, $password) {
-		//
-		$user = new User($username, $password);
+
+        $user = new User($username, $password);
 		
 		if ($user->attemptLogin()) {
 			session_start();
@@ -46,7 +46,6 @@ class ModelFacade {
         $users = new Users();
         $details = $users->GetUserDetails($userId);
         return $details ;
-        //TODO create getUserDetails in User.php
     }
 
 
