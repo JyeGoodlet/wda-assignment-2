@@ -33,6 +33,20 @@ class Categories {
 
     }
 
+    public function getCategory($id) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "SELECT * from categories
+                    WHERE id = :categoryId
+                    LIMIT 1";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam('categoryId', $id);
+        $stmt->execute();
+        $category = $stmt->fetch();
+        return $category;       
+    
+    }
+
     private function getSubcategories($categoryId) {
 
         $connection = new DbConnect();
@@ -54,6 +68,20 @@ class Categories {
                   where category = :category";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam('category', $categoryName);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        return $result;
+    }
+
+    private function checkIfSubcategoryExists($parentId, $subcategoryName) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "SELECT * from subcategories
+                    WHERE subcategory = :subcategory
+                    AND category_id = :parentId";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam('subcategory', $subcategoryName);
+        $stmt->bindParam('parentId', $parentId);
         $stmt->execute();
         $result = $stmt->fetchAll();
         return $result;
@@ -82,7 +110,7 @@ class Categories {
             $pdo = $connection->connect();
             $query = "UPDATE categories
                         SET category = :category
-                        WHERE id = :id";
+                        WHERE category_id = :id";
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":id", $id);
             $stmt->bindParam(":category", $categoryName);
@@ -93,6 +121,23 @@ class Categories {
             return null;
         }
 
+    }
+
+    public function addSubcategory($parentId, $subcatgeoryName) {
+        if(!$this->checkIfSubcategoryExists($parentId, $subcatgeoryName)) {
+            $connection = new DbConnect();
+            $pdo = $connection->connect();
+            $query = "INSERT INTO subcategories(category_id, subcategory)
+                        VALUES(:categoryId, :subcategoryName)";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":categoryId", $parentId);
+            $stmt->bindParam(":subcategoryName", $subcatgeoryName);
+            $stmt->execute();
+            return $stmt->errorInfo();
+        }
+        else {
+            return null;
+        }
     }
 
 }

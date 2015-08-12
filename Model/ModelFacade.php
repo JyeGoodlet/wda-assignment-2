@@ -129,6 +129,12 @@ class ModelFacade {
 
 	}
 
+    //get category name by its id
+    public static function getCategory($id) {
+        $categories = new Categories();
+		return $categories->getCategory($id);		
+    }
+
 	//get subcategory by its id
 	public static function getSubCategory($id) {
 		$subcategory = new Subcategory();
@@ -292,6 +298,11 @@ class ModelFacade {
     public static function AdminEditBoard($id, $categoryName) {
         $categories = new Categories();
         return $categories->EditCategory($id, $categoryName);
+    }
+
+    public static function AdminAddSubcategory($categoryId, $subcategoryName) {
+        $categories = new Categories();
+        return $categories->AddSubcategory($categoryId, $subcategoryName);       
     }
 
 

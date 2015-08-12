@@ -1,7 +1,7 @@
 <?php include_once('AdminHeader.html'); ?>
 
 <div class="panel-heading">
-    <h4 class="panel-title"><i class="fa fa-plus"></i> Edit Message Board</h4>
+    <h4 class="panel-title"><i class="fa fa-plus-square"></i> Add New Subcategory</h4>
 </div>
 
 <div class="panel-body">
@@ -15,20 +15,20 @@
 
     <form method="post">
         <div class="form-group">
-            <label for="SelectCategoryName">Select Category To Edit</label>
+            <label for="SelectCategoryName">Select Parent Category</label>
             <select id="SelectCategoryName" name="selectCategoryName" class="form-control" onchange="AdminEditCategorySelectBoxChange();">
-                <option value="-1">Select Existing Category</option>
+                <option value="-1">-</option>
                 <?php foreach($categories as $category) { ?>
                 <option value="<?php echo $category->id; ?>"><?php echo $category->category; ?></option>
                 <?php } ?>
             </select>
-        </div>
-        <div class="form-group">
-            <label for="CategoryName">Edit Category Name</label>
-            <input id="CategoryName" name="categoryName" class="form-control" placeholder="Category Name"/>            
+            </div>
+        <div id="addSubcategoryFormGroup" class="form-group">
+            <label for="CategoryName">Add New Subcategory</label>
+            <input id="subcategoryName" name="subcategoryName" class="form-control" placeholder="Subcategory Name" />
         </div>
 
-        <button id="adminEditCategorySubmit" class="btn btn-primary pull-right"><i class="fa fa-pencil"></i> Edit Category</button>
+        <button class="btn btn-primary pull-right"><i class="fa fa-plus-square"></i> Add Subcategory</button>
         <div class="clearfix"></div>
     </form>
 
