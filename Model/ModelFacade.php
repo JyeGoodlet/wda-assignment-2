@@ -252,6 +252,11 @@ class ModelFacade {
         $post->updateLastActivity($postId);
     }
 
+    public static function AdminDeleteComment($id) {
+        $posts = new Posts();
+        return $posts->AdminDeleteComment($id);
+    }
+
 
 
 

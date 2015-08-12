@@ -96,9 +96,24 @@ class Posts
         //$stmt->setFetchMode(PDO::FETCH_OBJ);
         $stmt->execute();
         return $pdo->lastInsertId();
-
-
     }
+
+    public function AdminDeleteComment($id) {
+        $comment = "[Comment removed by " . ModelFacade::getLoggedInUser()->username ."]";
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "UPDATE comments
+                    SET comment = :comment
+                    WHERE id = :id";
+        $stmt= $pdo->prepare($query);
+        $stmt->bindParam(":comment", $comment);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+
+        return $stmt->errorInfo();
+    }
+
+
     /* when a user adds a comment to a post it will alter the posts last activity. that
     way active posts stay at the top of the forum */
     public function updateLastActivity($postId) {
