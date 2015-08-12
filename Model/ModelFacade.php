@@ -97,7 +97,9 @@ class ModelFacade {
         }
 		if (!isset($_SESSION['user'])) {
 			header("Location: /Login.php");
+            exit();
 		}
+
 
 	}
 
@@ -107,6 +109,7 @@ class ModelFacade {
         // Check if admin - if not, boot them back to index
         if(!ModelFacade::getLoggedInUser()->isAdmin) {
             header("Location: /Index.php");
+            exit();
         }
 
 	}
