@@ -1,9 +1,29 @@
+<?php var_dump($post); ?>
 <!-- AUTHOR: jgoodlet -->
 <?php include_once('Include/Header.html'); ?>
 
 <div class="panel panel-primary">
     <div class="panel-heading"><h4 class="inline"> Close Thread</h4></div>
     <div class="panel-body">
+        <p>Title: <?php echo $post->title; ?></p>
+        <p>Question: <?php echo $post->content; ?></p>
+        <p>Poster: <?php echo $post->username; ?></p>
+
+        <p>Open Date: <?php echo $post->date; ?> </p>
+        <p>Category: TODO </p>
+        <p>Subcategory: <?php echo $post->subcategory; ?></p>
+        <p>Comment Count: TODO maybe...</p>
+
+        <form method="Post">
+            <div class="form-group">
+                <label for="CloseReason" >Reason Thread is being closed</label>
+                <textarea style="width:600px" rows="6" class="form-control"  id="CloseReason" name="CloseReason" required="required" ></textarea>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default"  >Close Thread</button>
+            </div>
+        </form>
+
 
 
     </div>

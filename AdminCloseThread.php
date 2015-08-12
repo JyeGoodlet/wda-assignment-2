@@ -18,7 +18,40 @@ OnRequest();
 
 function OnRequest() {
 
-    include_once('/Views/AdminCloseThread.html');
+
+    $requestMethod = $_SERVER['REQUEST_METHOD'];
+    if ($requestMethod == "GET") {
+        threadCloseGet();
+    }
+    else {
+        //loginPost("", "");
+        threadClosePost();
+    }
+
+
+
 }
+
+
+function threadCloseGet() {
+    //gets Post
+    $post = ModelFacade::getPost($_GET["id"]);
+    //get Comment Count
+
+
+    include_once('/Views/AdminCloseThread.html');
+
+}
+
+function threadClosePost() {
+    //gets Post
+    $post = ModelFacade::getPost($_GET["id"]);
+    //get Comment Count
+
+
+    include_once('/Views/AdminCloseThread.html');
+
+}
+
 
 ?>
