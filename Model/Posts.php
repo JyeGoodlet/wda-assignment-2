@@ -98,6 +98,35 @@ class Posts
         return $pdo->lastInsertId();
     }
 
+    public function AdminCloseThread($id, $closingMessage, $adminId) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->beginTransaction();
+
+        //insert comment
+        $query = "insert into comments (date,  post, comment,  user)
+                    values (now(), :post, :comment, :user)";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':post', $id);
+        $stmt->bindParam(':comment', $closingMessage);
+        $stmt->bindParam(':user', $adminId);
+        $stmt->execute();
+
+        //update to closed
+        $query = "UPDATE posts
+                  set closed  = true
+                  where id=:id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+
+
+        //commit
+        $pdo->commit();
+
+    }
+
     public function AdminDeleteComment($id) {
         $comment = "[Comment removed by " . ModelFacade::getLoggedInUser()->username ."]";
         $connection = new DbConnect();
@@ -109,6 +138,10 @@ class Posts
         $stmt->bindParam(":comment", $comment);
         $stmt->bindParam(":id", $id);
         $stmt->execute();
+
+
+
+
 
         return $stmt->errorInfo();
     }

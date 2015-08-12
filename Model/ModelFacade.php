@@ -188,6 +188,8 @@ class ModelFacade {
 
     }
 
+
+
     public static function deleteMsg($msgId) {
         $userId = ModelFacade::getLoggedInUser()->id;
         $messages = new DirectMessages();
@@ -260,6 +262,11 @@ class ModelFacade {
         return $posts->AdminDeleteComment($id);
     }
 
+    public static function closeThread($threadId, $closingMessage, $adminId) {
+        $posts = new Posts();
+        $posts->AdminCloseThread($threadId, $closingMessage, $adminId);
+
+    }
 
 
 
