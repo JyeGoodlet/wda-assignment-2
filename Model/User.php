@@ -42,8 +42,6 @@ class User {
 		$user = $stmt->fetch(PDO::FETCH_OBJ);
 
         if (!empty($user)) {
-            if ((strlen($user->password) < 10)&& ($this->password == $user->password))
-                $user->password = $this->HashOldPassword($user->password);
             if (!password_verify($this->password,$user->password))
                 return false;
 			//get users id
@@ -57,17 +55,7 @@ class User {
 			return false;
 	}
 
-    public function HashOldPassword($password) {
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $connection = new DbConnect();
-            $pdo = $connection->connect();
-            $query = "UPDATE users SET password = :hashedPassword WHERE username = :username";
-            $stmt = $pdo->prepare($query);
-            $stmt->bindParam(':username', $this->username);
-            $stmt->bindParam(':hashedPassword', $hashedPassword);
-            $stmt->execute();
-            return $hashedPassword;
-        }
+
 
     public function checkUsernameAvailable() {
 
