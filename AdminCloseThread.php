@@ -33,6 +33,8 @@ function OnRequest() {
         ModelFacade::closeThread($_GET["id"], $_POST["CloseReason"], ModelFacade::getLoggedInUser()->id);
 
         threadClosePost();
+
+        header("location:Thread.php?id=" . $_GET["id"]);
     }
 
 
