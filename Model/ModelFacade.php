@@ -274,6 +274,12 @@ class ModelFacade {
 
     }
 
+    public static function checkThreadClosed($threadId) {
+        $post = new Posts();
+        return $post->checkThreadClosed($threadId);
+
+    }
+
 
 
 
