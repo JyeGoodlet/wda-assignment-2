@@ -66,7 +66,7 @@ class Posts
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $query = "select * from comments
+        $query = "select comments.id as commentId, comments.date, comments.comment, users.id as UserId, users.username from comments
                   join users on users.id = comments.user
                   where post = :post";
         $stmt = $pdo->prepare($query);
@@ -74,6 +74,7 @@ class Posts
         $stmt->setFetchMode(PDO::FETCH_OBJ);
         $stmt->execute();
         $comments = $stmt->fetchAll();
+
         return $comments;
     }
 
