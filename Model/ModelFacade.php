@@ -128,6 +128,12 @@ class ModelFacade {
 
 	}
 
+    //get category name by its id
+    public static function getCategory($id) {
+        $categories = new Categories();
+		return $categories->getCategory($id);		
+    }
+
 	//get subcategory by its id
 	public static function getSubCategory($id) {
 		$subcategory = new Subcategory();
@@ -186,6 +192,8 @@ class ModelFacade {
         return true;
 
     }
+
+
 
     public static function deleteMsg($msgId) {
         $userId = ModelFacade::getLoggedInUser()->id;
@@ -259,6 +267,17 @@ class ModelFacade {
         return $posts->AdminDeleteComment($id);
     }
 
+    public static function closeThread($threadId, $closingMessage, $adminId) {
+        $posts = new Posts();
+        $posts->AdminCloseThread($threadId, $closingMessage, $adminId);
+
+    }
+
+    public static function checkThreadClosed($threadId) {
+        $post = new Posts();
+        return $post->checkThreadClosed($threadId);
+
+    }
 
 
 
@@ -274,6 +293,21 @@ class ModelFacade {
     public static function UpdateUser($user) {
         $users = new Users();
         return $users->UpdateUser($user);
+    }
+
+    public static function AdminAddBoard($categoryName) {
+        $categories = new Categories();
+        return $categories->AddCategory($categoryName);
+    }
+
+    public static function AdminEditBoard($id, $categoryName) {
+        $categories = new Categories();
+        return $categories->EditCategory($id, $categoryName);
+    }
+
+    public static function AdminAddSubcategory($categoryId, $subcategoryName) {
+        $categories = new Categories();
+        return $categories->AddSubcategory($categoryId, $subcategoryName);       
     }
 
 

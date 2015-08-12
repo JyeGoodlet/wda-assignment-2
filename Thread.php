@@ -50,6 +50,10 @@ function threadPost(){
   if (trim($_POST["newComment"]) == "") {
     $emptyComment = true;
   }
+  elseif (ModelFacade::checkThreadClosed($_GET["id"])) {
+
+    header("location:Thread.php?id=" . $_GET["id"]);
+  }
   else {
     //add comment
     ModelFacade::addComment($_GET["id"], htmlspecialchars($_POST["newComment"]), ModelFacade::getLoggedInUser()->id);

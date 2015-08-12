@@ -2,7 +2,7 @@
 <h4><a href="index.php">Home</a> <i class="fa fa-angle-double-right"></i> <a href="threads.php?id=<?php echo $post->subCatId; ?>"> <?php echo $post->subcategory ?></a></h4>
 <div class="panel panel-primary">
     <div class="panel-heading"><h4 class="inline"><?php echo $post->title ?></h4>
-        <?php if(ModelFacade::checkLoggedIn() && ModelFacade::getLoggedInUser()->isAdmin) { ?>
+        <?php if(ModelFacade::checkLoggedIn() && ModelFacade::getLoggedInUser()->isAdmin && ModelFacade::checkThreadClosed($post->id) == false) { ?>
         <a href="AdminCloseThread.php?id=<?php echo $post->id; ?>" type="button" class="btn btn-default pull-right">  Close Thread</a><?php } ?>
         <!-- pending remove <a href="AddComment.php?threadId=<?php echo $_GET['id']; ?>" type="button" class="btn btn-default pull-right">Add Comment</a> -->
     </div>
@@ -29,7 +29,7 @@
         </tbody>
         </table>
 
-        <?php if(ModelFacade::checkLoggedIn()) :?>
+        <?php if(ModelFacade::checkLoggedIn() && ModelFacade::checkThreadClosed($post->id) == false ) :?>
         <div style="width:600px" >
         <form method="post" >
             <div class="form-group">
@@ -42,6 +42,9 @@
             </div>
         </form>
         </div>
+        <?php elseif (ModelFacade::checkThreadClosed($post->id)): ?>
+            <div style="font-weight: bold;font-size: large;" class="alert alert-info" role="alert">Sorry, Thread has been Closed</div>
+
          <?php endif; ?>
 
       <!-- pending remove  <a href="AddComment.php?threadId=<?php echo $_GET['id']; ?>" type="button" class="btn btn-primary"> Add Comment</a> -->

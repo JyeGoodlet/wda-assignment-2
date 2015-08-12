@@ -1,4 +1,3 @@
-
 <?php include_once('Include/Header.html'); ?>
 <h4><a href="index.php">Home</a> <i class="fa fa-angle-double-right"></i> <a href="threads.php?id=<?php echo $_GET['id']; ?>"> <?php echo $subcategory->subcategory; ?></a></h4>
 <div class="panel panel-primary">
@@ -22,7 +21,7 @@
     </thead>
     <?php foreach($posts as $post):;?>
     <tr>
-        <td><a href="Thread.php?id=<?php echo $post->id; ?>"><?php echo $post->title; ?></a>
+        <td><a <?php if($post->closed){ ?>style="color: #636363" <?php ;}?> href="Thread.php?id=<?php echo $post->id; ?>"><?php echo $post->title; ?> <?php if($post->closed) { echo "(Thread Closed)"; } ?></a>
 
         </td>
         <td style="font-size: 14px;text-align: center;">
@@ -35,7 +34,11 @@
         <td style="font-size: 14px;text-align: center;"><a href="UserProfile.php?id=<?php echo $post->lastUserId; ?>"><?php echo $post->lastuser?></a><br>
             <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($post->lastdate)?></p></td>
         <?php if(ModelFacade::checkLoggedIn() && ModelFacade::getLoggedInUser()->isAdmin) { ?>
-       <td> <p class="text-danger"> <a href="/AdminCloseThread.php?id=<?php echo $post->id; ?>"><i class="fa fa-times-circle-o"></i> Close Thread</a></p> </td><?php } ?>
+        <?php if ($post->closed) { ?>
+        <td>Thread Closed</td>
+        <?php } else { ?>
+       <td> <p class="text-danger"> <a href="/AdminCloseThread.php?id=<?php echo $post->id; ?>"><i class="fa fa-times-circle-o"></i> Close Thread</a></p> </td>
+        <?php }} ?>
     </tr>
     <?php endforeach;?>
     </tbody>

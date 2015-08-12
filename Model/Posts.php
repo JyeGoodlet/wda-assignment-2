@@ -20,7 +20,7 @@ class Posts
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         //monster query - i might need to refactor this
         $query = "select posts.id, posts.date, posts.title, users.id as posterId, users.username, COALESCE(comment.commentcount,0) as commentcount,
-                    lastpost.id as lastUserId, lastpost.username as lastuser, lastpost.date as lastdate, posts.last_activity_timestamp from posts
+                    lastpost.id as lastUserId, lastpost.username as lastuser, lastpost.date as lastdate, posts.last_activity_timestamp, posts.closed from posts
                     left join users on posts.user = users.id
                     /* get comment count */
                     left join (
@@ -98,6 +98,52 @@ class Posts
         return $pdo->lastInsertId();
     }
 
+    public function checkThreadClosed($threadId) {
+
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $query = "select closed from posts
+                  where id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':id', $threadId);
+        $stmt->setFetchMode(PDO::FETCH_OBJ);
+        $stmt->execute();
+        $value =  $stmt->fetch();
+        //var_dump($value->closed);
+        return $value->closed;
+
+    }
+
+    public function AdminCloseThread($id, $closingMessage, $adminId) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->beginTransaction();
+
+        //insert comment
+        $query = "insert into comments (date,  post, comment,  user)
+                    values (now(), :post, :comment, :user)";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':post', $id);
+        $stmt->bindParam(':comment', $closingMessage);
+        $stmt->bindParam(':user', $adminId);
+        $stmt->execute();
+
+        //update to closed
+        $query = "UPDATE posts
+                  set closed  = true
+                  where id=:id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+
+
+        //commit
+        $pdo->commit();
+
+    }
+
     public function AdminDeleteComment($id) {
         $comment = "[Comment removed by " . ModelFacade::getLoggedInUser()->username ."]";
         $connection = new DbConnect();
@@ -109,6 +155,10 @@ class Posts
         $stmt->bindParam(":comment", $comment);
         $stmt->bindParam(":id", $id);
         $stmt->execute();
+
+
+
+
 
         return $stmt->errorInfo();
     }
