@@ -9,8 +9,8 @@ OnRequest();
 
 function OnRequest()
 {
-
-    $messages = ModelFacade::getMsgInbox();
+    $user = ModelFacade::getLoggedInUser();
+    $messages = $user->getUsersInbox();
     if (isset($_POST['delMsg'])) {
         foreach ($_POST['delMsg'] as $eachDelMsg)
             ModelFacade::deleteMsg($eachDelMsg);

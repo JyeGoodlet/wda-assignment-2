@@ -15,7 +15,9 @@ function OnRequest()
         header('Location: /DirectMsgSent.php');
     }
 
-    $messages = ModelFacade::getMsgSent();
+    $user = ModelFacade::getLoggedInUser();
+
+    $messages = $user->getUsersSentbox();
 
     if (isset($_GET['newMsgSent'])) {
         $newMsgSent = $_GET['newMsgSent'];

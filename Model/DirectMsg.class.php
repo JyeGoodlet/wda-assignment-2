@@ -1,11 +1,16 @@
 <?php
-/**  -_-_- AUTHOR: jAsOnD -_-_- */
+/**  Classname: DirectMessages
+ *
+ * Description: DirectMessages contains static methods to access direct
+ * message functionality to be accessed by ModelFacade and User Models
+ *
+ * -_-_- AUTHOR: jAsOnD -_-_- */
 
 class DirectMessages
 
 {
 
-    public function getMsgInbox($userId) {
+    public static function getUsersInbox($userId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "SELECT dm.id, dm.sender, dm.reciever, dm.isRead, dm.timeSent, dm.subject, dm.message, u.username as sendername FROM direct_message AS dm, users AS u WHERE reciever = :receiverId  AND dm.isDeleted_receiver = 0 AND dm.sender = u.id ORDER BY dm.timeSent DESC";
@@ -16,7 +21,8 @@ class DirectMessages
         $allMessages = $stmt->fetchAll();
         return $allMessages;
     }
-    public function getMsgSent($senderId) {
+
+    public static function getUserSentbox($senderId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "SELECT dm.id, dm.sender, dm.reciever, dm.isRead, dm.timeSent, dm.subject, dm.message, u.username as receiverName FROM direct_message AS dm, users AS u WHERE sender = :senderId  AND dm.isDeleted_sender =0 AND dm.reciever = u.id ORDER BY dm.timeSent DESC";
@@ -29,7 +35,7 @@ class DirectMessages
     }
 
 
-    public function countUnreadMsgs($userId) {
+    public static function getUsersUnreadCount($userId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "SELECT count(id) AS unread FROM direct_message WHERE reciever = :id AND isRead = 0 AND isDeleted_receiver = 0 GROUP BY isRead";
@@ -43,7 +49,7 @@ class DirectMessages
         }
         return $count->unread;
     }
-    public function displayMsg($msgId) {
+    public static function getDirectMessage($msgId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "SELECT dm.id, dm.sender, dm.reciever, dm.isRead, dm.timeSent, dm.subject, dm.message, u.username as sendername FROM direct_message AS dm, users AS u WHERE dm.id = :id AND dm.sender = u.id LIMIT 1";
@@ -55,7 +61,7 @@ class DirectMessages
         return $selectedMessage;
     }
 
-    public function createMsg($receiver, $sender, $subject, $message) {
+    public static function createMsg($receiver, $sender, $subject, $message) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "INSERT INTO direct_message (timeSent, sender,reciever,subject,message)"
@@ -68,10 +74,9 @@ class DirectMessages
         $stmt->bindParam(':message', $message);
         $stmt->execute();
         return true;
-        //TODO use try catch block for errors
     }
 
-    public function deleteMsg($msgId, $userId) {
+    public static function deleteMsg($msgId, $userId) {
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
@@ -84,22 +89,21 @@ class DirectMessages
 
         if ($ownerCheck->sender == $userId) {
             if ($ownerCheck->isDeleted_receiver == 1)
-                $this->deleteMsgFull($msgId);
+                DirectMessages::deleteMsgFull($msgId);
             else
-                $this->deleteMsgSender($msgId);
+                DirectMessages::deleteMsgSender($msgId);
         }
 
-        //Bug Fixed elseif to else so you can delete messages sent to yourself
         if ($ownerCheck->reciever == $userId) {
             if ($ownerCheck->isDeleted_sender == 1)
-                $this->deleteMsgFull($msgId);
+                DirectMessages::deleteMsgFull($msgId);
             else
-                $this->deleteMsgReceiver($msgId);
+                DirectMessages::deleteMsgReceiver($msgId);
         }
-
+        return true;
     }
 
-    private function deleteMsgSender($msgId) {
+    private static function deleteMsgSender($msgId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "UPDATE direct_message SET isDeleted_sender = 1 WHERE id = :msgId";
@@ -108,10 +112,49 @@ class DirectMessages
         $stmt->execute();
     }
 
-    private function deleteMsgReceiver($msgId) {
+    private static function deleteMsgReceiver($msgId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "UPDATE direct_message SET isDeleted_receiver = 1 WHERE id = :msgId";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':msgId', $msgId);
+        $stmt->execute();
+    }
+
+    public static function deleteAllUserMsgs($userId) {
+
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $ownerQuery = "SELECT id, sender, reciever, isDeleted_sender, isDeleted_receiver FROM direct_message
+                      WHERE sender = :userId AND reciever = :userId";
+        $stmt = $pdo->prepare($ownerQuery);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->setFetchMode(PDO::FETCH_OBJ);
+        $stmt->execute();
+        $ownerCheck = $stmt->fetchAll();
+        foreach ($ownerCheck as $eachMsg) {
+            if ($eachMsg->sender == $userId)
+                DirectMessages::removeSender($eachMsg->id);
+            if ($eachMsg->reciever == $userId)
+                DirectMessages::removeReceiver($eachMsg->id);
+        }
+        return true;
+    }
+
+
+    private static function removeSender($msgId) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "UPDATE direct_message SET sender = 0 WHERE id = :msgId";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':msgId', $msgId);
+        $stmt->execute();
+    }
+
+    private static function removeReceiver($msgId) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "UPDATE direct_message SET receiver = 0 WHERE id = :msgId";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':msgId', $msgId);
         $stmt->execute();
@@ -126,14 +169,12 @@ class DirectMessages
         $stmt->execute();
     }
 
-
-    public function markAsRead($msgId) {
+    public static function markAsRead($msgId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "UPDATE direct_message SET isRead = 1 WHERE id = :msgId";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':msgId', $msgId);
         $stmt->execute();
-        //TODO use try catch block for errors
     }
 }

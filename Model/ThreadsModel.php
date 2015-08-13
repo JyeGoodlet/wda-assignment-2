@@ -178,5 +178,56 @@ class ThreadsModel
         $stmt->execute();
     }
 
+    public static function userProfileThreads($userId) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $query = "select posts.subcategory, subcategories.subcategory as subcat, subcategories.category as cat, posts.id, posts.date, posts.title, users.id as posterId, users.username, COALESCE(comment.commentcount,0) as commentcount,
+                    posts.last_activity_timestamp, posts.closed from posts
+                    left join users on posts.user = users.id
+                    /* get comment count */
+                    left join (
+                    select post, count(*) as commentcount from comments
+                    group by post
+                    ) as comment on comment.post = posts.id
+
+                    LEFT JOIN (
+          select subcat.subcategory,  subcat.id, cat.category
+          FROM subcategories subcat, categories cat
+          WHERE subcat.category_id = cat.id
+                    ) as subcategories on subcategories.id = posts.subcategory
+                    WHERE users.id = :userId
+                    order by last_activity_timestamp desc";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->setFetchMode(PDO::FETCH_OBJ);
+        $stmt->execute();
+        $usersThreads = $stmt->fetchAll();
+        return $usersThreads;
+    }
+
+
+    public static function deleteAllUsersThreads($userId) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $query = "UPDATE posts SET user = 0
+                    WHERE user = :userId";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->execute();
+    }
+
+
+    public function deleteAllUsersComments($userId) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $query = "UPDATE comments SET user = 0
+                    WHERE user = :userId";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->execute();
+    }
 
 }

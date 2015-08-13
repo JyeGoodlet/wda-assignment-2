@@ -123,15 +123,13 @@ class ModelFacade {
 	}
 
     public static function checkUsernameAvaiable($username) {
-        $user = new User($username, "");
-        $avaiable = $user->checkUsernameAvailable();
+        $avaiable = User::checkUsernameAvailable($username);
         return $avaiable;
 
     }
 
     public static function checkEmailAvaiable($email) {
-        $user = new User("", "", $email);
-        $avaiable = $user->checkEmailAvailable();
+        $avaiable = User::checkEmailAvailable($email);
         return $avaiable;
 
     }
@@ -167,46 +165,46 @@ class ModelFacade {
 
 	}
   
-    public static function getMsgInbox() {
-        $userId = ModelFacade::getLoggedInUser()->id;
-        $messages = new DirectMessages();
-        $messages = $messages->getMsgInbox($userId);
-        return $messages;
+    public static function getUsersInbox($userId) {
+        $inbox = DirectMessages::getUsersInbox($userId);
+        return $inbox;
 
     }
 
-    public static function getMsgSent() {
-        $userId = ModelFacade::getLoggedInUser()->id;
-        $messages = new DirectMessages();
-        $messages = $messages->getMsgSent($userId);
-        return $messages;
+    public static function getUsersSentbox($userId) {
+        $sentbox = DirectMessages::getUserSentbox($userId);
+        return $sentbox;
 
     }
+
+    public static function getUsersThreads($userId) {
+        $usersThreads = ThreadsModel::userProfileThreads($userId);
+        return $usersThreads;
+
+    }
+
+
 
     public static function getMsg($msgId) {
         $userId = ModelFacade::getLoggedInUser()->id;
-        $messages = new DirectMessages();
-        $messages = $messages->displayMsg($msgId);
-        if (($messages->reciever != $userId)&&($messages->sender != $userId))
+        $msg = DirectMessages::getDirectMessage($msgId);
+        if (($msg->reciever != $userId)&&($msg->sender != $userId))
             header("Location: /DirectMsgInbox.php");
-        return $messages;
+        return $msg;
 
     }
 
     public static function countUnreadMsgs() {
         $userId = ModelFacade::getLoggedInUser()->id;
-        $messages = new DirectMessages();
-        $messages = $messages->countUnreadMsgs($userId);
-        return $messages;
+        $messageCount = DirectMessages::getUsersUnreadCount($userId);
+        return $messageCount;
 
     }
 
     public static function createMsg($receiver, $subject, $message) {
         $sender = ModelFacade::getLoggedInUser()->id;
-        $newMessage = new DirectMessages();
-
-        $newMessage = $newMessage->createMsg($receiver,$sender,$subject, $message);
-        return true;
+        $isCreated = DirectMessages::createMsg($receiver,$sender,$subject, $message);
+        return $isCreated;
 
     }
 
@@ -214,18 +212,13 @@ class ModelFacade {
 
     public static function deleteMsg($msgId) {
         $userId = ModelFacade::getLoggedInUser()->id;
-        $messages = new DirectMessages();
-        $messages->deleteMsg($msgId, $userId);
-        //TODO add visual feedback that message is delete
-        return true;
+        $isDeleted = DirectMessages::deleteMsg($msgId, $userId);
+        return $isDeleted;
 
     }
 
     public static function markMsgRead($msgId) {
-        $messages = new DirectMessages();
-        $messages->markAsRead($msgId);
-
-
+        DirectMessages::markAsRead($msgId);
     }
 
   public static function getThread($id) {
@@ -262,6 +255,8 @@ class ModelFacade {
         $user = $users->getUserByName($name);
         return $user;
     }
+
+
 	public static function insertThread($title, $content, $subcategory, $user) {
 		$thread = new ThreadModel($title, $content, $subcategory,  $user);
 		return $thread->addThread();
