@@ -1,36 +1,41 @@
-<?php include_once('Include/Header.html'); ?>
+<?php $pageTitle = 'Create new post'; 
+    include_once('Include/Header.html'); ?>
+<div class="row">
 
-<div class="col-lg-6 col-lg-offset-3">
+    <div class="col-lg-6 col-lg-offset-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4>New Thread for <?php echo ModelFacade::getSubCategory($_GET["subcategory"])->subcategory ; ?> Questions</h4>
+            </div>
+            <div class="panel-body">
+                <form method="post">
+                    <div class="form-group <?php echo (isset($titleReq) ? $titleReq : '' ); ?>   ">
+                        <label for="username"> Title </label>
+                        <input required="required" class="form-control" name="title" id="title" type="text" placeholder="Title" aria-describedby="inputWarning1Status" value="<?php echo (isset($title) ? $title : ''); ?>"> </input>
+                        <?php if(isset($titleReq)): ?>
+                        <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+                        <span id="inputWarning1Status" class="sr-only">(warning)</span>
+                        <?php endif; ?>
+                    </div>
+                    <div class="form-group <?php echo (isset($contentReq) ? $contentReq : '' ); ?>">
+                        <label for="content">Content</label>
+                        <textarea required="required" rows="6" class="form-control" name="content" id="content" type="text"><?php echo (isset($content) ? $content : ''); ?></textarea>
+                        <?php if(isset($contentReq)): ?>
+                        <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+                        <span id="inputWarning2Status" class="sr-only">(warning)</span>
+                        <?php endif; ?>
+                    </div>
+                    <div class="form-group ">
+                        <?php if(isset($message)): ?>
+                        <div class="alert text-danger alert-warning" role="alert">Missing Fields Required</div>
+                        <?php endif; ?>
+                        <button type="submit" class="btn btn-primary pull-right">Add Thread</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-    <h2>New Thread for <?php echo ModelFacade::getSubCategory($_GET["subcategory"])->subcategory ; ?> Questions</h2>
-
-   <form method="post">
-       <div class="form-group <?php echo (isset($titleReq) ? $titleReq : '' ); ?>   ">
-           <label for="username"> Title </label>
-           <input required="required"  class="form-control" name="title" id="title" type="text" placeholder="Title" aria-describedby="inputWarning1Status" value="<?php echo (isset($title) ? $title : ''); ?>"> </input>
-           <?php if(isset($titleReq)): ?>
-           <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
-           <span id="inputWarning1Status" class="sr-only">(warning)</span>
-           <?php endif; ?>
-       </div>
-       <div class="form-group <?php echo (isset($contentReq) ? $contentReq : '' ); ?>">
-           <label for="content">Content</label>
-           <textarea required="required"   rows="6" class="form-control" name="content" id="content" type="text"  ><?php echo (isset($content) ? $content : ''); ?></textarea>
-           <?php if(isset($contentReq)): ?>
-           <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
-           <span id="inputWarning2Status" class="sr-only">(warning)</span>
-           <?php endif; ?>
-       </div>
-       <div class="form-group ">
-           <?php if(isset($message)): ?>
-           <div class="alert text-danger alert-warning" role="alert">Missing Fields Required</div>
-           <?php endif; ?>
-           <button  type="submit" class="btn btn-default pull-right">Add Thread</button>
-       </div>
-
-
-    </form>
-
+    </div>
 </div>
 
 <?php include_once('Include/Footer.html'); ?>

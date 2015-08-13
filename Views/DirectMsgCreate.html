@@ -1,52 +1,64 @@
-<?php include_once('Include/Header.html'); ?>
+<?php $pageTitle = 'Direct Message';
+    include_once('Include/Header.html'); ?>
 
-<div class="col-lg-6 col-lg-offset-3">
+<div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+        <div class="panel panel-primary">
 
-    <h2>Direct Message</h2>
+            <div class="panel-heading">
+                <h4>Direct Message</h4>
+            </div>
+            <div class="panel-body">
+                <form method="post">
+                    <div class="form-group <?php echo (isset($receiverReq) ? $receiverReq : '' ); ?>">
 
-    <form method="post">
-        <div class="form-group <?php echo (isset($receiverReq) ? $receiverReq : '' ); ?>   ">
+                        <label> Send To </label>
+                        <select class="form-control" name="receiver">
 
-            <label> Send To </label>
-            <select class="form-control" name="receiver">
+                            <?php foreach($allUsers as $eachUser): ?>
+                            <?php
+                            $option = ($eachUser['id'] == $sendTo )?
+                            '
+                            <option value="' . $eachUser['id']. '" selected>'.$eachUser['username']. '</option>'
+                            : '
+                            <option value="' . $eachUser['id']. '">'.$eachUser['username'] .'</option>' ;
+                            ?>
 
-                <?php foreach($allUsers as $eachUser): ?>
-                <?php $option = ($eachUser['id'] == $sendTo )?
-                        '<option value="' . $eachUser['id']. '" selected >'.$eachUser['username']. '</option>'
-                        : '<option value="' . $eachUser['id']. '" >'.$eachUser['username'] .'</option>' ; ?>
+                            <?php echo $option ?>
+                            <?php endforeach; ?>
+                        </select>
 
-                    <?php echo $option ?>
-                <?php endforeach; ?>
-            </select>
+                    </div>
+                    <div class="form-group <?php echo (isset($subjectReq) ? $subjectReq : '' ); ?> ">
+                        <label for="subject"> Subject </label>
+                        <input class="form-control" name="subject" id="subject" value="<?php echo $replySubject.$fwdSubject; ?>" type="text"> </input>
+                        <?php if(isset($subjectReq)): ?>
+                        <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+                        <span id="inputWarning2Status" class="sr-only">(warning)</span>
+                        <?php endif; ?>
+                    </div>
 
+                    <div class="form-group <?php echo (isset($messageReq) ? $messageReq : '' ); ?> ">
+                        <label for="message">Message</label>
+                        <textarea rows="6" class="form-control" name="message" id="message" type="text"><?php echo $fwdMessage ; ?></textarea>
+                        <?php if(isset($messageReq)): ?>
+                        <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+                        <span id="inputWarning3Status" class="sr-only">(warning)</span>
+                        <?php endif; ?>
+                    </div>
+                    <div class="form-group">
+                        <?php if(isset($errorMessage)): ?>
+                        <div class="alert text-danger alert-warning" role="alert">Missing Fields Required</div>
+                        <?php endif; ?>
+                        <button type="submit" class="btn btn-default pull-right">Send</button>
+                    </div>
+
+
+                </form>
+
+            </div>
         </div>
-        <div class="form-group <?php echo (isset($subjectReq) ? $subjectReq : '' ); ?> ">
-            <label for="subject"> Subject </label>
-            <input  class="form-control" name="subject" id="subject" value="<?php echo $replySubject.$fwdSubject; ?>" type="text"> </input>
-            <?php if(isset($subjectReq)): ?>
-            <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
-            <span id="inputWarning2Status" class="sr-only">(warning)</span>
-            <?php endif; ?>
-        </div>
-
-        <div class="form-group <?php echo (isset($messageReq) ? $messageReq : '' ); ?> ">
-            <label for="message">Message</label>
-            <textarea   rows="6" class="form-control" name="message" id="message" type="text"><?php echo $fwdMessage ; ?></textarea>
-            <?php if(isset($messageReq)): ?>
-            <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
-            <span id="inputWarning3Status" class="sr-only">(warning)</span>
-            <?php endif; ?>
-        </div>
-        <div class="form-group">
-            <?php if(isset($errorMessage)): ?>
-            <div class="alert text-danger alert-warning" role="alert">Missing Fields Required</div>
-            <?php endif; ?>
-            <button  type="submit" class="btn btn-default pull-right">Send</button>
-        </div>
-
-
-    </form>
-
+    </div>
 </div>
 
 <?php include_once('Include/Footer.html'); ?>
