@@ -6,15 +6,15 @@
  * Date: 8/5/2015
  * Time: 9:14 PM
  */
-require_once "Post.php";
+require_once "ThreadModel.php";
 
-class Posts
+class ThreadsModel
 {
 
-    public $posts;
+    public $threads;
 
 
-    public function getPosts($subCategoryId) {
+    public function getThreads($subCategoryId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -39,12 +39,12 @@ class Posts
         $stmt->bindParam(':id', $subCategoryId);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
         $stmt->execute();
-        $posts = $stmt->fetchAll();
-        return $posts;
+        $threads = $stmt->fetchAll();
+        return $threads;
 
     }
 
-	public function getPost($id) {
+	public function getThread($id) {
 		$connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -57,11 +57,11 @@ class Posts
         $stmt->bindParam(':id', $id);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
         $stmt->execute();
-        $post = $stmt->fetch();
-        return $post;
+        $thread = $stmt->fetch();
+        return $thread;
 	}
 
-    public function getPostComment($postId) {
+    public function getThreadComments($threadId) {
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
@@ -70,7 +70,7 @@ class Posts
                   join users on users.id = comments.user
                   where post = :post";
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':post', $postId);
+        $stmt->bindParam(':post', $threadId);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
         $stmt->execute();
         $comments = $stmt->fetchAll();
@@ -80,7 +80,7 @@ class Posts
 
 
 
-    public function addComment($postId, $comment, $userId) {
+    public function addComment($threadId, $comment, $userId) {
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
@@ -88,7 +88,7 @@ class Posts
         $query = "insert into comments (date,  post, comment,  user)
                     values (now(), :post, :comment, :user)";
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':post', $postId);
+        $stmt->bindParam(':post', $threadId);
         $stmt->bindParam(':comment', $comment);
         $stmt->bindParam(':user', $userId);
 
@@ -101,7 +101,7 @@ class Posts
     }
     /* when a user adds a comment to a post it will alter the posts last activity. that
     way active posts stay at the top of the forum */
-    public function updateLastActivity($postId) {
+    public function updateLastActivity($threadId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -109,7 +109,7 @@ class Posts
                   set last_activity_timestamp = now()
                   where id = :id";
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':id', $postId);
+        $stmt->bindParam(':id', $threadId);
         $stmt->execute();
     }
 

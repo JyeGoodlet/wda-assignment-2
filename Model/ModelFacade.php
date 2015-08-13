@@ -6,9 +6,9 @@ require "Users.php";
 require "Category.php";
 require "Subcategory.php";
 require "Categories.php";
-require "Posts.php";
+require "ThreadsModel.php";
 
-require_once "Post.php";
+require_once "ThreadModel.php";
 require "DirectMsg.class.php";
 
 class ModelFacade {
@@ -133,12 +133,12 @@ class ModelFacade {
 		return $subcategory;
 	}
 
-	//get a subcategories posts
-	public static function getPosts($subcategoryId) {
+	//get a subcategories threads
+	public static function getThreads($subcategoryId) {
 
-		$posts = new Posts();
-		$posts = $posts->getPosts($subcategoryId);
-		return $posts;
+		$threads = new ThreadsModel();
+		$threads = $threads->getThreads($subcategoryId);
+		return $threads;
 
 	}
   
@@ -201,16 +201,16 @@ class ModelFacade {
 
     }
 
-  public static function getPost($id) {
-    $posts = new Posts();
-    $posts = $posts->getPost($id);
-    return $posts;
+  public static function getThread($id) {
+    $Threads = new ThreadsModel();
+    $Threads = $Threads->getThread($id);
+    return $Threads;
   }
 
 
-  public static function getPostComments($postId) {
+  public static function getThreadComments($threadId) {
 
-	return (new Posts())->getPostComment($postId);
+	return (new ThreadsModel())->getThreadComments($threadId);
 
 
 }
@@ -235,9 +235,9 @@ class ModelFacade {
         $user = $users->getUserByName($name);
         return $user;
     }
-	public static function insertPost($title, $content, $subcategory, $user) {
-		$post = new Post($title, $content, $subcategory,  $user);
-		return $post->addPost();
+	public static function insertThread($title, $content, $subcategory, $user) {
+		$thread = new ThreadModel($title, $content, $subcategory,  $user);
+		return $thread->addThread();
 	}
 
     public static function DeleteUser($id) {
@@ -245,11 +245,11 @@ class ModelFacade {
         return $users->DeleteUser($id);
     }
 
-    public static function addComment($postId, $comment, $userId) {
+    public static function addComment($threadId, $comment, $userId) {
 
-        $post = new Posts();
-        $post->addComment($postId, $comment, $userId);
-        $post->updateLastActivity($postId);
+        $thread = new ThreadsModel();
+        $thread->addComment($threadId, $comment, $userId);
+        $thread->updateLastActivity($threadId);
     }
 
 

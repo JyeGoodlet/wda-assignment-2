@@ -21,7 +21,7 @@ function OnRequest() {
     $subcategory = ModelFacade::getSubCategory($_GET["id"]);
 
     //get Posts
-    $posts = ModelFacade::getPosts($subcategory->id);
+    $threads = ModelFacade::getThreads($subcategory->id);
     include_once('/Views/Threads.html');
 }
 

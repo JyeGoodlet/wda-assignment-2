@@ -6,7 +6,7 @@
  * Date: 8/5/2015
  * Time: 8:24 PM
  */
-class Post
+class ThreadModel
 {
 
     public $id;
@@ -38,7 +38,7 @@ class Post
         $this->user = $user;
     }
 
-    public function addPost() {
+    public function addThread() {
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
