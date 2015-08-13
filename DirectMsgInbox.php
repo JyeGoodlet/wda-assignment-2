@@ -10,7 +10,7 @@ OnRequest();
 function OnRequest()
 {
     $user = ModelFacade::getLoggedInUser();
-    $messages = $user->getUsersInbox();
+    $messages = DirectMessages::getUsersInbox($user->id);
     if (isset($_POST['delMsg'])) {
         foreach ($_POST['delMsg'] as $eachDelMsg)
             ModelFacade::deleteMsg($eachDelMsg);

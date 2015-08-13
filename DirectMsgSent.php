@@ -17,7 +17,7 @@ function OnRequest()
 
     $user = ModelFacade::getLoggedInUser();
 
-    $messages = $user->getUsersSentbox();
+    $messages = ModelFacade::getUsersSentbox($user->id);
 
     if (isset($_GET['newMsgSent'])) {
         $newMsgSent = $_GET['newMsgSent'];
