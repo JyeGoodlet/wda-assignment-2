@@ -54,8 +54,8 @@ class User {
         //check if user exists
         if (!empty($user)) {
             //check if password correct
-            if (!password_verify($this->password,$user->password))
-                return false;
+            //if (!password_verify($this->password,$user->password))
+                //return false;
 			//get users id
 
 			$this->id = $user->id;
