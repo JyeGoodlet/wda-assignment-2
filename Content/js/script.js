@@ -13,11 +13,11 @@ $(document).ready(function () {
     "bSort": false
     });
 
-    $(function () {
-        
-        $('.accordion').accordion({
-            collapsible: true
-        });
+    $('#adminUserTable').DataTable({
+        "bSort": false
+    });
+
+    $(function () {      
 
         AdminEditCategorySelectBoxChange();
 

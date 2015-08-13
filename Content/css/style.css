@@ -12,3 +12,5 @@ h4 > a:link { text-decoration: none;}
 h4 > a:hover { text-decoration: none;}
 h4 > a:visited { text-decoration: none;}
 h4 > a:active { text-decoration: none;}
+
+i.margin-right-5 {margin: 0 10px 0 5px;}
