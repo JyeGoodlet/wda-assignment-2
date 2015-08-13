@@ -5,7 +5,7 @@
     <div class="panel-heading"><h4 class="inline"><?php echo $userDetails->username ?>'s Profile</h4>
         <?php
         if ($userDetails->id === $currentUser->id )
-            echo '<a href="#" type="button" class="btn btn-danger pull-right"> DELETE ACCOUNT</a>';
+            echo '<a href="/DeleteUser.php" type="button" class="btn btn-danger pull-right"> DELETE ACCOUNT</a>';
         else
             echo '<a href="/DirectMsgCreate.php?sendTo=<'.$userDetails->id.'" type="button" class="btn btn-default pull-right"> Message User</a>';
 
