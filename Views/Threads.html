@@ -19,25 +19,25 @@
     </tr>
 
     </thead>
-    <?php foreach($posts as $post):;?>
+    <?php foreach($threads as $thread):;?>
     <tr>
-        <td><a <?php if($post->closed){ ?>style="color: #636363" <?php ;}?> href="Thread.php?id=<?php echo $post->id; ?>"><?php echo $post->title; ?> <?php if($post->closed) { echo "(Thread Closed)"; } ?></a>
+        <td><a <?php if($thread->closed){ ?>style="color: #636363" <?php ;}?> href="Thread.php?id=<?php echo $thread->id; ?>"><?php echo $thread->title; ?> <?php if($thread->closed) { echo "(Thread Closed)"; } ?></a>
 
         </td>
         <td style="font-size: 14px;text-align: center;">
-            <?php echo $post->commentcount; ?>
+            <?php echo $thread->commentcount; ?>
 
         </td>
-        <td style="font-size: 14px;text-align: center;"><a href="UserProfile.php?id=<?php echo $post->posterId; ?>"><?php echo $post->username?></a><br>
-            <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($post->date)?></p>
+        <td style="font-size: 14px;text-align: center;"><a href="UserProfile.php?id=<?php echo $thread->posterId; ?>"><?php echo $thread->username?></a><br>
+            <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($thread->date)?></p>
         </td>
-        <td style="font-size: 14px;text-align: center;"><a href="UserProfile.php?id=<?php echo $post->lastUserId; ?>"><?php echo $post->lastuser?></a><br>
-            <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($post->lastdate)?></p></td>
+        <td style="font-size: 14px;text-align: center;"><a href="UserProfile.php?id=<?php echo $thread->lastUserId; ?>"><?php echo $thread->lastuser?></a><br>
+            <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($thread->lastdate)?></p></td>
         <?php if(ModelFacade::checkLoggedIn() && ModelFacade::getLoggedInUser()->isAdmin) { ?>
-        <?php if ($post->closed) { ?>
+        <?php if ($thread->closed) { ?>
         <td>Thread Closed</td>
         <?php } else { ?>
-       <td> <p class="text-danger"> <a href="/AdminCloseThread.php?id=<?php echo $post->id; ?>"><i class="fa fa-times-circle-o"></i> Close Thread</a></p> </td>
+       <td> <p class="text-danger"> <a href="/AdminCloseThread.php?id=<?php echo $thread->id; ?>"><i class="fa fa-times-circle-o"></i> Close Thread</a></p> </td>
         <?php }} ?>
     </tr>
     <?php endforeach;?>

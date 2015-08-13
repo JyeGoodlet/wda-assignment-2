@@ -263,19 +263,19 @@ class ModelFacade {
     }
 
     public static function AdminDeleteComment($id) {
-        $posts = new Posts();
-        return $posts->AdminDeleteComment($id);
+        $threads = new ThreadsModel();
+        return $threads->AdminDeleteComment($id);
     }
 
     public static function closeThread($threadId, $closingMessage, $adminId) {
-        $posts = new Posts();
-        $posts->AdminCloseThread($threadId, $closingMessage, $adminId);
+        $threads = new ThreadsModel();
+        $threads->AdminCloseThread($threadId, $closingMessage, $adminId);
 
     }
 
     public static function checkThreadClosed($threadId) {
-        $post = new Posts();
-        return $post->checkThreadClosed($threadId);
+        $thread = new ThreadsModel();
+        return $thread->checkThreadClosed($threadId);
 
     }
 
