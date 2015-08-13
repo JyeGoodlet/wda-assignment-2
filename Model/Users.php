@@ -7,7 +7,7 @@ class Users {
     public function GetAllUsers() {
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        $query = "select * from users";
+        $query = "select * from users WHERE id != 0 ORDER BY username ASC";
         $stmt = $pdo->prepare($query);       
         $stmt->execute();
         $users = $stmt->fetchAll();

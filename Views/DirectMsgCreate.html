@@ -15,17 +15,15 @@
                         <label> Send To </label>
                         <select class="form-control" name="receiver">
 
-                            <?php foreach($allUsers as $eachUser): ?>
                             <?php
-                            $option = ($eachUser['id'] == $sendTo )?
-                            '
-                            <option value="' . $eachUser['id']. '" selected>'.$eachUser['username']. '</option>'
-                            : '
-                            <option value="' . $eachUser['id']. '">'.$eachUser['username'] .'</option>' ;
+                            foreach($allUsers as $eachUser){
+                                if ($eachUser['id'] == $sendTo )
+                                    $option = '<option value="' . $eachUser['id']. '" selected>'.$eachUser['username']. '</option>';
+                                else
+                                    $option = '<option value="' . $eachUser['id']. '">'.$eachUser['username'] .'</option>' ;
+                            echo $option; }
                             ?>
 
-                            <?php echo $option ?>
-                            <?php endforeach; ?>
                         </select>
 
                     </div>
