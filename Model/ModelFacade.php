@@ -17,10 +17,16 @@ class ModelFacade {
         return "ThreadIT";
     }
 
-	public static function login($username, $password) {
+	public static function login($identify, $password) {
 
-        $user = new User($username, $password);
-		
+        //if email is provided
+        if (filter_var($identify, FILTER_VALIDATE_EMAIL))
+            $user = new User("", $password, $identify);
+
+        //if username is provided
+        else
+            $user = new User($identify, $password);
+
 		if ($user->attemptLogin()) {
 			session_start();
 			$_SESSION["user"] = $user;
@@ -56,8 +62,8 @@ class ModelFacade {
 		session_destroy();
 	}
 
-	public static function signup($username, $password) {
-		$user = new User($username, $password);
+	public static function signup($username, $password, $email) {
+		$user = new User($username, $password, $email);
 		$user->signup();
 
 	}
@@ -74,9 +80,12 @@ class ModelFacade {
 		}
 	}
   
-  public static function checkIfBanned($user) {
-    $userObj = new User($user, '');
-    return $userObj->checkIfBanned($user);
+  public static function checkIfBanned($identify) {
+      if (strpos($identify,"@" !== false))
+          $userObj = new User('', '', $identify);
+      else
+        $userObj = new User($identify , '');
+    return $userObj->checkIfBanned();
   }
 
     public static function kickIfBanned() {
@@ -120,7 +129,15 @@ class ModelFacade {
 
     }
 
-	//get categories with subcategories
+    public static function checkEmailAvaiable($email) {
+        $user = new User("", "", $email);
+        $avaiable = $user->checkEmailAvailable();
+        return $avaiable;
+
+    }
+
+
+    //get categories with subcategories
 	public static function getAllCategoriesWithSubcategories() {
 		$categories = new Categories();
 		$categories = $categories->getAllCategoriesWithSubcategories();

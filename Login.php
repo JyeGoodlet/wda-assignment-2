@@ -29,16 +29,16 @@ function loginGet() {
 
 
 function loginPost() {
-    if (isset($_POST["username"]) && isset($_POST["password"])) {
 
+    if (isset($_POST["identify"]) && isset($_POST["password"])) {
         //Attemp to log user in
-        ModelFacade::login($_POST["username"], $_POST["password"]);
+        ModelFacade::login($_POST["identify"], $_POST["password"]);
         if (ModelFacade::checkLoggedIn()) {
             //redirect
             header( 'Location: Index.php' ) ;
             exit();
         }
-        else if(ModelFacade::checkIfBanned($_POST["username"])) {
+        else if(ModelFacade::checkIfBanned($_POST["identify"])) {
             $message = "Your account has been banned!";
             include_once("/Views/Login.html");
         }

@@ -7,6 +7,8 @@ class User {
 	public $id;
 	//username
 	public $username;
+    //users email
+    public $email;
 	//users password
 	public $password;
 	//bool isAdmin
@@ -14,39 +16,51 @@ class User {
   //bool isBanned
   public $isBanned;
 
-
-
-
-	function __construct($username, $password) {
-		$connection = new DbConnect();
-		$pdo = $connection->connect();
+	function __construct($username, $password, $email = '') {
         $username = htmlspecialchars($username);
 		$this->username = $username;
+
         $password = htmlspecialchars($password);
 		$this->password = $password;
+
+        $email = htmlspecialchars($email);
+        $this->email = $email;
 	}
 
-	//returns true if exists, false if doesnt
+	//returns true if exists, false if doesn't
 	public function attemptLogin() {
         $connection = new DbConnect();
         $pdo = $connection->connect();
-		    $query = "SELECT * from users
-				  where username = :username
-          and is_banned = 0
-				  limit 1	";
+        if ($this->email !== '' ){
+            $identify = $this->email;
+            $query = "SELECT *
+                FROM users
+                WHERE email = :identify
+                and is_banned = 0 limit 1	";
+        }
+        else {
+            $identify = $this->username;
+            $query = "SELECT *
+                FROM users
+                WHERE username = :identify
+                and is_banned = 0 limit 1	";
+        }
 
-		$stmt = $pdo->prepare($query);
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':identify', $identify);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_OBJ);
 
-		$stmt->bindParam(':username', $this->username);
-		$stmt->execute();
-		$user = $stmt->fetch(PDO::FETCH_OBJ);
-
+        //check if user exists
         if (!empty($user)) {
+            //check if password correct
             if (!password_verify($this->password,$user->password))
                 return false;
 			//get users id
-            unset($password);
+
 			$this->id = $user->id;
+            $this->username = $user->username;
+            $this->email = $user->email;
 			$this->isAdmin = $user->is_admin;
             $this->isBanned = $user->is_banned;
 			return true;
@@ -54,7 +68,6 @@ class User {
 		else
 			return false;
 	}
-
 
 
     public function checkUsernameAvailable() {
@@ -76,26 +89,59 @@ class User {
         }
     }
 
-	public function signup() {
+    public function checkEmailAvailable() {
+
         $connection = new DbConnect();
         $pdo = $connection->connect();
-		$query = "insert into users(username, password)
-				  values (:username, :password)";
+        $query = "select username from users
+                  where email = :email";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':email', $this->email);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_OBJ);
+
+        if ($user == false) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
+    public function signup() {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+		$query = "insert into users(username, email, password)
+				  values (:username, :email, :password)";
 		$stmt = $pdo->prepare($query);
 		$stmt->bindParam(':username', $this->username);
+        $stmt->bindParam(':email', $this->email);
 		$stmt->bindParam(':password', password_hash($this->password, PASSWORD_DEFAULT));
 		$stmt->execute();
 
 	}
   
   public function checkIfBanned() {
+
      $connection = new DbConnect();
      $pdo = $connection->connect();
-		 $query = "SELECT is_banned 
+      if (isset($this->email)){
+          $identify = $this->email;
+          $query = "SELECT is_banned
                 FROM users
-                WHERE username = :username";
+                WHERE email = :identify";
+      }
+      else {
+          $identify = $this->username;
+          $query = "SELECT is_banned
+                FROM users
+                WHERE username = :identify";
+
+      }
+
 		$stmt = $pdo->prepare($query);
-		$stmt->bindParam(':username', $this->username);
+		$stmt->bindParam(':identify', $identify);
 		$stmt->execute();
     $status = $stmt->fetch(PDO::FETCH_OBJ);
       if ($status == null)

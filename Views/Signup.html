@@ -16,6 +16,10 @@
                         <input required="required" class="form-control" type="text" id="username" name="username" value="<?php echo (isset($username) ? $username : '');?>">
                     </div>
                     <div class="form-group">
+                        <label for="email"> Email </label>
+                        <input required="required" class="form-control" type="text" id="email" name="email" value="<?php echo (isset($email) ? $email : '');?>">
+                    </div>
+                    <div class="form-group">
                         <label for="password"> Password </label>
                         <input pattern=".{6,}" required="required" title="6 characters minimum" " class=" form-control" type="password" id="password" name="password">
                     </div>
@@ -27,6 +31,7 @@
                         <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-user-plus"></i> Sign Up</button>
                     </div>
                 </form>
+                </div>
                 <?php if(isset($message)): ?>
                 <div class="alert alert-danger text-center margin-bottom-none margin-top-15" role="alert"><?php echo $message; ?></div>
                 <?php endif; ?>
