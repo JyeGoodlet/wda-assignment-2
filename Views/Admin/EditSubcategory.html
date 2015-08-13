@@ -1,0 +1,39 @@
+<?php include_once('AdminHeader.html'); ?>
+
+<div class="panel-heading">
+    <h4 class="panel-title"><i class="fa fa-plus-square"></i> Edit Subcategory</h4>
+</div>
+
+<div class="panel-body">
+    <?php if(isset($error)): ?>
+    <div class="alert alert-danger" role="alert"><i class="fa fa-times-circle"></i> <?php echo $error; ?></div>
+    <?php endif; ?>
+
+    <?php if(isset($success)): ?>
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+    <?php endif; ?>
+
+    <form method="post">
+        <div class="form-group">
+            <label for="SelectSubcategoryName">Select Subcategory</label>
+            <select id="SelectSubcategoryName" name="selectSubcategoryName" class="form-control" onchange="AdminEditSubcategorySelectBoxChange();">
+                <option value="-1">-</option>
+                <?php foreach($categories as $category) { ?>
+                    <?php foreach($category->subcategories as $subcategory) { ?>
+                        <option value="<?php echo $subcategory->id; ?>"><?php echo $subcategory->subcategory; ?></option>
+                    <?php } ?>
+                 <?php } ?>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="SubcategoryName">Edit Subcategory Name</label>
+            <input id="SubcategoryName" name="subcategoryName" class="form-control" placeholder="Subcategory Name"/>            
+        </div>
+
+        <button id="adminEditSubcategorySubmit" class="btn btn-primary pull-right"><i class="fa fa-pencil-square"></i> Edit Subcategory</button>
+        <div class="clearfix"></div>
+    </form>
+
+</div>
+
+<?php include_once('AdminFooter.html'); ?>

@@ -16,10 +16,10 @@
     <form method="post">
         <div class="form-group">
             <label for="CategoryName">Add New Category</label>
-            <input id="CategoryName" name="categoryName" class="form-control" placeholder="Category Name"/>            
+            <input id="CategoryName" name="categoryName" class="form-control" onkeyup="AdminAddCategoryTextBoxChange()" placeholder="Category Name"/>            
         </div>
 
-        <button class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add Category</button>
+        <button id="adminAddCategorySubmit" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add Category</button>
         <div class="clearfix"></div>
     </form>
 

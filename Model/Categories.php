@@ -87,6 +87,20 @@ class Categories {
         return $result;
     }
 
+    private function checkIfSubcategoryExistsBySubcategoryId($id, $subcategoryName) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "SELECT * from subcategories
+                    WHERE subcategory = :subcategory
+                    AND id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam('subcategory', $subcategoryName);
+        $stmt->bindParam('id', $id);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        return $result;
+    }
+
     public function AddCategory($categoryName) {
         if(!$this->checkIfCategoryExists($categoryName)) {
             $connection = new DbConnect();
@@ -138,6 +152,25 @@ class Categories {
         else {
             return null;
         }
+    }
+
+    public function EditSubcategory($id, $subcategoryName) {
+        if(!$this->checkIfSubcategoryExistsBySubcategoryId($id, $subcategoryName)) {
+            $connection = new DbConnect();
+            $pdo = $connection->connect();
+            $query = "UPDATE subcategories
+                        SET subcategory = :subcategory
+                        WHERE id = :id";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":subcategory", $subcategoryName);
+            $stmt->execute();
+            return $stmt->errorInfo();
+        }
+        else {
+            return null;
+        }
+
     }
 
 }

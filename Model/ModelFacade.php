@@ -322,6 +322,10 @@ class ModelFacade {
         return $categories->AddSubcategory($categoryId, $subcategoryName);       
     }
 
+    public static function AdminEditSubcategory($id, $subcategoryName) {
+        $categories = new Categories();
+        return $categories->EditSubcategory($id, $subcategoryName);
+    }
 
 
 }
