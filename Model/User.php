@@ -70,6 +70,7 @@ class User {
 	}
 
 
+
     public static function checkUsernameAvailable($username) {
 
         $connection = new DbConnect();
