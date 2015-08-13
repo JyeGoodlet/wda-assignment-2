@@ -110,7 +110,7 @@ class Categories {
             $pdo = $connection->connect();
             $query = "UPDATE categories
                         SET category = :category
-                        WHERE category_id = :id";
+                        WHERE id = :id";
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":id", $id);
             $stmt->bindParam(":category", $categoryName);
