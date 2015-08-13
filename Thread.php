@@ -31,9 +31,9 @@ function OnRequest()
 
 function threadGet() {
   //gets Post
-  $post = ModelFacade::getPost($_GET["id"]);
+  $thread = ModelFacade::getThread($_GET["id"]);
   //get Post Comments
-  $comments = ModelFacade::getPostComments($_GET["id"]);
+  $comments = ModelFacade::getThreadComments($_GET["id"]);
   include_once('/Views/Thread.html');
 
 }
@@ -42,7 +42,7 @@ function threadPost(){
 
     ModelFacade::kickIfBanned();
 
-  $post = ModelFacade::getPost($_GET["id"]);
+  $thread = ModelFacade::getThread($_GET["id"]);
   //get Post Comments
 
   //check if comment has text
@@ -61,7 +61,7 @@ function threadPost(){
 
 
 
-  $comments = ModelFacade::getPostComments($_GET["id"]);
+  $comments = ModelFacade::getThreadComments($_GET["id"]);
   include_once('/Views/Thread.html');
 }
 

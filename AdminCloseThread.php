@@ -44,7 +44,7 @@ function OnRequest() {
 
 function threadCloseGet() {
     //gets Post
-    $post = ModelFacade::getPost($_GET["id"]);
+    $thread = ModelFacade::getThread($_GET["id"]);
     //get Comment Count
 
 
@@ -54,7 +54,7 @@ function threadCloseGet() {
 
 function threadClosePost() {
     //gets Post
-    $post = ModelFacade::getPost($_GET["id"]);
+    $thread = ModelFacade::getThread($_GET["id"]);
     //get Comment Count
 
 

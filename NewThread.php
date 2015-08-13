@@ -46,7 +46,7 @@ function newThreadPost() {
         checkEmptyValues($title, $content);
     }
     else {
-        $postId = ModelFacade::insertPost($title, $content, $subcategory, ModelFacade::getLoggedInUser()->id);
+        $postId = ModelFacade::insertThread($title, $content, $subcategory, ModelFacade::getLoggedInUser()->id);
         header("location:Thread.php?id=" . $postId);
 
     }

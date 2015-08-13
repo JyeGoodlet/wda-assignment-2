@@ -1,9 +1,9 @@
 <?php include_once('Include/Header.html'); ?>
-<h4><a href="index.php">Home</a> <i class="fa fa-angle-double-right"></i> <a href="threads.php?id=<?php echo $post->subCatId; ?>"> <?php echo $post->subcategory ?></a></h4>
+<h4><a href="index.php">Home</a> <i class="fa fa-angle-double-right"></i> <a href="threads.php?id=<?php echo $thread->subCatId; ?>"> <?php echo $thread->subcategory ?></a></h4>
 <div class="panel panel-primary">
-    <div class="panel-heading"><h4 class="inline"><?php echo $post->title ?></h4>
-        <?php if(ModelFacade::checkLoggedIn() && ModelFacade::getLoggedInUser()->isAdmin && ModelFacade::checkThreadClosed($post->id) == false) { ?>
-        <a href="AdminCloseThread.php?id=<?php echo $post->id; ?>" type="button" class="btn btn-default pull-right">  Close Thread</a><?php } ?>
+    <div class="panel-heading"><h4 class="inline"><?php echo $thread->title ?></h4>
+        <?php if(ModelFacade::checkLoggedIn() && ModelFacade::getLoggedInUser()->isAdmin && ModelFacade::checkThreadClosed($thread->id) == false) { ?>
+        <a href="AdminCloseThread.php?id=<?php echo $thread->id; ?>" type="button" class="btn btn-default pull-right">  Close Thread</a><?php } ?>
         <!-- pending remove <a href="AddComment.php?threadId=<?php echo $_GET['id']; ?>" type="button" class="btn btn-default pull-right">Add Comment</a> -->
     </div>
         <div class="panel-body">
@@ -12,9 +12,9 @@
             <tr><th></th><th></th></tr>
         </thead>
         <tbody>
-        <td style="width:150px;text-align: center;background-color: #F1F1F1"><p><a href="UserProfile.php?id=<?php echo $post->user; ?>"><?php echo htmlspecialchars($post->username) ?></a></p> <br/>
-            <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($post->date); ?></p></td>
-        <td><?php echo nl2br(htmlspecialchars($post->content)) ?></td>
+        <td style="width:150px;text-align: center;background-color: #F1F1F1"><p><a href="UserProfile.php?id=<?php echo $thread->user; ?>"><?php echo htmlspecialchars($thread->username) ?></a></p> <br/>
+            <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($thread->date); ?></p></td>
+        <td><?php echo nl2br(htmlspecialchars($thread->content)) ?></td>
 
         <?php foreach($comments as $comment): ?>
 
@@ -29,7 +29,7 @@
         </tbody>
         </table>
 
-        <?php if(ModelFacade::checkLoggedIn() && ModelFacade::checkThreadClosed($post->id) == false ) :?>
+        <?php if(ModelFacade::checkLoggedIn() && ModelFacade::checkThreadClosed($thread->id) == false ) :?>
         <div style="width:600px" >
         <form method="post" >
             <div class="form-group">
@@ -42,7 +42,7 @@
             </div>
         </form>
         </div>
-        <?php elseif (ModelFacade::checkThreadClosed($post->id)): ?>
+        <?php elseif (ModelFacade::checkThreadClosed($thread->id)): ?>
             <div style="font-weight: bold;font-size: large;" class="alert alert-info" role="alert">Sorry, Thread has been Closed</div>
 
          <?php endif; ?>
