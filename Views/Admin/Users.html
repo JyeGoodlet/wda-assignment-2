@@ -9,7 +9,6 @@
     <table id="adminUserTable" class="table table-striped">
         <thead>
         <th>Name</th>
-        <th>Online</th>
         <th>Banned</th>
         <th>Admin</th>
 
@@ -18,7 +17,6 @@
             <?php foreach(ModelFacade::GetAllUsers() as $user) { ?>
             <tr>
                 <td><a href="/AdminUser.php?id=<?php echo $user['id'];?>"><?php echo $user['username']; ?></a></td>
-                <td></td>
                 <td><?php echo $user['is_banned'] ? 'Yes' : 'No'; ?></td>
                 <td><?php echo $user['is_admin'] ? 'Yes' : 'No'; ?></td>
 

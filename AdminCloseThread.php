@@ -24,8 +24,17 @@ function OnRequest() {
         threadCloseGet();
     }
     else {
-        //loginPost("", "");
+
+        //TODO: Check comment has data
+
+
+
+        //close Thread
+        ModelFacade::closeThread($_GET["id"], $_POST["CloseReason"], ModelFacade::getLoggedInUser()->id);
+
         threadClosePost();
+
+        header("location:Thread.php?id=" . $_GET["id"]);
     }
 
 

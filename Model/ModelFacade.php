@@ -18,8 +18,8 @@ class ModelFacade {
     }
 
 	public static function login($username, $password) {
-		//
-		$user = new User($username, $password);
+
+        $user = new User($username, $password);
 		
 		if ($user->attemptLogin()) {
 			session_start();
@@ -46,7 +46,6 @@ class ModelFacade {
         $users = new Users();
         $details = $users->GetUserDetails($userId);
         return $details ;
-        //TODO create getUserDetails in User.php
     }
 
 
@@ -97,7 +96,9 @@ class ModelFacade {
         }
 		if (!isset($_SESSION['user'])) {
 			header("Location: /Login.php");
+            exit();
 		}
+
 
 	}
 
@@ -107,6 +108,7 @@ class ModelFacade {
         // Check if admin - if not, boot them back to index
         if(!ModelFacade::getLoggedInUser()->isAdmin) {
             header("Location: /Index.php");
+            exit();
         }
 
 	}
@@ -125,6 +127,12 @@ class ModelFacade {
 		return $categories;
 
 	}
+
+    //get category name by its id
+    public static function getCategory($id) {
+        $categories = new Categories();
+		return $categories->getCategory($id);		
+    }
 
 	//get subcategory by its id
 	public static function getSubCategory($id) {
@@ -184,6 +192,8 @@ class ModelFacade {
         return true;
 
     }
+
+
 
     public static function deleteMsg($msgId) {
         $userId = ModelFacade::getLoggedInUser()->id;
@@ -252,6 +262,22 @@ class ModelFacade {
         $thread->updateLastActivity($threadId);
     }
 
+    public static function AdminDeleteComment($id) {
+        $posts = new Posts();
+        return $posts->AdminDeleteComment($id);
+    }
+
+    public static function closeThread($threadId, $closingMessage, $adminId) {
+        $posts = new Posts();
+        $posts->AdminCloseThread($threadId, $closingMessage, $adminId);
+
+    }
+
+    public static function checkThreadClosed($threadId) {
+        $post = new Posts();
+        return $post->checkThreadClosed($threadId);
+
+    }
 
 
 
@@ -267,6 +293,21 @@ class ModelFacade {
     public static function UpdateUser($user) {
         $users = new Users();
         return $users->UpdateUser($user);
+    }
+
+    public static function AdminAddBoard($categoryName) {
+        $categories = new Categories();
+        return $categories->AddCategory($categoryName);
+    }
+
+    public static function AdminEditBoard($id, $categoryName) {
+        $categories = new Categories();
+        return $categories->EditCategory($id, $categoryName);
+    }
+
+    public static function AdminAddSubcategory($categoryId, $subcategoryName) {
+        $categories = new Categories();
+        return $categories->AddSubcategory($categoryId, $subcategoryName);       
     }
 
 

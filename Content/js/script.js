@@ -14,15 +14,26 @@ $(document).ready(function () {
     });
 
     $(function () {
+        
         $('.accordion').accordion({
             collapsible: true
         });
-        $('.accordion2').accordion({
-            collapsible: true
-        });
+
+        AdminEditCategorySelectBoxChange();
+
     });
 
-
 });
+
+function AdminEditCategorySelectBoxChange() {
+    if ($('#SelectCategoryName').val() == -1) {
+        $('#CategoryName').val('');
+        $('#adminEditCategorySubmit').prop('disabled', true);
+    }
+    else {
+        $('#CategoryName').val($('#SelectCategoryName option:selected').text());
+        $('#adminEditCategorySubmit').prop('disabled', false);
+    }
+}
 
 

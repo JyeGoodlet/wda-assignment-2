@@ -1,4 +1,3 @@
-
 <?php include_once('Include/Header.html'); ?>
 <h4><a href="index.php">Home</a> <i class="fa fa-angle-double-right"></i> <a href="threads.php?id=<?php echo $_GET['id']; ?>"> <?php echo $subcategory->subcategory; ?></a></h4>
 <div class="panel panel-primary">
@@ -13,29 +12,33 @@
     <tr>
         <th style="width:700px">Post</th>
         <th  style="text-align: center;">Replies</th>
-        <th  style="text-align: center;width: 170px;">First Comment</th>
-        <th  style="text-align: center;width: 170px;">Last Comment</th>
+        <th  style="text-align: center;width: 170px;">First Post</th>
+        <th  style="text-align: center;width: 170px;">Last Post</th>
         <?php if(ModelFacade::checkLoggedIn() && ModelFacade::getLoggedInUser()->isAdmin) { ?>
         <th>Admin</th><?php } ?>
     </tr>
 
     </thead>
-    <?php foreach($threads as $thread):;?>
+    <?php foreach($posts as $post):;?>
     <tr>
-        <td><a href="Thread.php?id=<?php echo $thread->id; ?>"><?php echo $thread->title; ?></a>
+        <td><a <?php if($post->closed){ ?>style="color: #636363" <?php ;}?> href="Thread.php?id=<?php echo $post->id; ?>"><?php echo $post->title; ?> <?php if($post->closed) { echo "(Thread Closed)"; } ?></a>
 
         </td>
         <td style="font-size: 14px;text-align: center;">
-            <?php echo $thread->commentcount; ?>
+            <?php echo $post->commentcount; ?>
 
         </td>
-        <td style="font-size: 14px;text-align: center;"><a href="UserProfile.php?id=<?php echo $thread->posterId; ?>"><?php echo $thread->username?></a><br>
-            <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($thread->date)?></p>
+        <td style="font-size: 14px;text-align: center;"><a href="UserProfile.php?id=<?php echo $post->posterId; ?>"><?php echo $post->username?></a><br>
+            <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($post->date)?></p>
         </td>
-        <td style="font-size: 14px;text-align: center;"><a href="UserProfile.php?id=<?php echo $thread->lastUserId; ?>"><?php echo $thread->lastuser?></a><br>
-            <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($thread->lastdate)?></p></td>
+        <td style="font-size: 14px;text-align: center;"><a href="UserProfile.php?id=<?php echo $post->lastUserId; ?>"><?php echo $post->lastuser?></a><br>
+            <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($post->lastdate)?></p></td>
         <?php if(ModelFacade::checkLoggedIn() && ModelFacade::getLoggedInUser()->isAdmin) { ?>
-       <td> <p class="text-danger"> <a href="/AdminCloseThread.php?id=<?php echo $thread->id; ?>"><i class="fa fa-times-circle-o"></i> Close Thread</a></p> </td><?php } ?>
+        <?php if ($post->closed) { ?>
+        <td>Thread Closed</td>
+        <?php } else { ?>
+       <td> <p class="text-danger"> <a href="/AdminCloseThread.php?id=<?php echo $post->id; ?>"><i class="fa fa-times-circle-o"></i> Close Thread</a></p> </td>
+        <?php }} ?>
     </tr>
     <?php endforeach;?>
     </tbody>

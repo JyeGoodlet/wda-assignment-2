@@ -20,46 +20,42 @@ class User {
 	function __construct($username, $password) {
 		$connection = new DbConnect();
 		$pdo = $connection->connect();
-
+        $username = htmlspecialchars($username);
 		$this->username = $username;
+        $password = htmlspecialchars($password);
 		$this->password = $password;
 	}
 
 	//returns true if exists, false if doesnt
 	public function attemptLogin() {
-        $this->username = htmlspecialchars($this->username);
-        $this->password = htmlspecialchars($this->password);
         $connection = new DbConnect();
         $pdo = $connection->connect();
 		    $query = "SELECT * from users
 				  where username = :username
-				  and password =:password
           and is_banned = 0
 				  limit 1	";
 
-
 		$stmt = $pdo->prepare($query);
+
 		$stmt->bindParam(':username', $this->username);
-		$stmt->bindParam(':password', $this->password);
 		$stmt->execute();
 		$user = $stmt->fetch(PDO::FETCH_OBJ);
 
-		
-		if (!empty($user)) {
+        if (!empty($user)) {
+            if (!password_verify($this->password,$user->password))
+                return false;
 			//get users id
+            unset($password);
 			$this->id = $user->id;
 			$this->isAdmin = $user->is_admin;
-      $this->isBanned = $user->is_banned;			
+            $this->isBanned = $user->is_banned;
 			return true;
 		}
-		else {			
+		else
 			return false;
-		}
-
-  		
-	
-
 	}
+
+
 
     public function checkUsernameAvailable() {
 
@@ -86,8 +82,8 @@ class User {
 		$query = "insert into users(username, password)
 				  values (:username, :password)";
 		$stmt = $pdo->prepare($query);
-		$stmt->bindParam(':username', htmlspecialchars($this->username));
-		$stmt->bindParam(':password', htmlspecialchars($this->password));
+		$stmt->bindParam(':username', $this->username);
+		$stmt->bindParam(':password', password_hash($this->password, PASSWORD_DEFAULT));
 		$stmt->execute();
 
 	}
