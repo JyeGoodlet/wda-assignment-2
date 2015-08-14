@@ -43,7 +43,7 @@ class ThreadModel
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $query = "insert into posts (date, title, content, user, subcategory)
+        $query = "insert into threads (date, title, content, user, subcategory)
                     values (now(), :title, :content, :user, :subcategory)";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':title', $this->title);
