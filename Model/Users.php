@@ -48,7 +48,7 @@ class Users {
         $pdo = $connection->connect();
         $query = "SELECT users.id, users.username, users.is_admin, p.totalPosts, c.totalComments
                   FROM users
-                  LEFT JOIN ( SELECT COUNT(user) as totalPosts, user FROM posts GROUP BY user ) p
+                  LEFT JOIN ( SELECT COUNT(user) as totalPosts, user FROM threads GROUP BY user ) p
 	              ON users.id = p.user
                   LEFT JOIN ( SELECT COUNT(user) as totalComments, user FROM comments GROUP BY user ) c
 	              ON users.id = c.user
