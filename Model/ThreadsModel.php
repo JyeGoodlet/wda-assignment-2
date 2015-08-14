@@ -20,19 +20,19 @@ class ThreadsModel
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         //monster query - i might need to refactor this
         $query = "select threads.id, threads.date, threads.title, users.id as posterId, users.username, COALESCE(comment.commentcount,0) as commentcount,
-                    lastpost.id as lastUserId, lastpost.username as lastuser, lastpost.date as lastdate, threads.last_activity_timestamp, threads.closed from threads
+                    lastcomment.id as lastUserId, lastcomment.username as lastuser, lastcomment.date as lastdate, threads.last_activity_timestamp, threads.closed from threads
                     left join users on threads.user = users.id
                     /* get comment count */
                     left join (
-                    select post, count(*) as commentcount from comments
-                    group by post
-                    ) as comment on comment.post = threads.id
+                    select thread, count(*) as commentcount from comments
+                    group by thread
+                    ) as comment on comment.thread = threads.id
                     left join (
-          select users.id, post, username, date from comments
+          select users.id, thread, username, date from comments
                     join users on comments.user = users.id
-			 group by post
+			 group by thread
                     order by date desc
-                    ) as lastpost on lastpost.post = threads.id
+                    ) as lastcomment on lastcomment.thread = threads.id
                     where subcategory = :id
                     order by last_activity_timestamp desc";
         $stmt = $pdo->prepare($query);
@@ -68,9 +68,9 @@ class ThreadsModel
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $query = "select comments.id as commentId, comments.date, comments.comment, users.id as UserId, users.username from comments
                   join users on users.id = comments.user
-                  where post = :post";
+                  where thread = :thread";
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':post', $threadId);
+        $stmt->bindParam(':thread', $threadId);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
         $stmt->execute();
         $comments = $stmt->fetchAll();
@@ -85,10 +85,10 @@ class ThreadsModel
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $query = "insert into comments (date,  post, comment,  user)
-                    values (now(), :post, :comment, :user)";
+        $query = "insert into comments (date,  thread, comment,  user)
+                    values (now(), :thread, :comment, :user)";
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':post', $threadId);
+        $stmt->bindParam(':thread', $threadId);
         $stmt->bindParam(':comment', $comment);
         $stmt->bindParam(':user', $userId);
 
@@ -122,10 +122,10 @@ class ThreadsModel
         $pdo->beginTransaction();
 
         //insert comment
-        $query = "insert into comments (date,  post, comment,  user)
-                    values (now(), :post, :comment, :user)";
+        $query = "insert into comments (date,  thread, comment,  user)
+                    values (now(), :thread, :comment, :user)";
         $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':post', $id);
+        $stmt->bindParam(':thread', $id);
         $stmt->bindParam(':comment', $closingMessage);
         $stmt->bindParam(':user', $adminId);
         $stmt->execute();
@@ -164,8 +164,8 @@ class ThreadsModel
     }
 
 
-    /* when a user adds a comment to a post it will alter the posts last activity. that
-    way active posts stay at the top of the forum */
+    /* when a user adds a comment to a thread it will alter the threads last activity. that
+    way active threads stay at the top of the forum */
     public function updateLastActivity($threadId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
@@ -187,9 +187,9 @@ class ThreadsModel
                     left join users on threads.user = users.id
                     /* get comment count */
                     left join (
-                    select post, count(*) as commentcount from comments
-                    group by post
-                    ) as comment on comment.post = threads.id
+                    select thread, count(*) as commentcount from comments
+                    group by thread
+                    ) as comment on comment.thread = threads.id
 
                     LEFT JOIN (
           select subcat.subcategory,  subcat.id, cat.category
