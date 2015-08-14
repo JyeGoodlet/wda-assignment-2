@@ -19,20 +19,20 @@ class ThreadsModel
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         //monster query - i might need to refactor this
-        $query = "select posts.id, posts.date, posts.title, users.id as posterId, users.username, COALESCE(comment.commentcount,0) as commentcount,
-                    lastpost.id as lastUserId, lastpost.username as lastuser, lastpost.date as lastdate, posts.last_activity_timestamp, posts.closed from posts
-                    left join users on posts.user = users.id
+        $query = "select threads.id, threads.date, threads.title, users.id as posterId, users.username, COALESCE(comment.commentcount,0) as commentcount,
+                    lastpost.id as lastUserId, lastpost.username as lastuser, lastpost.date as lastdate, threads.last_activity_timestamp, threads.closed from threads
+                    left join users on threads.user = users.id
                     /* get comment count */
                     left join (
                     select post, count(*) as commentcount from comments
                     group by post
-                    ) as comment on comment.post = posts.id
+                    ) as comment on comment.post = threads.id
                     left join (
           select users.id, post, username, date from comments
                     join users on comments.user = users.id
 			 group by post
                     order by date desc
-                    ) as lastpost on lastpost.post = posts.id
+                    ) as lastpost on lastpost.post = threads.id
                     where subcategory = :id
                     order by last_activity_timestamp desc";
         $stmt = $pdo->prepare($query);
@@ -48,10 +48,10 @@ class ThreadsModel
 		$connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $query = "select posts.id, posts.date, posts.title, posts.subcategory as subCatId, posts.user, posts.content, users.username, subcategories.subcategory FROM posts
-                  left join users on users.id = posts.user
-                  left join subcategories on subcategories.id = posts.subcategory
-                    WHERE posts.id = :id
+        $query = "select threads.id, threads.date, threads.title, threads.subcategory as subCatId, threads.user, threads.content, users.username, subcategories.subcategory FROM threads
+                  left join users on users.id = threads.user
+                  left join subcategories on subcategories.id = threads.subcategory
+                    WHERE threads.id = :id
                     LIMIT 1";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':id', $id);
@@ -103,7 +103,7 @@ class ThreadsModel
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $query = "select closed from posts
+        $query = "select closed from threads
                   where id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':id', $threadId);
@@ -131,7 +131,7 @@ class ThreadsModel
         $stmt->execute();
 
         //update to closed
-        $query = "UPDATE posts
+        $query = "UPDATE threads
                   set closed  = true
                   where id=:id";
         $stmt = $pdo->prepare($query);
@@ -170,7 +170,7 @@ class ThreadsModel
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $query = "update posts
+        $query = "update threads
                   set last_activity_timestamp = now()
                   where id = :id";
         $stmt = $pdo->prepare($query);
@@ -182,20 +182,20 @@ class ThreadsModel
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $query = "select posts.subcategory, subcategories.subcategory as subcat, subcategories.category as cat, posts.id, posts.date, posts.title, users.id as posterId, users.username, COALESCE(comment.commentcount,0) as commentcount,
-                    posts.last_activity_timestamp, posts.closed from posts
-                    left join users on posts.user = users.id
+        $query = "select threads.subcategory, subcategories.subcategory as subcat, subcategories.category as cat, threads.id, threads.date, threads.title, users.id as posterId, users.username, COALESCE(comment.commentcount,0) as commentcount,
+                    threads.last_activity_timestamp, threads.closed from threads
+                    left join users on threads.user = users.id
                     /* get comment count */
                     left join (
                     select post, count(*) as commentcount from comments
                     group by post
-                    ) as comment on comment.post = posts.id
+                    ) as comment on comment.post = threads.id
 
                     LEFT JOIN (
           select subcat.subcategory,  subcat.id, cat.category
           FROM subcategories subcat, categories cat
           WHERE subcat.category_id = cat.id
-                    ) as subcategories on subcategories.id = posts.subcategory
+                    ) as subcategories on subcategories.id = threads.subcategory
                     WHERE users.id = :userId
                     order by last_activity_timestamp desc";
         $stmt = $pdo->prepare($query);
@@ -211,7 +211,7 @@ class ThreadsModel
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $query = "UPDATE posts SET user = 0
+        $query = "UPDATE threads SET user = 0
                     WHERE user = :userId";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':userId', $userId);
