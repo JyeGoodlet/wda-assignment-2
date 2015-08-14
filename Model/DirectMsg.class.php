@@ -13,7 +13,7 @@ class DirectMessages
     public static function getUsersInbox($userId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        $query = "SELECT dm.id, dm.sender, dm.reciever, dm.isRead, dm.timeSent, dm.subject, dm.message, u.username as sendername FROM direct_message AS dm, users AS u WHERE reciever = :receiverId  AND dm.isDeleted_receiver = 0 AND dm.sender = u.id ORDER BY dm.timeSent DESC";
+        $query = "SELECT dm.id, dm.sender, dm.receiver, dm.isRead, dm.timeSent, dm.subject, dm.message, u.username as sendername FROM direct_message AS dm, users AS u WHERE receiver = :receiverId  AND dm.isDeleted_receiver = 0 AND dm.sender = u.id ORDER BY dm.timeSent DESC";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':receiverId', $userId);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
@@ -25,7 +25,7 @@ class DirectMessages
     public static function getUserSentbox($senderId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        $query = "SELECT dm.id, dm.sender, dm.reciever, dm.isRead, dm.timeSent, dm.subject, dm.message, u.username as receiverName FROM direct_message AS dm, users AS u WHERE sender = :senderId  AND dm.isDeleted_sender =0 AND dm.reciever = u.id ORDER BY dm.timeSent DESC";
+        $query = "SELECT dm.id, dm.sender, dm.receiver, dm.isRead, dm.timeSent, dm.subject, dm.message, u.username as receiverName FROM direct_message AS dm, users AS u WHERE sender = :senderId  AND dm.isDeleted_sender =0 AND dm.receiver = u.id ORDER BY dm.timeSent DESC";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':senderId', $senderId);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
@@ -38,7 +38,7 @@ class DirectMessages
     public static function getUsersUnreadCount($userId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        $query = "SELECT count(id) AS unread FROM direct_message WHERE reciever = :id AND isRead = 0 AND isDeleted_receiver = 0 GROUP BY isRead";
+        $query = "SELECT count(id) AS unread FROM direct_message WHERE receiver = :id AND isRead = 0 AND isDeleted_receiver = 0 GROUP BY isRead";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':id', $userId);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
@@ -53,7 +53,7 @@ class DirectMessages
     public static function getDirectMessage($msgId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        $query = "SELECT dm.id, dm.sender, dm.reciever, dm.isRead, dm.timeSent, dm.subject, dm.message, u.username as sendername FROM direct_message AS dm, users AS u WHERE dm.id = :id AND dm.sender = u.id LIMIT 1";
+        $query = "SELECT dm.id, dm.sender, dm.receiver, dm.isRead, dm.timeSent, dm.subject, dm.message, u.username as sendername FROM direct_message AS dm, users AS u WHERE dm.id = :id AND dm.sender = u.id LIMIT 1";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':id', $msgId);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
@@ -65,7 +65,7 @@ class DirectMessages
     public static function createMsg($receiver, $sender, $subject, $message) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        $query = "INSERT INTO direct_message (timeSent, sender,reciever,subject,message)"
+        $query = "INSERT INTO direct_message (timeSent, sender,receiver,subject,message)"
                     ."VALUES ( now() , :sender, :receiver, :subject, :message)";
 
         $stmt = $pdo->prepare($query);
@@ -82,7 +82,7 @@ class DirectMessages
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        $ownerQuery = "SELECT id, sender, reciever, isDeleted_sender, isDeleted_receiver FROM direct_message WHERE id = :msgId";
+        $ownerQuery = "SELECT id, sender, receiver, isDeleted_sender, isDeleted_receiver FROM direct_message WHERE id = :msgId";
         $stmt = $pdo->prepare($ownerQuery);
         $stmt->bindParam(':msgId', $msgId);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
@@ -90,7 +90,7 @@ class DirectMessages
         $ownerCheck = $stmt->fetch();
         if ($ownerCheck->sender == $userId)
                 DirectMessages::deleteMsgSender($msgId);
-        if ($ownerCheck->reciever == $userId)
+        if ($ownerCheck->receiver == $userId)
                 DirectMessages::deleteMsgReceiver($msgId);
         DirectMessages::removeMsgCheck($ownerCheck->id, $ownerCheck->isDeleted_sender, $ownerCheck->isDeleted_receiver);
         return $stmt->errorInfo();
@@ -101,8 +101,8 @@ class DirectMessages
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        $ownerQuery = "SELECT id, sender, reciever, isDeleted_sender, isDeleted_receiver FROM direct_message
-                      WHERE sender = :userId OR reciever = :userId";
+        $ownerQuery = "SELECT id, sender, receiver, isDeleted_sender, isDeleted_receiver FROM direct_message
+                      WHERE sender = :userId OR receiver = :userId";
         $stmt = $pdo->prepare($ownerQuery);
         $stmt->bindParam(':userId', $userId);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
@@ -112,7 +112,7 @@ class DirectMessages
 
             if ($eachMsg->sender == $userId)
                 DirectMessages::removeSender($eachMsg->id);
-            if ($eachMsg->reciever == $userId)
+            if ($eachMsg->receiver == $userId)
                 DirectMessages::removeReceiver($eachMsg->id);
             DirectMessages::removeMsgCheck($eachMsg->id, $eachMsg->isDeleted_sender, $eachMsg->isDeleted_receiver);
         }
@@ -154,7 +154,7 @@ class DirectMessages
     private static function removeReceiver($msgId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        $query = "UPDATE direct_message SET reciever = 0, isDeleted_receiver = 1  WHERE id = :msgId";
+        $query = "UPDATE direct_message SET receiver = 0, isDeleted_receiver = 1  WHERE id = :msgId";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':msgId', $msgId);
         $stmt->execute();

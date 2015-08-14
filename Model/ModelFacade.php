@@ -188,7 +188,7 @@ class ModelFacade {
     public static function getMsg($msgId) {
         $userId = ModelFacade::getLoggedInUser()->id;
         $msg = DirectMessages::getDirectMessage($msgId);
-        if (($msg->reciever != $userId)&&($msg->sender != $userId))
+        if (($msg->receiver != $userId)&&($msg->sender != $userId))
             header("Location: /DirectMsgInbox.php");
         return $msg;
 
