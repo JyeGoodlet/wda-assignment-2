@@ -25,10 +25,21 @@ function OnRequest()
 }
 
 function DeleteConfirmGet() {
-    include_once("/Views/DeleteConfirm.html");
+    include_once("/Views/DeleteUser.html");
 }
 
-function deleteConfirmPost() {}
+function deleteConfirmPost() {
+
+    $currentUserId = ModelFacade::getLoggedInUser()->id;
+    if ((isset($_POST['deleteAccount'])) && ($_POST['deleteAccount'] == "confirm")) {
+            ModelFacade::DeleteUser($currentUserId);
+            ModelFacade::logout();
+            header( "location: /Signup.php?delAccount=success");
+        }
+    else
+        header( "location: /Index.php");
+
+}
 
 
 

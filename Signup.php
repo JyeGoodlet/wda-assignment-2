@@ -18,6 +18,8 @@ function OnRequest() {
 
 
 function SignupGet() {
+    if (isset($_GET['delAccount']))
+        $message = "Your Account has been successfully deleted";
     include_once("/Views/Signup.html");
 
 }

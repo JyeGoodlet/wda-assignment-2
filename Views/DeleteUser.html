@@ -1,0 +1,32 @@
+<?php $pageTitle = 'Login';
+include_once('Include/Header.html'); ?>
+
+<div class="row">
+
+    <div class="col-lg-4 col-lg-offset-4">
+
+        <div class="panel panel-primary">
+
+            <div class="panel-heading " style="background-color: red">
+                <h4 class="text-center">
+                    Are You Sure You Want To Delete Your
+                    <?php echo ModelFacade::GetAppTitle() ?> Account</h4>
+                <h4 class="text-center">
+                    ! This Cannot Be Undone !</h4>
+            </div>
+
+            <div class="panel-body" id="confirm">
+                <form action="/DeleteUser.php" method="post">
+                    <input class="btn-lg btn-danger pull-left" type="submit" name="deleteAccount" value="confirm">
+                    <input class="btn-lg btn-primary pull-right" type="submit" name="deleteAccount" value="cancel">
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<?php include_once('Include/Footer.html'); ?>

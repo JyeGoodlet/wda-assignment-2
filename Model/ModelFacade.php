@@ -263,9 +263,15 @@ class ModelFacade {
 	}
 
     public static function DeleteUser($id) {
-        $users = new Users();
-        return $users->DeleteUser($id);
+        $usersModel = new Users();
+        $threadsModel = new ThreadsModel();
+        DirectMessages::removeUserMsgs($id);
+        $threadsModel->deleteAllUsersComments($id);
+        $threadsModel->deleteAllUsersThreads($id);
+        return $usersModel->DeleteUser($id);
     }
+
+
 
     public static function addComment($threadId, $comment, $userId) {
 
