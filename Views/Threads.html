@@ -21,7 +21,7 @@
     </thead>
     <?php foreach($threads as $thread):;?>
     <tr>
-        <td><a <?php if($thread->closed){ ?>style="color: #636363" <?php ;}?> href="Thread.php?id=<?php echo $thread->id; ?>"><?php echo $thread->title; ?> <?php if($thread->closed) { echo "(Thread Closed)"; } ?></a>
+        <td><a <?php if($thread->closed){ ?>style="color: #636363" <?php ;}?> href="Thread.php?id=<?php echo $thread->id; ?>"><?php echo htmlspecialchars($thread->title); ?> <?php if($thread->closed) { echo "(Thread Closed)"; } ?></a>
 
         </td>
         <td style="font-size: 14px;text-align: center;">
