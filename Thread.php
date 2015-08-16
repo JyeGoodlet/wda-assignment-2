@@ -32,10 +32,15 @@ function OnRequest()
 function threadGet() {
   //gets Post
   $thread = ModelFacade::getThread($_GET["id"]);
-  //get Post Comments
-  $comments = ModelFacade::getThreadComments($_GET["id"]);
-  include_once('/Views/Thread.html');
 
+  if ($thread == null) {
+    $message = "Sorry a thread with that id does not exist";
+    include_once('/Views/ErrorPage.html');
+  } else {
+    //get Post Comments
+    $comments = ModelFacade::getThreadComments($_GET["id"]);
+    include_once('/Views/Thread.html');
+  }
 }
 
 function threadPost(){

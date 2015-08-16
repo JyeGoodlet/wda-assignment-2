@@ -46,10 +46,13 @@ function threadCloseGet() {
     //gets Post
     $thread = ModelFacade::getThread($_GET["id"]);
     //get Comment Count
-
-
-    include_once('/Views/AdminCloseThread.html');
-
+    if ($thread == null) {
+        $message =  "Sorry but a thread with that id does not exist";
+        include_once('/Views/ErrorPage.html');
+    }
+    else {
+        include_once('/Views/AdminCloseThread.html');
+    }
 }
 
 function threadClosePost() {

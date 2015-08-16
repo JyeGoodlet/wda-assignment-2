@@ -20,9 +20,17 @@ function OnRequest() {
     //get subcategory
     $subcategory = ModelFacade::getSubCategory($_GET["id"]);
 
-    //get Posts
-    $threads = ModelFacade::getThreads($subcategory->id);
-    include_once('/Views/Threads.html');
+
+
+    if ($subcategory == null) {
+        $message =  "Sorry but a thread with that id does not exist";
+        include_once('/Views/ErrorPage.html');
+    }else {
+        //get Posts
+        $threads = ModelFacade::getThreads($subcategory->id);
+        include_once('/Views/Threads.html');
+    }
+
 }
 
 

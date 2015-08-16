@@ -31,8 +31,14 @@ function OnRequest() {
 }
 
 function newThreadGet() {
-    include_once('/Views/NewThread.html');
-
+    $subcategory = ModelFacade::getSubCategory($_GET["subcategory"]);
+    if ($subcategory == null) {
+        $message = "Sorry Subcategory with that id does not exist";
+        include_once('/Views/ErrorPage.html');
+    }
+    else {
+        include_once('/Views/NewThread.html');
+    }
 }
 
 function newThreadPost() {
