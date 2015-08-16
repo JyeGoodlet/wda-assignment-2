@@ -164,6 +164,12 @@ class ModelFacade {
 		return $threads;
 	}
 
+    public static function SearchThreads($search) {
+        $threads = new ThreadsModel();
+        $result = $threads->searchThreads($search);
+        return $result;
+    }
+
     //Update Thread Category state offline/online
     public static function UpdateBoardState($categoryId, $isOffline) {
         $threads = new ThreadsModel();

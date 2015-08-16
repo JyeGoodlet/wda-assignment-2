@@ -14,6 +14,37 @@ class ThreadsModel
     public $threads;
 
 
+    public function searchThreads($search) {
+        $search = "%" . $search . "%";
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        //monster query - i might need to refactor this
+        $query = "select threads.id, threads.date, threads.title, users.id as posterId, users.username, COALESCE(comment.commentcount,0) as commentcount,
+                    lastcomment.id as lastUserId, lastcomment.username as lastuser, lastcomment.date as lastdate, threads.last_activity_timestamp, threads.closed from threads
+                    left join users on threads.user = users.id
+                    /* get comment count */
+                    left join (
+                    select thread, count(*) as commentcount from comments
+                    group by thread
+                    ) as comment on comment.thread = threads.id
+                    left join (
+          select users.id, thread, username, date from comments
+                    join users on comments.user = users.id
+			 group by thread
+                    order by date desc
+                    ) as lastcomment on lastcomment.thread = threads.id
+                    where threads.title like :searchTitle
+                    order by last_activity_timestamp desc";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':searchTitle', $search);
+        $stmt->setFetchMode(PDO::FETCH_OBJ);
+        $stmt->execute();
+        $threads = $stmt->fetchAll();
+        return $threads;
+
+    }
+
     public function getThreads($subCategoryId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();

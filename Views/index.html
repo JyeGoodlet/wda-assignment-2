@@ -6,7 +6,8 @@ include_once('Include/Header.html');
 <div class="container">
 
     <?php if (isset($_SESSION['newsignup'])): ?> <div class="alert alert-success" role="alert">Thank you for signing up</div><?php unset($_SESSION["newsignup"]);?> <?php endif;?>
-    <h4><a href="index.php">Home</a></h4>
+    <form action="search.php" class="pull-right"><input required="required" type="search" id="search" name="search" placeholder="Search Threads" /> <button>Search Threads</button> </form>
+    <h4 ><a href="index.php">Home</a></h4>
     <div id="boards" class="row">
         <?php foreach($categories as $category): if($category->offline == 1) continue; ?>
         <div class="col-lg-6 ">
