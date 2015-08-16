@@ -162,8 +162,21 @@ class ModelFacade {
 		$threads = new ThreadsModel();
 		$threads = $threads->getThreads($subcategoryId);
 		return $threads;
-
 	}
+
+    //Update Thread Category state offline/online
+    public static function UpdateBoardState($categoryId, $isOffline) {
+        $threads = new ThreadsModel();
+        return $threads->UpdateBoardState($categoryId, $isOffline);
+    }
+
+    //Update Thread state offline/online
+    public static function UpdateSubcategoryState($subcategoryId, $isOffline) {
+        $threads = new ThreadsModel();
+        return $threads->UpdateSubcategoryState($subcategoryId, $isOffline);
+    }
+
+
   
     public static function getUsersInbox($userId) {
         $inbox = DirectMessages::getUsersInbox($userId);

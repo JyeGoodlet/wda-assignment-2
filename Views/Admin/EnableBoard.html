@@ -1,0 +1,37 @@
+<?php include_once('AdminHeader.html'); ?>
+
+<div class="panel-heading">
+    <h4 class="panel-title"><i class="fa fa-toggle-on"></i> Switch Categories On/Off</h4>
+</div>
+
+<div class="panel-body">
+    <?php if(isset($error)): ?>
+    <div class="alert alert-danger" role="alert"><i class="fa fa-times-circle"></i> <?php echo $error; ?></div>
+    <?php endif; ?>
+
+    <?php if(isset($success)): ?>
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+    <?php endif; ?>
+    <form method="post">
+        <table id="adminCategoriesTable" class="table table-striped">
+            <thead>
+            <th>Category Name</th>
+            <th>Offline</th>
+            </thead>
+            <tbody>
+                <?php foreach($categories as $category) { ?>
+                <tr>
+                    <td><?php echo $category->category; ?></td>
+                    <td><input type="checkbox" name="boardState[]" value="<?php echo $category->id; ?>" <?php echo $category->offline ? 'checked' : '';?>></td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-toggle-on"></i> Update Selected Boards</button>
+
+    </form>
+
+</div>
+
+<?php include_once('AdminFooter.html'); ?>

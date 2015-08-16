@@ -19,9 +19,12 @@
             <select id="SelectSubcategoryName" name="selectSubcategoryName" class="form-control" onchange="AdminEditSubcategorySelectBoxChange();">
                 <option value="-1">-</option>
                 <?php foreach($categories as $category) { ?>
+                    <optgroup label="<?php echo $category->category; ?>">
                     <?php foreach($category->subcategories as $subcategory) { ?>
                         <option value="<?php echo $subcategory->id; ?>"><?php echo $subcategory->subcategory; ?></option>
                     <?php } ?>
+                    </optgroup>    
+
                  <?php } ?>
             </select>
         </div>

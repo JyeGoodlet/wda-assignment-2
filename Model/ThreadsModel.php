@@ -230,4 +230,30 @@ class ThreadsModel
         $stmt->execute();
     }
 
+    public function UpdateBoardState($categoryId, $isOffline) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "UPDATE categories
+                    SET offline = :offline
+                    WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":offline", $isOffline);
+        $stmt->bindParam(":id", $categoryId);
+        $stmt->execute();
+        return $stmt->errorInfo();
+    }
+
+    public function UpdateSubcategoryState($subcategoryId, $isOffline) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "UPDATE subcategories
+                    SET offline = :offline
+                    WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":offline", $isOffline);
+        $stmt->bindParam(":id", $subcategoryId);
+        $stmt->execute();
+        return $stmt->errorInfo();
+    }
+
 }
