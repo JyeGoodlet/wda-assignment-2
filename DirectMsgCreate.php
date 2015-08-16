@@ -13,7 +13,7 @@ OnRequest();
 
 function OnRequest() {
 
-    ModelFacade::kickIfBanned();
+    ModelFacade::kickIfBannedOrDeleted();
 
 
     $requestMethod = $_SERVER['REQUEST_METHOD'];

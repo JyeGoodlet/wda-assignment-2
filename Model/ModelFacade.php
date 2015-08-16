@@ -29,6 +29,7 @@ class ModelFacade {
 
 		if ($user->attemptLogin()) {
 			session_start();
+
 			$_SESSION["user"] = $user;
 
 		}
@@ -85,13 +86,14 @@ class ModelFacade {
           $userObj = new User('', '', $identify);
       else
         $userObj = new User($identify , '');
-    return $userObj->checkIfBanned();
+    return $userObj->checkIfBannedOrDeleted();
   }
 
-    public static function kickIfBanned() {
+    public static function kickIfBannedOrDeleted() {
         if (ModelFacade::checkLoggedIn()) {
             $userObj = ModelFacade::getLoggedInUser();
-            if ($userObj->checkIfBanned()) {
+            $test = $userObj->checkIfBannedOrDeleted();
+            if ($test) {
                 ModelFacade::logout();
                 header("Location: /Login.php");
             }

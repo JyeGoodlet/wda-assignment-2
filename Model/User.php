@@ -136,7 +136,7 @@ class User {
 
     }
 
-    public function checkIfBanned() {
+    public function checkIfBannedOrDeleted() {
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
@@ -159,7 +159,7 @@ class User {
         $stmt->execute();
         $status = $stmt->fetch(PDO::FETCH_OBJ);
         if ($status == null)
-            return false;
+            return true;
         if($status->is_banned == 0)
             return false;
         else

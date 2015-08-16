@@ -10,7 +10,7 @@ OnRequest();
 
 function OnRequest() {
 
-    ModelFacade::kickIfBanned();
+    ModelFacade::kickIfBannedOrDeleted();
     include_once('/Views/Admin/Index.html');
 
 }
