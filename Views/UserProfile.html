@@ -1,50 +1,49 @@
 <!--   -_-_- AUTHOR: jAsOnD -_-_- -->
-<?php include_once('Include/Header.html'); ?>
+<?php $pageTitle = $userDetails->username . "'s profile"; 
+    include_once('Include/Header.html'); ?>
 
 <div class="panel panel-primary">
-    <div class="panel-heading"><h4 class="inline"><?php echo $userDetails->username ?>'s Profile</h4>
-        <?php
-        if ($userDetails->id !== $currentUser->id )
-        ?>
+    <div class="panel-heading">
+        <h4 class="inline"><?php echo $userDetails->username ?>'s Profile</h4>
+    </div>
+    
+    <div class="panel-body">
+        <div class="col-lg-6 col-lg-offset-3">
+            <table id="UserProfile" class="table table-bordered text-center">
+                <tr>
+                    <td class="active">User Name</td>
+                    <td><?php echo $userDetails->username ?></td>
+                </tr>
+                <tr>
+                    <td class="active">User Type</td>
+                    <td><?php echo ($userDetails->is_admin)? "Admin":"Standard"; ?></td>
+                </tr>
+                <tr>
+                    <td class="active">Total Threads</td>
+                    <td><?php echo $userDetails->totalPosts ?></td>
+                </tr>
+                <tr>
+                    <td class="active">Total Comments</td>
+                    <td><?php echo $userDetails->totalComments ?></td>
+                </tr>
+            </table>
+
+            <div id="profile_buttons">
+                <?php if ($userDetails->id === $currentUser->id ) { ?>
+                    <a href="/DeleteUser.php" type="button" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i> Delete User Account</a>
+                    <a href="#" type="button" class="btn btn-primary pull-right"><i class="fa fa-unlock-alt fa-fw"></i> Change Password</a>
+                <?php } else { ?>
+                    <a href="/DirectMsgCreate.php?sendTo=<'.$userDetails->id.'" type="button" class="btn btn-primary pull-right"><i class="fa fa-paper-plane fa-fw"></i> Message User</a>
+                <?php } ?>
+            </div>
+
+        </div>        
+        
     </div>
 
-    <div class="panel-body text-center">
-        <table id="UserProfile" style="width:500px; margin: 0 300px" class="table">
-            <thead>
-            <tr><th></th><th></th></tr>
-            </thead>
-            <tbody>
-            <tr class="table-bordered">
-            <td style="width:250px;text-align: center;background-color: #F1F1F1"><p>User Name</p>
-            <td style="width:250px;text-align: center;background-color: #F9F9F9"><?php echo $userDetails->username ?></td>              
-            <tr class="table-bordered">
-                <td style="width:250px;text-align: center;background-color: #F1F1F1"><p>User Type</p>
-                <td style="width:250px;text-align: center;background-color: #F9F9F9"><?php echo ($userDetails->is_admin)? "Admin":"Standard"; ?></td>
-            </tr>
-            <tr class="table-bordered">
-                <td style="width:250px;text-align: center;background-color: #F1F1F1"><p>Total Threads</p>
-                <td style="width:250px;text-align: center;background-color: #F9F9F9"><?php echo $userDetails->totalPosts ?></td>
-            </tr>
-            <tr class="table-bordered">
-                <td style="width:250px;text-align: center;background-color: #F1F1F1"><p>Total Comments</p>
-                <td style="width:250px;text-align: center;background-color: #F9F9F9"><?php echo $userDetails->totalComments ?></td>
-            </tr>
-            </tbody>
-        </table>
-        <br>
+</div>
 
-        <!-- TODO move styling to external stylesheet -->
-        <div id="profile_buttons" style="margin:0 25% 50px 25%; width: 50%">
-        <?php
-        if ($userDetails->id === $currentUser->id ) {
-            echo '<a href="/DeleteUser.php" type="button" class="btn btn-danger pull-right"> DELETE ACCOUNT</a>';
-            echo '<a href="#" type="button" class="btn btn-warning pull-left"> CHANGE EMAIL </a>';
-        }
-            else
-            echo '<a href="/DirectMsgCreate.php?sendTo=<'.$userDetails->id.'" type="button" class="btn btn-primary"> Message User</a>';
-            ?>
-        </div>
-    </div>
+<div class="panel panel-primary">
 <div class="panel-heading">
     <h4 class="inline text-center"> <?php echo $userDetails->username ?>'s Threads </h4>
 </div>
@@ -63,6 +62,7 @@
             </tr>
 
             </thead>
+            <tbody>
             <?php foreach($userThreads as $thread):;?>
             <tr>
 
@@ -71,7 +71,7 @@
 
                 </td>
 
-                <td><a <?php if($thread->closed){ ?>style="color: #636363" <?php ;}?> href="Thread.php?id=<?php echo $thread->id; ?>"><?php echo $thread->title; ?> <?php if($thread->closed) { echo "(Thread Closed)"; } ?></a>
+                <td><a <?php if($thread->closed){ ?>style="color: #636363" <?php ;}?> href="Thread.php?id=<?php echo $thread->id; ?>"><?php echo htmlspecialchars($thread->title); ?> <?php if($thread->closed) { echo "(Thread Closed)"; } ?></a>
 
                 </td>
                 <td style="font-size: 14px;text-align: center;">
@@ -94,4 +94,5 @@
         </table>
     </div>
 </div>
+
 <?php include_once('Include/Footer.html'); ?>
