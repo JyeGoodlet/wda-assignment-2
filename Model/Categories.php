@@ -173,6 +173,35 @@ class Categories {
 
     }
 
+    public function GetIsSubCategoryDisabled($subcategoryId) {
+        //Check if subcategory disabled:
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "SELECT category_id, offline from subcategories
+                    WHERE id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam('id', $subcategoryId);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        if($result) {
+            if($result['offline'] == true) return true;
+            else {
+                //Subcategory not disabled - check parent category enabled or not
+                $query = "SELECT offline from categories
+                    WHERE id = :id";
+                $stmt = $pdo->prepare($query);
+                $stmt->bindParam('id', $result['category_id']);
+                $stmt->execute();
+                $result = $stmt->fetch();
+                return $result['offline'];
+            }
+        }
+        else {
+            return null;
+        }
+
+    }
+
 }
 
 

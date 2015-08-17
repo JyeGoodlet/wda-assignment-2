@@ -21,7 +21,6 @@ function OnRequest()
     threadGet();
   }
   else {
-    //loginPost("", "");
     threadPost();
   }
 
@@ -37,9 +36,16 @@ function threadGet() {
     $message = "Sorry a thread with that id does not exist";
     include_once('/Views/ErrorPage.html');
   } else {
-    //get Post Comments
-    $comments = ModelFacade::getThreadComments($_GET["id"]);
-    include_once('/Views/Thread.html');
+      //Check if subcategory or parent category is disabled
+      if(ModelFacade::checkSubcategoryDisabled($thread->subCatId)) {
+          $message = "Sorry, but this thread is not enabled for viewing";
+          include_once('/Views/ErrorPage.html');
+      }
+      else {
+          //get Post Comments
+          $comments = ModelFacade::getThreadComments($_GET["id"]);
+          include_once('/Views/Thread.html');
+      }
   }
 }
 

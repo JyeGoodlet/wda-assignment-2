@@ -318,8 +318,10 @@ class ModelFacade {
 
     }
 
-
-
+    public static function checkSubcategoryDisabled($subcategoryId) {
+        $categories = new Categories();
+        return $categories->GetIsSubCategoryDisabled($subcategoryId);
+    }
 
 	public static function friendlyDate($date) {
 		if ($date == null) {

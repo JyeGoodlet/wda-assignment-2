@@ -20,20 +20,23 @@ function OnRequest() {
     //get subcategory
     $subcategory = ModelFacade::getSubCategory($_GET["id"]);
 
-
-
     if ($subcategory == null) {
         $message =  "Sorry but a thread with that id does not exist";
         include_once('/Views/ErrorPage.html');
     }else {
-        //get Posts
-        $threads = ModelFacade::getThreads($subcategory->id);
-        include_once('/Views/Threads.html');
+        //Check if subcategory or parent category is disabled
+        if(ModelFacade::checkSubcategoryDisabled($subcategory->id)) {          
+
+            $message = "Sorry, but this thread is not enabled for viewing";
+            include_once('/Views/ErrorPage.html');
+        }
+        else {
+            //get Posts
+            $threads = ModelFacade::getThreads($subcategory->id);
+            include_once('/Views/Threads.html');
+        }
     }
 
 }
-
-
-
 
 ?>
