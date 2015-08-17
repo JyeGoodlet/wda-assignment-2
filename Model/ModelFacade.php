@@ -82,10 +82,12 @@ class ModelFacade {
 	}
   
   public static function checkIfBanned($identify) {
-      if (strpos($identify,"@" !== false))
+      if (strpos($identify,"@" !== false)){
           $userObj = new User('', '', $identify);
-      else
-        $userObj = new User($identify , '');
+      }
+      else {
+          $userObj = new User($identify , '');
+      }
     return $userObj->checkIfBannedOrDeleted();
   }
 
@@ -112,6 +114,16 @@ class ModelFacade {
 
 
 	}
+
+    public static function confirmPassword($userId, $password) {
+        $users = new Users();
+        return $users->testUserPassword($userId, $password);
+    }
+
+    public static function updatePassword($userId, $password) {
+        $users = new Users();
+        return $users->updatePassword($userId, $password);
+    }
 
     public static function redirectUnauthorisedNotAdmin() {
         ModelFacade::redirectUnauthorised();

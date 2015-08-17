@@ -6,15 +6,15 @@ class User {
 	//user id
 	public $id;
 	//username
-	public $username;
+	public $username = null;
     //users email
-    public $email;
+    public $email = null;
 	//users password
 	public $password;
 	//bool isAdmin
 	public $isAdmin;
-  //bool isBanned
-  public $isBanned;
+    //bool isBanned
+    public $isBanned;
 
 	function __construct($username, $password, $email = '') {
         $username = htmlspecialchars($username);
@@ -121,7 +121,7 @@ class User {
 		$stmt->bindParam(':password', password_hash($this->password, PASSWORD_DEFAULT));
 		$stmt->execute();
 
-	}
+	}    
 
     public function deleteUser() {
         $connection = new DbConnect();
@@ -140,6 +140,7 @@ class User {
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
+
         if (isset($this->email)){
             $identify = $this->email;
             $query = "SELECT is_banned

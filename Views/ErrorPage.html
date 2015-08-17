@@ -2,12 +2,15 @@
 <?php $pageTitle = "Error"; 
     include_once('Include/Header.html'); ?>
 
-<div class="panel panel-primary">
-    <div class="panel-heading"><h4 class="inline"> Error</h4></div>
-    <div class="panel-body">
-        <i class="fa fa-exclamation-triangle"></i> <?php if(isset($message)) {echo $message;} ?>
-
+<div class="col-lg-6 col-lg-offset-3">
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h4 class="inline"><i class="fa fa-exclamation-circle"></i> Could not process your request</h4></div>
+        <div class="panel-body">
+            <div class="alert alert-danger text-center margin-bottom-none">
+                <?php if(isset($message)) {echo $message;} ?>
+            </div>
+            </div>
+        </div>
     </div>
-</div>
 
-<?php include_once('Include/Footer.html'); ?>
+    <?php include_once('Include/Footer.html'); ?>
