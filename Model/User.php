@@ -159,7 +159,7 @@ class User {
         $stmt->execute();
         $status = $stmt->fetch(PDO::FETCH_OBJ);
         if ($status == null)
-            return true;
+            return false;
         if($status->is_banned == 0)
             return false;
         else
