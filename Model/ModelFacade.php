@@ -82,7 +82,7 @@ class ModelFacade {
 	}
   
   public static function checkIfBanned($identify) {
-      if (strpos($identify,"@" !== false))
+      if (filter_var($identify, FILTER_VALIDATE_EMAIL))
           $userObj = new User('', '', $identify);
       else
         $userObj = new User($identify , '');
