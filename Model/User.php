@@ -140,7 +140,7 @@ class User {
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        if (isset($this->email)){
+        if ($this->email !== ''){
             $identify = $this->email;
             $query = "SELECT is_banned
                 FROM users
