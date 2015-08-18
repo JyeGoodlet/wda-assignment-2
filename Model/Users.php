@@ -85,6 +85,44 @@ class Users {
         $stmt->execute();
         return $stmt->errorInfo();
     }
+    
+    public function testUserPassword($id, $password) {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "select * from users
+                  where id = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_OBJ);
+
+        if (!empty($user)) {
+            //check if password correct
+            if (!password_verify($password, $user->password))
+                return false;
+            else
+			    return true;
+		}
+		else
+			return false;
+        
+    }
+
+    public function updatePassword($id, $password) {
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+		    $query = "UPDATE users
+                        SET password = :password
+                        WHERE id = :id";
+		    $stmt = $pdo->prepare($query);
+		    $stmt->bindParam(':id', $id);
+		    $stmt->bindParam(':password', $password);
+		    $stmt->execute();
+
+        return $stmt->errorCode();
+    }
+
 
 }
 

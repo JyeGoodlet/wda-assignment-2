@@ -99,7 +99,16 @@ class ModelFacade {
             }
         }
     }
+    
+    public static function confirmPassword($userId, $password) {
+        $users = new Users();
+        return $users->testUserPassword($userId, $password);
+    }
 
+    public static function updatePassword($userId, $password) {
+        $users = new Users();
+        return $users->updatePassword($userId, $password);
+    }
 
 	public static function redirectUnauthorised() {
         if (session_status() == PHP_SESSION_NONE) {

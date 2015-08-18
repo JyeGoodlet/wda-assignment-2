@@ -31,7 +31,7 @@
             <div id="profile_buttons">
                 <?php if ($userDetails->id === $currentUser->id ) { ?>
                     <a href="/DeleteUser.php" type="button" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i> Delete User Account</a>
-                    <a href="#" type="button" class="btn btn-primary pull-right"><i class="fa fa-unlock-alt fa-fw"></i> Change Password</a>
+                    <a href="/UserChangePassword.php?id=<?php echo $currentUser->id ?>" type="button" class="btn btn-primary pull-right"><i class="fa fa-unlock-alt fa-fw"></i> Change Password</a>
                 <?php } else { ?>
                     <a href="/DirectMsgCreate.php?sendTo=<'.$userDetails->id.'" type="button" class="btn btn-primary pull-right"><i class="fa fa-paper-plane fa-fw"></i> Message User</a>
                 <?php } ?>
