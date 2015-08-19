@@ -4,7 +4,7 @@
 <div class="panel panel-primary">
     <div class="panel-heading"><h4 class="inline"><?php echo htmlspecialchars($thread->title) ?></h4>
         <?php if(ModelFacade::checkLoggedIn() && ModelFacade::getLoggedInUser()->isAdmin && ModelFacade::checkThreadClosed($thread->id) == false) { ?>
-        <a href="AdminCloseThread.php?id=<?php echo $thread->id; ?>" type="button" class="btn btn-default pull-right">  Close Thread</a><?php } ?>
+        <a href="AdminCloseThread.php?id=<?php echo $thread->id; ?>" class="btn btn-default pull-right">  Close Thread</a><?php } ?>
         <!-- pending remove <a href="AddComment.php?threadId=<?php echo $_GET['id']; ?>" type="button" class="btn btn-default pull-right">Add Comment</a> -->
     </div>
         <div class="panel-body">
