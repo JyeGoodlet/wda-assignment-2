@@ -10,7 +10,6 @@ include_once('Include/Header.html'); ?>
     <div class="panel-body">
         <form action="/DirectMsgSent.php" method="post">
 
-        <!-- TODO replace inline styling with bootstrap classes or edit external style sheet -->
         <?php if (isset($newMsgSent) && $newMsgSent != ""): ?>
         <div style="padding: 5px;" class="alert alert-success" role="alert"><h4 style="text-align: center;" ><?php echo $newMsgSent?></h4></div>
         <?php endif; ?>

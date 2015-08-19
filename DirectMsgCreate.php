@@ -60,7 +60,6 @@ function newMessageGet() {
 
 function newMessagePost() {
 
-    //TODO consider creating validator // secureInput controller/helper class
     $receiver = htmlspecialchars(trim($_POST["receiver"]));
     $subject = htmlspecialchars(trim($_POST["subject"]));
     $message = htmlspecialchars(trim($_POST["message"]));
