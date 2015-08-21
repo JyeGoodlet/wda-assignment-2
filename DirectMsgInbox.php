@@ -1,5 +1,6 @@
 <?php
-/**  -_-_- AUTHOR: jAsOnD -_-_- */
+/**  -_-_- AUTHOR: jAsOnD -_-_-
+   Display the logged in users INBOX */
 
 require "/Model/ModelFacade.php";
 //redirect if user not logged in
@@ -7,6 +8,7 @@ ModelFacade::redirectUnauthorised();
 
 OnRequest();
 
+//function loads on page request
 function OnRequest()
 {
     $user = ModelFacade::getLoggedInUser();

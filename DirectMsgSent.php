@@ -1,5 +1,6 @@
 <?php
-/**  -_-_- AUTHOR: jAsOnD -_-_- */
+/**  -_-_- AUTHOR: jAsOnD -_-_-
+ displays the logged in users Sent box - messages sent */
 
 require "/Model/ModelFacade.php";
 //redirect if user not logged in
@@ -19,6 +20,7 @@ function OnRequest()
 
     $messages = ModelFacade::getUsersSentbox($user->id);
 
+    //display confirmation if message was just sent
     if (isset($_GET['newMsgSent'])) {
         $newMsgSent = $_GET['newMsgSent'];
         if ($newMsgSent === 'true')

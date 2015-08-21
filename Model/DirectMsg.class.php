@@ -1,7 +1,8 @@
 <?php
 /**  Classname: DirectMessages
  *
- * Description: DirectMessages contains static methods to access direct
+ * Description:
+ * DirectMessages contains static methods to access direct
  * message functionality to be accessed by ModelFacade and User Models
  *
  * -_-_- AUTHOR: jAsOnD -_-_- */
@@ -9,7 +10,7 @@
 class DirectMessages
 
 {
-
+    // return an array of DIRECT MESSAGE objects that the selected user has received
     public static function getUsersInbox($userId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
@@ -22,6 +23,7 @@ class DirectMessages
         return $allMessages;
     }
 
+    // return an array of DIRECT MESSAGE objects that the selected user has sent
     public static function getUserSentbox($senderId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
@@ -34,7 +36,7 @@ class DirectMessages
         return $allMessages;
     }
 
-
+    // return the number of unread received messages as an INT
     public static function getUsersUnreadCount($userId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
@@ -50,6 +52,7 @@ class DirectMessages
         return $count->unread;
     }
 
+    // Return a DIRECT MESSAGE object selected by its msgID
     public static function getDirectMessage($msgId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
@@ -62,6 +65,7 @@ class DirectMessages
         return $selectedMessage;
     }
 
+    //add a DIRECT MESSAGE record to the database
     public static function createMsg($receiver, $sender, $subject, $message) {
         $connection = new DbConnect();
         $pdo = $connection->connect();
@@ -180,6 +184,7 @@ class DirectMessages
             return false;
     }
 
+    //Update the database to mark a DIRECT MESSAGE as read
     public static function markAsRead($msgId) {
         $connection = new DbConnect();
         $pdo = $connection->connect();

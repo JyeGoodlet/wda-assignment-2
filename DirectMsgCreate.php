@@ -11,6 +11,8 @@ ModelFacade::redirectUnauthorised();
 
 OnRequest();
 
+
+//function loads when page is requested
 function OnRequest() {
 
     ModelFacade::kickIfBannedOrDeleted();
@@ -30,6 +32,7 @@ function OnRequest() {
 
 }
 
+//function displays form to create a message and prefills data
 function newMessageGet() {
 
     if (isset($_GET['sendTo']))
@@ -58,15 +61,15 @@ function newMessageGet() {
 
 }
 
+//function handles submission of a create message form
 function newMessagePost() {
 
+    // sanitises data input from form.
     $receiver = htmlspecialchars(trim($_POST["receiver"]));
     $subject = htmlspecialchars(trim($_POST["subject"]));
     $message = htmlspecialchars(trim($_POST["message"]));
 
-
-
-
+    //if successful redirect to sentbox with confirmation message
     if ( empty($receiver) or empty($subject) or empty($message) ) {
         checkEmptyValues($receiver, $subject, $message);
     }
@@ -79,6 +82,7 @@ function newMessagePost() {
 
 }
 
+//check for empty values and prompt for resubmission of form with an error message
 function checkEmptyValues($receiver, $subject, $message) {
 
     if (empty($subject)) {
