@@ -68,12 +68,13 @@ function threadPost(){
   else {
     //add comment
     ModelFacade::addComment($_GET["id"], htmlspecialchars($_POST["newComment"]), ModelFacade::getLoggedInUser()->id);
+
   }
 
-
-
-  $comments = ModelFacade::getThreadComments($_GET["id"]);
-  include_once('/Views/Thread.html');
+    unset($_POST);
+    $comments = ModelFacade::getThreadComments($_GET["id"]);
+    //include_once('/Views/Thread.html');
+    header("location:Thread.php?id=" . $_GET["id"]);
 }
 
 
