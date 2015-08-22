@@ -1,7 +1,11 @@
 <?php
 require "/Model/ModelFacade.php";
-//redirect if user not logged in as admin
+/*
+ * This controller is used to allow an admin to delete a users account.
+ *
+ */
 
+//redirect if user not logged in as admin
 ModelFacade::redirectUnauthorisedNotAdmin();
 
 //get all categories and subcategories

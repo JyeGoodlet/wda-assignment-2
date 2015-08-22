@@ -1,7 +1,12 @@
 <?php
 require "/Model/ModelFacade.php";
-//redirect if user not logged in as admin
+/*
+ * This controller is used to show a admin control page for admins only
+ *
+ */
 
+
+//redirect if user not logged in as admin
 ModelFacade::redirectUnauthorisedNotAdmin();
 
 //get all categories and subcategories

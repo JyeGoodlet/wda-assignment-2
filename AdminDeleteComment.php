@@ -1,5 +1,11 @@
 <?php
 require "/Model/ModelFacade.php";
+
+/*
+ * Allows an admin to delete a comment
+ *
+ */
+
 //redirect if user not logged in as admin
 
 ModelFacade::redirectUnauthorisedNotAdmin();

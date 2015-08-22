@@ -6,6 +6,12 @@
  * Time: 1:22 AM
  */
 
+/*
+ * This controller is used for the closing of threads
+ *
+ */
+
+
 require "/Model/ModelFacade.php";
 //redirect if user not logged in as admin
 

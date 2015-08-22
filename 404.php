@@ -1,4 +1,9 @@
 <?php
+/*
+ * This controller is used to show a 404 page
+ *
+ */
+
 require "Model/ModelFacade.php";
 onRequest();
 
