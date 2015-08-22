@@ -8,36 +8,43 @@ include_once('Include/Header.html'); ?>
     </div>
 
     <div class="panel-body">
-    <form action="DirectMsgInbox.php" method="post">
-        <table style="width:1100px" class="table">
+        <form action="DirectMsgInbox.php" method="post">
+            <table style="width:1100px" class="table">
 
-            <thead>
-            <tr>
-                <th style="width:30px"></th>
-                <th style="width:700px">Message Subject</th>
-                <th  style="text-align: center;">Read</th>
-                <th  style="text-align: center;">Sender</th>
-                <th  style="text-align: center;">Time Sent</th></tr>
-            </thead>
-            <?php foreach($messages as $message):;?>
-            <tr>
-                <td><input type="checkbox" name="delMsg[]" value="<?PHP echo $message->id?>"></td>
-                <td><a href="DirectMsg.php?msgId=<?php echo $message->id; ?>"><?php echo $message->subject; ?></a></td>
-                <td style="font-size: 14px;text-align: center;"><?php echo ($message->isRead ? "read" : "unread") ; ?></td>
-                <td style="font-size: 14px;text-align: center;"><a href="UserProfile.php?id=<?php echo $message->sender; ?>"><?php echo $message->sendername; ?></a>
-                </td>
-                <td style="font-size: 14px;text-align: center;">
-                    <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($message->timeSent)?></p></td>
-            </tr>
-            <?php endforeach;?>
-            </tbody>
-        </table>
-        <div id="buttonBar">
-        <a href="/DirectMsgCreate.php" type="button" class="btn btn-primary"> Create New Message</a>
-        <input value="Delete Selected Message" type="submit" class="btn btn-secondary">
-        </div>
+                <thead>
+                <tr>
+                    <th style="width:30px"></th>
+                    <th style="width:700px">Message Subject</th>
+                    <th style="text-align: center;">Read</th>
+                    <th style="text-align: center;">Sender</th>
+                    <th style="text-align: center;">Time Sent</th>
+                </tr>
+                </thead>
+                <?php foreach($messages as $message):;?>
+                <tr>
+                    <td><input type="checkbox" name="delMsg[]" value="<?PHP echo $message->id?>"></td>
+                    <td><a href="DirectMsg.php?msgId=<?php echo $message->id; ?>"><?php echo $message->subject; ?></a>
+                    </td>
+                    <td style="font-size: 14px;text-align: center;"><?php echo ($message->isRead ? "read" : "unread") ;
+                        ?>
+                    </td>
+                    <td style="font-size: 14px;text-align: center;"><a
+                            href="UserProfile.php?id=<?php echo $message->sender; ?>"><?php echo $message->sendername;
+                        ?></a>
+                    </td>
+                    <td style="font-size: 14px;text-align: center;">
+                        <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($message->timeSent)?></p>
+                    </td>
+                </tr>
+                <?php endforeach;?>
+                </tbody>
+            </table>
+            <div id="buttonBar">
+                <a href="/DirectMsgCreate.php" type="button" class="btn btn-primary"> Create New Message</a>
+                <input value="Delete Selected Message" type="submit" class="btn btn-secondary">
+            </div>
 
-    </form>
+        </form>
     </div>
 </div>
 <?php include_once('Include/Footer.html'); ?>

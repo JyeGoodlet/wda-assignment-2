@@ -5,7 +5,8 @@ require "Model/ModelFacade.php";
 
 OnRequest();
 
-function OnRequest() {
+function OnRequest()
+{
     $requestMethod = $_SERVER['REQUEST_METHOD'];
     if (ModelFacade::checkLoggedIn()) {
         //redirect if user is logged in
@@ -14,13 +15,13 @@ function OnRequest() {
     }
     if ($requestMethod == "GET") {
         loginGet();
-    }
-    else {
+    } else {
         loginPost();
     }
 }
 
-function loginGet() {
+function loginGet()
+{
     //echo "Get";
     include_once("/Views/Login.html");
 
@@ -28,37 +29,32 @@ function loginGet() {
 }
 
 
-function loginPost() {
+function loginPost()
+{
 
     if (isset($_POST["identify"]) && isset($_POST["password"])) {
         //Attemp to log user in
         ModelFacade::login($_POST["identify"], $_POST["password"]);
         if (ModelFacade::checkLoggedIn()) {
             //redirect
-            header( 'Location: Index.php' ) ;
+            header('Location: Index.php');
             exit();
-        }
-        else if(ModelFacade::checkIfBanned($_POST["identify"])) {
+        } else if (ModelFacade::checkIfBanned($_POST["identify"])) {
             $message = "Your account has been banned!";
             include_once("/Views/Login.html");
-        }
-        else {
+        } else {
             $message = "Username or password does not exist";
             include_once("/Views/Login.html");
         }
 
 
-    }
-    else {
+    } else {
         $message = "Please enter username and password";
         include_once("/Views/Login.html");
     }
 
 
-
 }
-
-
 
 
 ?>

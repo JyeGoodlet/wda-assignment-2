@@ -12,18 +12,16 @@ require "/Model/ModelFacade.php";
 ModelFacade::redirectUnauthorisedNotAdmin();
 
 
-
-
 OnRequest();
 
-function OnRequest() {
+function OnRequest()
+{
 
 
     $requestMethod = $_SERVER['REQUEST_METHOD'];
     if ($requestMethod == "GET") {
         threadCloseGet();
-    }
-    else {
+    } else {
 
 
         //close Thread
@@ -35,24 +33,24 @@ function OnRequest() {
     }
 
 
-
 }
 
 
-function threadCloseGet() {
+function threadCloseGet()
+{
     //gets Post
     $thread = ModelFacade::getThread($_GET["id"]);
     //get Comment Count
     if ($thread == null) {
-        $message =  "Sorry but a thread with that id does not exist";
+        $message = "Sorry but a thread with that id does not exist";
         include_once('/Views/ErrorPage.html');
-    }
-    else {
+    } else {
         include_once('/Views/AdminCloseThread.html');
     }
 }
 
-function threadClosePost() {
+function threadClosePost()
+{
     //gets Post
     $thread = ModelFacade::getThread($_GET["id"]);
     //get Comment Count

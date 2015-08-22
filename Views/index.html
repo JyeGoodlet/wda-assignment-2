@@ -5,7 +5,9 @@ include_once('Include/Header.html');
 
 <div class="container">
 
-    <?php if (isset($_SESSION['newsignup'])): ?> <div class="alert alert-success" role="alert">Thank you for signing up</div><?php unset($_SESSION["newsignup"]);?> <?php endif;?>
+    <?php if (isset($_SESSION['newsignup'])): ?>
+    <div class="alert alert-success" role="alert">Thank you for signing up</div>
+    <?php unset($_SESSION["newsignup"]);?> <?php endif;?>
     <div class="row">
         <div class="col-lg-6">
             <h4><a href="index.php">Home</a></h4>
@@ -13,7 +15,8 @@ include_once('Include/Header.html');
         <div class="col-lg-offset-2 col-lg-4">
             <form action="search.php" class="pull-right">
                 <div class="input-group">
-                    <input class="form-control" required="required" type="text" id="search" name="search" placeholder="Search Threads" />
+                    <input class="form-control" required="required" type="text" id="search" name="search"
+                           placeholder="Search Threads"/>
                     <span class="input-group-btn">
                         <button class="btn btn-primary"><i class="fa fa-search"></i></button>
                     </span>
@@ -21,33 +24,34 @@ include_once('Include/Header.html');
             </form>
         </div>
     </div>
-        <div id="boards" class="row">
-            <?php foreach($categories as $category): if($category->offline == 1) continue; ?>
-            <div class="col-lg-6 ">
-                <div class="panel panel-primary">
-                    <div class="panel-heading"><?php echo $category->category; ?> </div>
+    <div id="boards" class="row">
+        <?php foreach($categories as $category): if($category->offline == 1) continue; ?>
+        <div class="col-lg-6 ">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><?php echo $category->category; ?></div>
 
-                    <div class="panel-body">
+                <div class="panel-body">
 
 
-                        <table>
-                            <?php foreach($category->subcategories as $subcategory): if($subcategory->offline == 1) continue;?>
-                            <tr>
-                                <td>
-                                    <a href="/Threads.php?id=<?php echo $subcategory->id; ?>">
-                                        <?php echo $subcategory->subcategory; ?>
-                                    </a>
-                                </td>
-                            </tr>
-                            <?php endforeach;?>
-                        </table>
-                    </div>
+                    <table>
+                        <?php foreach($category->subcategories as $subcategory): if($subcategory->offline == 1)
+                        continue;?>
+                        <tr>
+                            <td>
+                                <a href="/Threads.php?id=<?php echo $subcategory->id; ?>">
+                                    <?php echo $subcategory->subcategory; ?>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php endforeach;?>
+                    </table>
                 </div>
             </div>
-            <?php endforeach;?>
-
         </div>
+        <?php endforeach;?>
 
     </div>
+
+</div>
 
 <?php include_once('Include/Footer.html'); ?> 

@@ -8,25 +8,26 @@ ModelFacade::redirectUnauthorisedNotAdmin();
 
 OnRequest();
 
-function OnRequest() {
+function OnRequest()
+{
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        if(isset($_POST['categoryName'])) {
+        if (isset($_POST['categoryName'])) {
             AdminAddBoard($_POST['categoryName']);
         }
-    }
-    else {        
+    } else {
         include_once('/Views/Admin/AddBoard.html');
     }
 
 }
 
-function AdminAddBoard($categoryName) {
+function AdminAddBoard($categoryName)
+{
     $categoryName = htmlspecialchars($categoryName);
     $result = ModelFacade::AdminAddBoard($categoryName);
-    
-    if($result) {
-        switch($result[0]) {
+
+    if ($result) {
+        switch ($result[0]) {
             case 0:
                 $success = "Board " . $categoryName . " successfully added!";
                 break;
@@ -34,8 +35,7 @@ function AdminAddBoard($categoryName) {
                 $error = "There was an error adding " . $categoryName . ": code = " . $result[0];
                 break;
         }
-    }
-    else {
+    } else {
         $error = $categoryName . " already exists!";
     }
 

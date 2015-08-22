@@ -19,16 +19,19 @@
             <th>Offline</th>
             </thead>
             <tbody>
-                <?php foreach($categories as $category) { ?>
-                <tr>
-                    <td><?php echo $category->category; ?></td>
-                    <td><input type="checkbox" name="boardState[]" value="<?php echo $category->id; ?>" <?php echo $category->offline ? 'checked' : '';?>></td>
-                </tr>
-                <?php } ?>
+            <?php foreach($categories as $category) { ?>
+            <tr>
+                <td><?php echo $category->category; ?></td>
+                <td><input type="checkbox" name="boardState[]"
+                           value="<?php echo $category->id; ?>" <?php echo $category->offline ? 'checked' : '';?>>
+                </td>
+            </tr>
+            <?php } ?>
             </tbody>
         </table>
 
-        <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-toggle-on"></i> Update Selected Boards</button>
+        <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-toggle-on"></i> Update Selected Boards
+        </button>
 
     </form>
 

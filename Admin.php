@@ -8,7 +8,8 @@ ModelFacade::redirectUnauthorisedNotAdmin();
 
 OnRequest();
 
-function OnRequest() {
+function OnRequest()
+{
 
     ModelFacade::kickIfBannedOrDeleted();
     include_once('/Views/Admin/Index.html');

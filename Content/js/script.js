@@ -1,23 +1,21 @@
-﻿
-
-//Pagination for threads.php 
+﻿//Pagination for threads.php
 $(document).ready(function () {
 
     $('#subcategoryThreads').DataTable({
-    "bSort": false
+        "bSort": false
     });
-    
+
 //pagination for thread.php comments
 
     $('#threadComments').DataTable({
-    "bSort": false
+        "bSort": false
     });
 
     $('#adminUserTable').DataTable({
         "bSort": false
     });
 
-    $(function () {      
+    $(function () {
 
         AdminAddCategoryTextBoxChange();
         AdminEditCategorySelectBoxChange();

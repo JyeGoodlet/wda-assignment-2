@@ -2,43 +2,45 @@
 
 require_once('db_pdo.php');
 
-class User {
-	//user id
-	public $id;
-	//username
-	public $username;
+class User
+{
+    //user id
+    public $id;
+    //username
+    public $username;
     //users email
     public $email;
-	//users password
-	public $password;
-	//bool isAdmin
-	public $isAdmin;
-  //bool isBanned
-  public $isBanned;
+    //users password
+    public $password;
+    //bool isAdmin
+    public $isAdmin;
+    //bool isBanned
+    public $isBanned;
 
-	function __construct($username, $password, $email = '') {
+    function __construct($username, $password, $email = '')
+    {
         $username = htmlspecialchars($username);
-		$this->username = $username;
+        $this->username = $username;
 
         $password = htmlspecialchars($password);
-		$this->password = $password;
+        $this->password = $password;
 
         $email = htmlspecialchars($email);
         $this->email = $email;
-	}
+    }
 
-	//returns true if exists, false if doesn't
-	public function attemptLogin() {
+    //returns true if exists, false if doesn't
+    public function attemptLogin()
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        if ($this->email !== '' ){
+        if ($this->email !== '') {
             $identify = $this->email;
             $query = "SELECT *
                 FROM users
                 WHERE email = :identify
                 and is_banned = 0 limit 1	";
-        }
-        else {
+        } else {
             $identify = $this->username;
             $query = "SELECT *
                 FROM users
@@ -54,24 +56,23 @@ class User {
         //check if user exists
         if (!empty($user)) {
             //check if password correct
-            if (!password_verify($this->password,$user->password))
+            if (!password_verify($this->password, $user->password))
                 return false;
-			//get users id
+            //get users id
 
-			$this->id = $user->id;
+            $this->id = $user->id;
             $this->username = $user->username;
             $this->email = $user->email;
-			$this->isAdmin = $user->is_admin;
+            $this->isAdmin = $user->is_admin;
             $this->isBanned = $user->is_banned;
-			return true;
-		}
-		else
-			return false;
-	}
+            return true;
+        } else
+            return false;
+    }
 
 
-
-    public static function checkUsernameAvailable($username) {
+    public static function checkUsernameAvailable($username)
+    {
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
@@ -84,13 +85,13 @@ class User {
 
         if ($user == false) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
-    public static function checkEmailAvailable($email) {
+    public static function checkEmailAvailable($email)
+    {
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
@@ -103,27 +104,14 @@ class User {
 
         if ($user == false) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
 
-    public function signup() {
-        $connection = new DbConnect();
-        $pdo = $connection->connect();
-		$query = "insert into users(username, email, password)
-				  values (:username, :email, :password)";
-		$stmt = $pdo->prepare($query);
-		$stmt->bindParam(':username', $this->username);
-        $stmt->bindParam(':email', $this->email);
-		$stmt->bindParam(':password', password_hash($this->password, PASSWORD_DEFAULT));
-		$stmt->execute();
-
-	}
-
-    public function deleteUser() {
+    public function signup()
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "insert into users(username, email, password)
@@ -136,17 +124,31 @@ class User {
 
     }
 
-    public function checkIfBannedOrDeleted() {
+    public function deleteUser()
+    {
+        $connection = new DbConnect();
+        $pdo = $connection->connect();
+        $query = "insert into users(username, email, password)
+				  values (:username, :email, :password)";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':username', $this->username);
+        $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':password', password_hash($this->password, PASSWORD_DEFAULT));
+        $stmt->execute();
+
+    }
+
+    public function checkIfBannedOrDeleted()
+    {
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
-        if ($this->email !== ''){
+        if ($this->email !== '') {
             $identify = $this->email;
             $query = "SELECT is_banned
                 FROM users
                 WHERE email = :identify";
-        }
-        else {
+        } else {
             $identify = $this->username;
             $query = "SELECT is_banned
                 FROM users
@@ -160,14 +162,13 @@ class User {
         $status = $stmt->fetch(PDO::FETCH_OBJ);
         if ($status == null)
             return false;
-        if($status->is_banned == 0)
+        if ($status->is_banned == 0)
             return false;
         else
             return true;
     }
 
 }
-
 
 
 ?>

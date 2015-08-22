@@ -16,16 +16,17 @@
     <form method="post">
         <div class="form-group">
             <label for="SelectCategoryName">Select Parent Category</label>
-            <select id="SelectCategoryName" name="selectCategoryName" class="form-control" onchange="AdminEditCategorySelectBoxChange();">
+            <select id="SelectCategoryName" name="selectCategoryName" class="form-control"
+                    onchange="AdminEditCategorySelectBoxChange();">
                 <option value="-1">-</option>
                 <?php foreach($categories as $category) { ?>
                 <option value="<?php echo $category->id; ?>"><?php echo $category->category; ?></option>
                 <?php } ?>
             </select>
-            </div>
+        </div>
         <div id="addSubcategoryFormGroup" class="form-group">
             <label for="CategoryName">Add New Subcategory</label>
-            <input id="subcategoryName" name="subcategoryName" class="form-control" placeholder="Subcategory Name" />
+            <input id="subcategoryName" name="subcategoryName" class="form-control" placeholder="Subcategory Name"/>
         </div>
 
         <button class="btn btn-primary pull-right"><i class="fa fa-plus-square"></i> Add Subcategory</button>

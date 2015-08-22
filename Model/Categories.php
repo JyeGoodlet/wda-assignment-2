@@ -6,7 +6,9 @@
  * Time: 11:01 PM
  */
 require_once "Subcategory.php";
-class Categories {
+
+class Categories
+{
 
     //hold our category items
     public $categories;
@@ -23,7 +25,7 @@ class Categories {
         $stmt->setFetchMode(PDO::FETCH_CLASS, 'Category');
         $stmt->execute();
         $categories = $stmt->fetchAll();
-        foreach($categories as $category) {
+        foreach ($categories as $category) {
             $category->subcategories = $this->getSubCategories($category->id);
         }
 
@@ -33,7 +35,8 @@ class Categories {
 
     }
 
-    public function getCategory($id) {
+    public function getCategory($id)
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "SELECT * from categories
@@ -43,11 +46,12 @@ class Categories {
         $stmt->bindParam('categoryId', $id);
         $stmt->execute();
         $category = $stmt->fetch();
-        return $category;       
-    
+        return $category;
+
     }
 
-    private function getSubcategories($categoryId) {
+    private function getSubcategories($categoryId)
+    {
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
@@ -58,10 +62,11 @@ class Categories {
         $stmt->setFetchMode(PDO::FETCH_CLASS, 'Subcategory');
         $stmt->execute();
         $subcategories = $stmt->fetchAll();
-        return $subcategories;        
+        return $subcategories;
     }
 
-    private function checkIfCategoryExists($categoryName) {
+    private function checkIfCategoryExists($categoryName)
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "SELECT * from categories
@@ -73,7 +78,8 @@ class Categories {
         return $result;
     }
 
-    private function checkIfSubcategoryExists($parentId, $subcategoryName) {
+    private function checkIfSubcategoryExists($parentId, $subcategoryName)
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "SELECT * from subcategories
@@ -87,7 +93,8 @@ class Categories {
         return $result;
     }
 
-    private function checkIfSubcategoryExistsBySubcategoryId($id, $subcategoryName) {
+    private function checkIfSubcategoryExistsBySubcategoryId($id, $subcategoryName)
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "SELECT * from subcategories
@@ -101,8 +108,9 @@ class Categories {
         return $result;
     }
 
-    public function AddCategory($categoryName) {
-        if(!$this->checkIfCategoryExists($categoryName)) {
+    public function AddCategory($categoryName)
+    {
+        if (!$this->checkIfCategoryExists($categoryName)) {
             $connection = new DbConnect();
             $pdo = $connection->connect();
             $query = "INSERT INTO categories(category)
@@ -111,15 +119,15 @@ class Categories {
             $stmt->bindParam(":categoryName", $categoryName);
             $stmt->execute();
             return $stmt->errorInfo();
-        }
-        else {
+        } else {
             return null;
         }
 
     }
 
-    public function EditCategory($id, $categoryName) {
-        if(!$this->checkIfCategoryExists($categoryName)) {
+    public function EditCategory($id, $categoryName)
+    {
+        if (!$this->checkIfCategoryExists($categoryName)) {
             $connection = new DbConnect();
             $pdo = $connection->connect();
             $query = "UPDATE categories
@@ -130,15 +138,15 @@ class Categories {
             $stmt->bindParam(":category", $categoryName);
             $stmt->execute();
             return $stmt->errorInfo();
-        }
-        else {
+        } else {
             return null;
         }
 
     }
 
-    public function addSubcategory($parentId, $subcatgeoryName) {
-        if(!$this->checkIfSubcategoryExists($parentId, $subcatgeoryName)) {
+    public function addSubcategory($parentId, $subcatgeoryName)
+    {
+        if (!$this->checkIfSubcategoryExists($parentId, $subcatgeoryName)) {
             $connection = new DbConnect();
             $pdo = $connection->connect();
             $query = "INSERT INTO subcategories(category_id, subcategory)
@@ -148,14 +156,14 @@ class Categories {
             $stmt->bindParam(":subcategoryName", $subcatgeoryName);
             $stmt->execute();
             return $stmt->errorInfo();
-        }
-        else {
+        } else {
             return null;
         }
     }
 
-    public function EditSubcategory($id, $subcategoryName) {
-        if(!$this->checkIfSubcategoryExistsBySubcategoryId($id, $subcategoryName)) {
+    public function EditSubcategory($id, $subcategoryName)
+    {
+        if (!$this->checkIfSubcategoryExistsBySubcategoryId($id, $subcategoryName)) {
             $connection = new DbConnect();
             $pdo = $connection->connect();
             $query = "UPDATE subcategories
@@ -166,14 +174,14 @@ class Categories {
             $stmt->bindParam(":subcategory", $subcategoryName);
             $stmt->execute();
             return $stmt->errorInfo();
-        }
-        else {
+        } else {
             return null;
         }
 
     }
 
-    public function GetIsSubCategoryDisabled($subcategoryId) {
+    public function GetIsSubCategoryDisabled($subcategoryId)
+    {
         //Check if subcategory disabled:
         $connection = new DbConnect();
         $pdo = $connection->connect();
@@ -183,8 +191,8 @@ class Categories {
         $stmt->bindParam('id', $subcategoryId);
         $stmt->execute();
         $result = $stmt->fetch();
-        if($result) {
-            if($result['offline'] == true) return true;
+        if ($result) {
+            if ($result['offline'] == true) return true;
             else {
                 //Subcategory not disabled - check parent category enabled or not
                 $query = "SELECT offline from categories
@@ -195,8 +203,7 @@ class Categories {
                 $result = $stmt->fetch();
                 return $result['offline'];
             }
-        }
-        else {
+        } else {
             return null;
         }
 

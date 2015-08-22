@@ -13,7 +13,8 @@ OnRequest();
 
 
 //function loads when page is requested
-function OnRequest() {
+function OnRequest()
+{
 
     ModelFacade::kickIfBannedOrDeleted();
 
@@ -21,19 +22,18 @@ function OnRequest() {
     $requestMethod = $_SERVER['REQUEST_METHOD'];
     if ($requestMethod == "GET") {
         newMessageGet();
-    }
-    else {
+    } else {
         //loginPost("", "");
         newMessagePost();
     }
     $errorMessage = "test error";
 
 
-
 }
 
 //function displays form to create a message and prefills data
-function newMessageGet() {
+function newMessageGet()
+{
 
     if (isset($_GET['sendTo']))
         $sendTo = $_GET['sendTo'];
@@ -45,24 +45,24 @@ function newMessageGet() {
     else
         $replySubject = "";
 
-    if  (isset($_GET['forwardMsgId'])) {
+    if (isset($_GET['forwardMsgId'])) {
         $getMessage = ModelFacade::getMsg($_GET['forwardMsgId']);
         $fwdSubject = 'FW:' . $getMessage->subject;
         $fwdMessage = $getMessage->message;
         unset($getMessage);
-    }
-    else {
+    } else {
         $fwdSubject = "";
         $fwdMessage = "";
     }
 
-    $allUsers= ModelFacade::GetAllUsers();
+    $allUsers = ModelFacade::GetAllUsers();
     include_once('/Views/DirectMsgCreate.html');
 
 }
 
 //function handles submission of a create message form
-function newMessagePost() {
+function newMessagePost()
+{
 
     // sanitises data input from form.
     $receiver = htmlspecialchars(trim($_POST["receiver"]));
@@ -70,11 +70,10 @@ function newMessagePost() {
     $message = htmlspecialchars(trim($_POST["message"]));
 
     //if successful redirect to sentbox with confirmation message
-    if ( empty($receiver) or empty($subject) or empty($message) ) {
+    if (empty($receiver) or empty($subject) or empty($message)) {
         checkEmptyValues($receiver, $subject, $message);
-    }
-    else {
-        if (ModelFacade::createMsg($receiver,$subject, $message))
+    } else {
+        if (ModelFacade::createMsg($receiver, $subject, $message))
             header("location:DirectMsgSent.php?newMsgSent=true");
         else
             header("location:DirectMsgSent.php?newMsgSent=false");
@@ -83,7 +82,8 @@ function newMessagePost() {
 }
 
 //check for empty values and prompt for resubmission of form with an error message
-function checkEmptyValues($receiver, $subject, $message) {
+function checkEmptyValues($receiver, $subject, $message)
+{
 
     if (empty($subject)) {
         $subjectReq = "has-warning has-feedback";

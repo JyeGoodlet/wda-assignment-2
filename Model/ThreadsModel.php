@@ -14,7 +14,8 @@ class ThreadsModel
     public $threads;
 
 
-    public function searchThreads($search) {
+    public function searchThreads($search)
+    {
         $search = "%" . $search . "%";
         $connection = new DbConnect();
         $pdo = $connection->connect();
@@ -45,7 +46,8 @@ class ThreadsModel
 
     }
 
-    public function getThreads($subCategoryId) {
+    public function getThreads($subCategoryId)
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -75,8 +77,9 @@ class ThreadsModel
 
     }
 
-	public function getThread($id) {
-		$connection = new DbConnect();
+    public function getThread($id)
+    {
+        $connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $query = "select threads.id, threads.date, threads.title, threads.subcategory as subCatId, threads.user, threads.content, users.username, subcategories.subcategory FROM threads
@@ -90,9 +93,10 @@ class ThreadsModel
         $stmt->execute();
         $thread = $stmt->fetch();
         return $thread;
-	}
+    }
 
-    public function getThreadComments($threadId) {
+    public function getThreadComments($threadId)
+    {
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
@@ -110,8 +114,8 @@ class ThreadsModel
     }
 
 
-
-    public function addComment($threadId, $comment, $userId) {
+    public function addComment($threadId, $comment, $userId)
+    {
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
@@ -129,7 +133,8 @@ class ThreadsModel
         return $pdo->lastInsertId();
     }
 
-    public function checkThreadClosed($threadId) {
+    public function checkThreadClosed($threadId)
+    {
 
         $connection = new DbConnect();
         $pdo = $connection->connect();
@@ -140,13 +145,14 @@ class ThreadsModel
         $stmt->bindParam(':id', $threadId);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
         $stmt->execute();
-        $value =  $stmt->fetch();
+        $value = $stmt->fetch();
         //var_dump($value->closed);
         return $value->closed;
 
     }
 
-    public function AdminCloseThread($id, $closingMessage, $adminId) {
+    public function AdminCloseThread($id, $closingMessage, $adminId)
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -175,20 +181,18 @@ class ThreadsModel
 
     }
 
-    public function AdminDeleteComment($id) {
-        $comment = "[Comment removed by " . ModelFacade::getLoggedInUser()->username ."]";
+    public function AdminDeleteComment($id)
+    {
+        $comment = "[Comment removed by " . ModelFacade::getLoggedInUser()->username . "]";
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "UPDATE comments
                     SET comment = :comment
                     WHERE id = :id";
-        $stmt= $pdo->prepare($query);
+        $stmt = $pdo->prepare($query);
         $stmt->bindParam(":comment", $comment);
         $stmt->bindParam(":id", $id);
         $stmt->execute();
-
-
-
 
 
         return $stmt->errorInfo();
@@ -197,7 +201,8 @@ class ThreadsModel
 
     /* when a user adds a comment to a thread it will alter the threads last activity. that
     way active threads stay at the top of the forum */
-    public function updateLastActivity($threadId) {
+    public function updateLastActivity($threadId)
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -209,7 +214,8 @@ class ThreadsModel
         $stmt->execute();
     }
 
-    public static function userProfileThreads($userId) {
+    public static function userProfileThreads($userId)
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -238,7 +244,8 @@ class ThreadsModel
     }
 
 
-    public static function deleteAllUsersThreads($userId) {
+    public static function deleteAllUsersThreads($userId)
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -250,7 +257,8 @@ class ThreadsModel
     }
 
 
-    public function deleteAllUsersComments($userId) {
+    public function deleteAllUsersComments($userId)
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -261,7 +269,8 @@ class ThreadsModel
         $stmt->execute();
     }
 
-    public function UpdateBoardState($categoryId, $isOffline) {
+    public function UpdateBoardState($categoryId, $isOffline)
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "UPDATE categories
@@ -274,7 +283,8 @@ class ThreadsModel
         return $stmt->errorInfo();
     }
 
-    public function UpdateSubcategoryState($subcategoryId, $isOffline) {
+    public function UpdateSubcategoryState($subcategoryId, $isOffline)
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "UPDATE subcategories

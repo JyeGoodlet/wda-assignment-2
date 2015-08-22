@@ -2,13 +2,15 @@
 
 require_once('Db_pdo.php');
 
-class Users {
+class Users
+{
 
-    public function GetAllUsers() {
+    public function GetAllUsers()
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "select * from users WHERE id != 0 ORDER BY username ASC";
-        $stmt = $pdo->prepare($query);       
+        $stmt = $pdo->prepare($query);
         $stmt->execute();
         $users = $stmt->fetchAll();
 
@@ -16,7 +18,8 @@ class Users {
         return $users;
     }
 
-    public function GetUserById($id) {
+    public function GetUserById($id)
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "SELECT * FROM users
@@ -43,7 +46,8 @@ class Users {
         return $user;
     }
 
-    public function GetUserDetails($id) {
+    public function GetUserDetails($id)
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "SELECT users.id, users.username, users.is_admin, p.totalPosts, c.totalComments
@@ -60,7 +64,8 @@ class Users {
         return $userDetails;
     }
 
-    public function UpdateUser($user) {
+    public function UpdateUser($user)
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = 'UPDATE users
@@ -75,7 +80,8 @@ class Users {
         return $stmt->errorInfo();
     }
 
-    public function DeleteUser($id) {
+    public function DeleteUser($id)
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = 'DELETE FROM users
@@ -85,8 +91,9 @@ class Users {
         $stmt->execute();
         return $stmt->errorInfo();
     }
-    
-    public function testUserPassword($id, $password) {
+
+    public function testUserPassword($id, $password)
+    {
         $connection = new DbConnect();
         $pdo = $connection->connect();
         $query = "select * from users
@@ -101,24 +108,24 @@ class Users {
             if (!password_verify($password, $user->password))
                 return false;
             else
-			    return true;
-		}
-		else
-			return false;
-        
+                return true;
+        } else
+            return false;
+
     }
 
-    public function updatePassword($id, $password) {
+    public function updatePassword($id, $password)
+    {
         $password = password_hash($password, PASSWORD_DEFAULT);
         $connection = new DbConnect();
         $pdo = $connection->connect();
-		    $query = "UPDATE users
+        $query = "UPDATE users
                         SET password = :password
                         WHERE id = :id";
-		    $stmt = $pdo->prepare($query);
-		    $stmt->bindParam(':id', $id);
-		    $stmt->bindParam(':password', $password);
-		    $stmt->execute();
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':password', $password);
+        $stmt->execute();
 
         return $stmt->errorCode();
     }

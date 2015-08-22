@@ -16,7 +16,8 @@
     <form method="post">
         <div class="form-group">
             <label for="SelectCategoryName">Select Category To Edit</label>
-            <select id="SelectCategoryName" name="selectCategoryName" class="form-control" onchange="AdminEditCategorySelectBoxChange();">
+            <select id="SelectCategoryName" name="selectCategoryName" class="form-control"
+                    onchange="AdminEditCategorySelectBoxChange();">
                 <option value="-1">Select Existing Category</option>
                 <?php foreach($categories as $category) { ?>
                 <option value="<?php echo $category->id; ?>"><?php echo $category->category; ?></option>
@@ -25,10 +26,12 @@
         </div>
         <div class="form-group">
             <label for="CategoryName">Edit Category Name</label>
-            <input id="CategoryName" name="categoryName" class="form-control" placeholder="Category Name"/>            
+            <input id="CategoryName" name="categoryName" class="form-control" placeholder="Category Name"/>
         </div>
 
-        <button id="adminEditCategorySubmit" class="btn btn-primary pull-right"><i class="fa fa-pencil"></i> Edit Category</button>
+        <button id="adminEditCategorySubmit" class="btn btn-primary pull-right"><i class="fa fa-pencil"></i> Edit
+            Category
+        </button>
         <div class="clearfix"></div>
     </form>
 

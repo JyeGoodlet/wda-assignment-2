@@ -5,22 +5,25 @@
     <div class="panel-heading"><h4 class="inline"> Close Thread</h4></div>
     <div class="panel-body">
         <p>Title: <?php echo $thread->title; ?></p>
+
         <p>Question: <?php echo $thread->content; ?></p>
+
         <p>Poster: <?php echo $thread->username; ?></p>
 
         <p>Open Date: <?php echo $thread->date; ?> </p>
+
         <p>Subcategory: <?php echo $thread->subcategory; ?></p>
 
         <form method="Post">
             <div class="form-group">
-                <label for="CloseReason" >Please write a reason why the thread is being closed</label>
-                <textarea style="width:600px" rows="6" class="form-control"  id="CloseReason" name="CloseReason" required="required" >This Thread has been Closed</textarea>
+                <label for="CloseReason">Please write a reason why the thread is being closed</label>
+                <textarea style="width:600px" rows="6" class="form-control" id="CloseReason" name="CloseReason"
+                          required="required">This Thread has been Closed</textarea>
             </div>
             <div class="form-group">
-                <button class="btn btn-default"  >Close Thread</button>
+                <button class="btn btn-default">Close Thread</button>
             </div>
         </form>
-
 
 
     </div>

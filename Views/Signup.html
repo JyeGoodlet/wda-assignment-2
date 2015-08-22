@@ -13,33 +13,39 @@
                 <form method="post">
                     <div class="form-group">
                         <label for="username"> User Name </label>
-                        <input required="required" class="form-control" type="text" id="username" name="username" value="<?php echo (isset($username) ? $username : '');?>">
+                        <input required="required" class="form-control" type="text" id="username" name="username"
+                               value="<?php echo (isset($username) ? $username : '');?>">
                     </div>
                     <div class="form-group">
                         <label for="email"> Email </label>
-                        <input required="required" class="form-control" type="email" id="email" name="email" value="<?php echo (isset($email) ? $email : '');?>">
+                        <input required="required" class="form-control" type="email" id="email" name="email"
+                               value="<?php echo (isset($email) ? $email : '');?>">
                     </div>
                     <div class="form-group">
                         <label for="password"> Password </label>
-                        <input pattern=".{6,}" required="required" title="6 characters minimum" class="form-control" type="password" id="password" name="password">
+                        <input pattern=".{6,}" required="required" title="6 characters minimum" class="form-control"
+                               type="password" id="password" name="password">
                     </div>
                     <div class="form-group">
                         <label for="password"> Password Confirm</label>
-                        <input pattern=".{6,}" required="required" title="6 characters minimum" class="form-control" type="password" id="passwordconfirm" name="passwordconfirm">
+                        <input pattern=".{6,}" required="required" title="6 characters minimum" class="form-control"
+                               type="password" id="passwordconfirm" name="passwordconfirm">
                     </div>
                     <div class="form-group margin-bottom-none">
-                        <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-user-plus"></i> Sign Up</button>
+                        <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-user-plus"></i> Sign Up
+                        </button>
                     </div>
                 </form>
-                </div>
-                <?php if(isset($message)): ?>
-                <div class="alert alert-danger text-center margin-bottom-none margin-top-15" role="alert"><?php echo $message; ?></div>
-                <?php endif; ?>
-
             </div>
-        
+            <?php if(isset($message)): ?>
+            <div class="alert alert-danger text-center margin-bottom-none margin-top-15"
+                 role="alert"><?php echo $message; ?></div>
+            <?php endif; ?>
+
         </div>
-    
+
     </div>
+
+</div>
 
 <?php include_once('Include/Footer.html'); ?>

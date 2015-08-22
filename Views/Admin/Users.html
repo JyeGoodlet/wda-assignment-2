@@ -8,22 +8,22 @@
 
     <table id="adminUserTable" class="table table-striped">
         <thead>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Banned</th>
-            <th>Admin</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Banned</th>
+        <th>Admin</th>
 
         </thead>
         <tbody>
-            <?php foreach(ModelFacade::GetAllUsers() as $user) { ?>
-            <tr>
-                <td><a href="/AdminUser.php?id=<?php echo $user['id'];?>"><?php echo $user['username']; ?></a></td>
-                <td><?php echo $user['email']; ?></td>
-                <td><?php echo $user['is_banned'] ? 'Yes' : 'No'; ?></td>
-                <td><?php echo $user['is_admin'] ? 'Yes' : 'No'; ?></td>
+        <?php foreach(ModelFacade::GetAllUsers() as $user) { ?>
+        <tr>
+            <td><a href="/AdminUser.php?id=<?php echo $user['id'];?>"><?php echo $user['username']; ?></a></td>
+            <td><?php echo $user['email']; ?></td>
+            <td><?php echo $user['is_banned'] ? 'Yes' : 'No'; ?></td>
+            <td><?php echo $user['is_admin'] ? 'Yes' : 'No'; ?></td>
 
-            </tr>
-            <?php } ?>
+        </tr>
+        <?php } ?>
         </tbody>
 
     </table>

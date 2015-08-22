@@ -5,21 +5,23 @@ require "/Model/ModelFacade.php";
 ModelFacade::redirectUnauthorisedNotAdmin();
 OnRequest();
 
-function OnRequest() {
-    
+function OnRequest()
+{
+
     if ($_SERVER['REQUEST_METHOD'] == "GET") {
-        if(isset($_GET['id'])) {
+        if (isset($_GET['id'])) {
             AdminDeleteComment($_GET['id']);
         }
-    } 
+    }
 
 }
 
-function AdminDeleteComment($id) {
+function AdminDeleteComment($id)
+{
 
     $result = ModelFacade::AdminDeleteComment($id);
     header("Location: " . $_SERVER['HTTP_REFERER']);
-    
+
 }
 
 ?>

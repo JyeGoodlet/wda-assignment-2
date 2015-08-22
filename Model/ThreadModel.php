@@ -28,17 +28,16 @@ class ThreadModel
     public $lastActivity;
 
 
-
-
-
-    public function __construct($title, $content, $subcategory, $user) {
+    public function __construct($title, $content, $subcategory, $user)
+    {
         $this->title = $title;
         $this->content = $content;
         $this->subcategory = $subcategory;
         $this->user = $user;
     }
 
-    public function addThread() {
+    public function addThread()
+    {
 
         $connection = new DbConnect();
         $pdo = $connection->connect();

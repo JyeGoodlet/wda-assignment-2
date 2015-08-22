@@ -1,16 +1,17 @@
 <?php
 
-	class Category {
+class Category
+{
 
 
-		public $id;
+    public $id;
 
-		public $category;
+    public $category;
 
-		//list to hold our subcategories
-		public $subcategories;
+    //list to hold our subcategories
+    public $subcategories;
 
-	}
+}
 
 
 ?>

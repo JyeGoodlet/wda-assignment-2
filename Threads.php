@@ -16,21 +16,21 @@ require "/Model/ModelFacade.php";
 //get all categories and subcategories
 OnRequest();
 
-function OnRequest() {
+function OnRequest()
+{
     //get subcategory
     $subcategory = ModelFacade::getSubCategory($_GET["id"]);
 
     if ($subcategory == null) {
-        $message =  "Sorry but a thread with that id does not exist";
+        $message = "Sorry but a thread with that id does not exist";
         include_once('/Views/ErrorPage.html');
-    }else {
+    } else {
         //Check if subcategory or parent category is disabled
-        if(ModelFacade::checkSubcategoryDisabled($subcategory->id)) {          
+        if (ModelFacade::checkSubcategoryDisabled($subcategory->id)) {
 
             $message = "Sorry, but this thread is not enabled for viewing";
             include_once('/Views/ErrorPage.html');
-        }
-        else {
+        } else {
             //get Posts
             $threads = ModelFacade::getThreads($subcategory->id);
             include_once('/Views/Threads.html');

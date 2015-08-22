@@ -16,24 +16,27 @@
     <form method="post">
         <div class="form-group">
             <label for="SelectSubcategoryName">Select Subcategory</label>
-            <select id="SelectSubcategoryName" name="selectSubcategoryName" class="form-control" onchange="AdminEditSubcategorySelectBoxChange();">
+            <select id="SelectSubcategoryName" name="selectSubcategoryName" class="form-control"
+                    onchange="AdminEditSubcategorySelectBoxChange();">
                 <option value="-1">-</option>
                 <?php foreach($categories as $category) { ?>
-                    <optgroup label="<?php echo $category->category; ?>">
+                <optgroup label="<?php echo $category->category; ?>">
                     <?php foreach($category->subcategories as $subcategory) { ?>
-                        <option value="<?php echo $subcategory->id; ?>"><?php echo $subcategory->subcategory; ?></option>
+                    <option value="<?php echo $subcategory->id; ?>"><?php echo $subcategory->subcategory; ?></option>
                     <?php } ?>
-                    </optgroup>    
+                </optgroup>
 
-                 <?php } ?>
+                <?php } ?>
             </select>
         </div>
         <div class="form-group">
             <label for="SubcategoryName">Edit Subcategory Name</label>
-            <input id="SubcategoryName" name="subcategoryName" class="form-control" placeholder="Subcategory Name"/>            
+            <input id="SubcategoryName" name="subcategoryName" class="form-control" placeholder="Subcategory Name"/>
         </div>
 
-        <button id="adminEditSubcategorySubmit" class="btn btn-primary pull-right"><i class="fa fa-pencil-square"></i> Edit Subcategory</button>
+        <button id="adminEditSubcategorySubmit" class="btn btn-primary pull-right"><i class="fa fa-pencil-square"></i>
+            Edit Subcategory
+        </button>
         <div class="clearfix"></div>
     </form>
 

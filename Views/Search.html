@@ -8,42 +8,52 @@
 
     <div class="panel-body">
 
-<table id="subcategoryThreads" style="width:1100px" class="table">
-    <thead>
-    <tr>
-        <th style="width:700px">Post</th>
-        <th  style="text-align: center;">Replies</th>
-        <th  style="text-align: center;width: 170px;">First Post</th>
-        <th  style="text-align: center;width: 170px;">Last Post</th>
-        <?php if(ModelFacade::checkLoggedIn() && ModelFacade::getLoggedInUser()->isAdmin) { ?>
-        <th>Admin</th><?php } ?>
-    </tr>
+        <table id="subcategoryThreads" style="width:1100px" class="table">
+            <thead>
+            <tr>
+                <th style="width:700px">Post</th>
+                <th style="text-align: center;">Replies</th>
+                <th style="text-align: center;width: 170px;">First Post</th>
+                <th style="text-align: center;width: 170px;">Last Post</th>
+                <?php if(ModelFacade::checkLoggedIn() && ModelFacade::getLoggedInUser()->isAdmin) { ?>
+                <th>Admin</th>
+                <?php } ?>
+            </tr>
 
-    </thead>
-    <?php foreach($threads as $thread):?>
-    <tr>
-        <td><a <?php if($thread->closed){ ?>style="color: #636363" <?php ;}?> href="Thread.php?id=<?php echo $thread->id; ?>"><?php echo  htmlspecialchars($thread->title); ?> <?php if($thread->closed) { echo "(Thread Closed)"; } ?></a>
+            </thead>
+            <?php foreach($threads as $thread):?>
+            <tr>
+                <td><a <?php if($thread->closed){ ?>style="color: #636363" <?php ;}?>
+                    href="Thread.php?id=<?php echo $thread->id; ?>"><?php echo  htmlspecialchars($thread->title);
+                    ?> <?php if($thread->closed) { echo "(Thread Closed)"; } ?></a>
 
-        </td>
-        <td style="font-size: 14px;text-align: center;">
-            <?php echo $thread->commentcount; ?>
+                </td>
+                <td style="font-size: 14px;text-align: center;">
+                    <?php echo $thread->commentcount; ?>
 
-        </td>
-        <td style="font-size: 14px;text-align: center;"><a href="UserProfile.php?id=<?php echo $thread->posterId; ?>"><?php echo $thread->username?></a><br>
-            <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($thread->date)?></p>
-        </td>
-        <td style="font-size: 14px;text-align: center;"><a href="UserProfile.php?id=<?php echo $thread->lastUserId; ?>"><?php echo $thread->lastuser?></a><br>
-            <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($thread->lastdate)?></p></td>
-        <?php if(ModelFacade::checkLoggedIn() && ModelFacade::getLoggedInUser()->isAdmin) { ?>
-        <?php if ($thread->closed) { ?>
-        <td>Thread Closed</td>
-        <?php } else { ?>
-       <td> <p class="text-danger"> <a href="/AdminCloseThread.php?id=<?php echo $thread->id; ?>"><i class="fa fa-times-circle-o"></i> Close Thread</a></p> </td>
-        <?php }} ?>
-    </tr>
-    <?php endforeach;?>
-    </tbody>
-</table>
+                </td>
+                <td style="font-size: 14px;text-align: center;"><a
+                        href="UserProfile.php?id=<?php echo $thread->posterId; ?>"><?php echo $thread->
+                    username?></a><br>
+
+                    <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($thread->date)?></p>
+                </td>
+                <td style="font-size: 14px;text-align: center;"><a
+                        href="UserProfile.php?id=<?php echo $thread->lastUserId; ?>"><?php echo $thread->
+                    lastuser?></a><br>
+
+                    <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($thread->lastdate)?></p></td>
+                <?php if(ModelFacade::checkLoggedIn() && ModelFacade::getLoggedInUser()->isAdmin) { ?>
+                <?php if ($thread->closed) { ?>
+                <td>Thread Closed</td>
+                <?php } else { ?>
+                <td><p class="text-danger"><a href="/AdminCloseThread.php?id=<?php echo $thread->id; ?>"><i
+                        class="fa fa-times-circle-o"></i> Close Thread</a></p></td>
+                <?php }} ?>
+            </tr>
+            <?php endforeach;?>
+            </tbody>
+        </table>
     </div>
 </div>
 <?php include_once('Include/Footer.html'); ?>

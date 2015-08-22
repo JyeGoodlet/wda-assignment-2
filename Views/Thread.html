@@ -1,52 +1,70 @@
 <?php $pageTitle = $thread->title;
-    include_once('Include/Header.html'); ?>
-<h4><a href="index.php">Home</a> <i class="fa fa-angle-double-right"></i> <a href="threads.php?id=<?php echo $thread->subCatId; ?>"> <?php echo $thread->subcategory ?></a></h4>
+include_once('Include/Header.html'); ?>
+<h4><a href="index.php">Home</a> <i class="fa fa-angle-double-right"></i> <a
+        href="threads.php?id=<?php echo $thread->subCatId; ?>"> <?php echo $thread->subcategory ?></a></h4>
 <div class="panel panel-primary">
     <div class="panel-heading"><h4 class="inline"><?php echo htmlspecialchars($thread->title) ?></h4>
-        <?php if(ModelFacade::checkLoggedIn() && ModelFacade::getLoggedInUser()->isAdmin && ModelFacade::checkThreadClosed($thread->id) == false) { ?>
-        <a href="AdminCloseThread.php?id=<?php echo $thread->id; ?>" class="btn btn-default pull-right">  Close Thread</a><?php } ?>
+        <?php if(ModelFacade::checkLoggedIn() && ModelFacade::getLoggedInUser()->isAdmin &&
+        ModelFacade::checkThreadClosed($thread->id) == false) { ?>
+        <a href="AdminCloseThread.php?id=<?php echo $thread->id; ?>" class="btn btn-default pull-right"> Close
+            Thread</a><?php } ?>
         <!-- pending remove <a href="AddComment.php?threadId=<?php echo $_GET['id']; ?>" type="button" class="btn btn-default pull-right">Add Comment</a> -->
     </div>
-        <div class="panel-body">
+    <div class="panel-body">
         <table id="threadComments" style="width:1100px" class="table">
-        <thead>
-            <tr><th></th><th></th></tr>
-        </thead>
-        <tbody>
-        <td style="width:150px;text-align: center;background-color: #F1F1F1"><p><a href="UserProfile.php?id=<?php echo $thread->user; ?>"><?php echo htmlspecialchars($thread->username) ?></a></p> <br/>
-            <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($thread->date); ?></p></td>
-        <td><?php echo nl2br(htmlspecialchars($thread->content)) ?></td>
-
-        <?php foreach($comments as $comment): ?>
-
-        <tr><td style="width:150px;text-align: center;background-color: #F1F1F1"><p><a href="UserProfile.php?id=<?php  echo $comment->UserId; ?>"><?php echo htmlspecialchars($comment->username) ?></a></p> <br/>
-            <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($comment->date); ?></p>
-            <?php if(ModelFacade::checkLoggedIn() && ModelFacade::getLoggedInUser()->isAdmin) { ?>
-            <p class="text-danger"> <a href="/AdminDeleteComment.php?id=<?php echo $comment->commentId; ?>"><i class="fa fa-trash"></i> Remove</a></p><?php } ?>
-            </td>
-            <td><?php echo nl2br (htmlspecialchars($comment->comment)) ?></td>
+            <thead>
+            <tr>
+                <th></th>
+                <th></th>
             </tr>
-        <?php endforeach;?>
-        </tbody>
+            </thead>
+            <tbody>
+            <td style="width:150px;text-align: center;background-color: #F1F1F1"><p><a
+                    href="UserProfile.php?id=<?php echo $thread->user; ?>"><?php echo htmlspecialchars($thread->
+                username) ?></a></p> <br/>
+
+                <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($thread->date); ?></p></td>
+            <td><?php echo nl2br(htmlspecialchars($thread->content)) ?></td>
+
+            <?php foreach($comments as $comment): ?>
+
+            <tr>
+                <td style="width:150px;text-align: center;background-color: #F1F1F1"><p><a
+                        href="UserProfile.php?id=<?php  echo $comment->UserId; ?>"><?php echo htmlspecialchars($comment->
+                    username) ?></a></p> <br/>
+
+                    <p style="font-size: smaller"><?php echo ModelFacade::friendlyDate($comment->date); ?></p>
+                    <?php if(ModelFacade::checkLoggedIn() && ModelFacade::getLoggedInUser()->isAdmin) { ?>
+                    <p class="text-danger"><a href="/AdminDeleteComment.php?id=<?php echo $comment->commentId; ?>"><i
+                            class="fa fa-trash"></i> Remove</a></p><?php } ?>
+                </td>
+                <td><?php echo nl2br (htmlspecialchars($comment->comment)) ?></td>
+            </tr>
+            <?php endforeach;?>
+            </tbody>
         </table>
 
         <?php if(ModelFacade::checkLoggedIn() && ModelFacade::checkThreadClosed($thread->id) == false ) :?>
-        <div style="width:600px" >
-        <form method="post" >
-            <div class="form-group">
-                <textarea required="required" rows="6" class="form-control" name="newComment" id="newComment" ></textarea>
-            </div>
-            <?php if (isset($emptyComment) && $emptyComment): ?> <p class="alert alert-warning" role="alert">Error: Comment Empty</p> <?php endif; ?>
-            <div class="form-group fa-pull-right">
+        <div style="width:600px">
+            <form method="post">
+                <div class="form-group">
+                    <textarea required="required" rows="6" class="form-control" name="newComment"
+                              id="newComment"></textarea>
+                </div>
+                <?php if (isset($emptyComment) && $emptyComment): ?> <p class="alert alert-warning" role="alert">Error:
+                Comment Empty</p> <?php endif; ?>
+                <div class="form-group fa-pull-right">
 
-                <button class="btn btn-primary">Add Comment</button>
-            </div>
-        </form>
+                    <button class="btn btn-primary">Add Comment</button>
+                </div>
+            </form>
         </div>
         <?php elseif (ModelFacade::checkThreadClosed($thread->id)): ?>
-            <div style="font-weight: bold;font-size: large;" class="alert alert-info" role="alert">Sorry, Thread has been Closed</div>
+        <div style="font-weight: bold;font-size: large;" class="alert alert-info" role="alert">Sorry, Thread has been
+            Closed
+        </div>
 
-         <?php endif; ?>
+        <?php endif; ?>
 
 
     </div>

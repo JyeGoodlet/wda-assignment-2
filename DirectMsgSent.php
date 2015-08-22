@@ -1,6 +1,6 @@
 <?php
 /**  -_-_- AUTHOR: jAsOnD -_-_-
- displays the logged in users Sent box - messages sent */
+ * displays the logged in users Sent box - messages sent */
 
 require "/Model/ModelFacade.php";
 //redirect if user not logged in
@@ -27,8 +27,7 @@ function OnRequest()
             $newMsgSent = "MESSAGE SENT SUCCESSFULLY";
         else
             $newMsgSent = "MESSAGE SEND FAILED - NO SUCH USER EXISTS";
-    }
-    else
+    } else
         $newMsgSent = "";
 
     include_once('/Views/DirectMsgSent.html');

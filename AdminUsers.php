@@ -8,8 +8,9 @@ ModelFacade::redirectUnauthorisedNotAdmin();
 
 OnRequest();
 
-function OnRequest() {
-    if(isset($_SESSION['deleteUser'])) {
+function OnRequest()
+{
+    if (isset($_SESSION['deleteUser'])) {
         $message = $_SESSION['deleteUser'];
     }
 

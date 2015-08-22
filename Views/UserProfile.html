@@ -1,12 +1,12 @@
 <?php $pageTitle = $userDetails->username . "'s profile";
-    include_once('Include/Header.html'); ?>
+include_once('Include/Header.html'); ?>
 
 <!--   -_-_- AUTHOR: jAsOnD -_-_- -->
 <div class="panel panel-primary">
     <div class="panel-heading">
         <h4 class="inline"><?php echo $userDetails->username ?>'s Profile</h4>
     </div>
-    
+
     <div class="panel-body">
         <div class="col-lg-6 col-lg-offset-3">
             <table id="UserProfile" class="table table-bordered text-center">
@@ -30,35 +30,39 @@
 
             <div id="profile_buttons">
                 <?php if ($userDetails->id === $currentUser->id ) { ?>
-                    <a href="/DeleteUser.php" type="button" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i> Delete User Account</a>
-                    <a href="/UserChangePassword.php?id=<?php echo $currentUser->id ?>" type="button" class="btn btn-primary pull-right"><i class="fa fa-unlock-alt fa-fw"></i> Change Password</a>
+                <a href="/DeleteUser.php" type="button" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i> Delete
+                    User Account</a>
+                <a href="/UserChangePassword.php?id=<?php echo $currentUser->id ?>" type="button"
+                   class="btn btn-primary pull-right"><i class="fa fa-unlock-alt fa-fw"></i> Change Password</a>
                 <?php } else { ?>
-                    <a href="/DirectMsgCreate.php?sendTo=<'.$userDetails->id.'" type="button" class="btn btn-primary pull-right"><i class="fa fa-paper-plane fa-fw"></i> Message User</a>
+                <a href="/DirectMsgCreate.php?sendTo=<'.$userDetails->id.'" type="button"
+                   class="btn btn-primary pull-right"><i class="fa fa-paper-plane fa-fw"></i> Message User</a>
                 <?php } ?>
             </div>
 
-        </div>        
-        
+        </div>
+
     </div>
 
 </div>
 
 <div class="panel panel-primary">
-<div class="panel-heading">
-    <h4 class="inline text-center"> <?php echo $userDetails->username ?>'s Threads </h4>
-</div>
+    <div class="panel-heading">
+        <h4 class="inline text-center"> <?php echo $userDetails->username ?>'s Threads </h4>
+    </div>
 
     <div class="panel-body">
 
         <table id="subcategoryThreads" style="width:1100px" class="table">
             <thead>
             <tr>
-                <th style="width:200px; text-align: center;"> Category </th>
+                <th style="width:200px; text-align: center;"> Category</th>
                 <th style="width:500px">Thread</th>
-                <th  style="text-align: center;">Replies</th>
-                <th  style="text-align: center;width: 170px;">Posted on</th>
+                <th style="text-align: center;">Replies</th>
+                <th style="text-align: center;width: 170px;">Posted on</th>
                 <?php if(ModelFacade::checkLoggedIn() && ModelFacade::getLoggedInUser()->isAdmin) { ?>
-                <th>Admin</th><?php } ?>
+                <th>Admin</th>
+                <?php } ?>
             </tr>
 
             </thead>
@@ -71,7 +75,9 @@
 
                 </td>
 
-                <td><a <?php if($thread->closed){ ?>style="color: #636363" <?php ;}?> href="Thread.php?id=<?php echo $thread->id; ?>"><?php echo htmlspecialchars($thread->title); ?> <?php if($thread->closed) { echo "(Thread Closed)"; } ?></a>
+                <td><a <?php if($thread->closed){ ?>style="color: #636363" <?php ;}?>
+                    href="Thread.php?id=<?php echo $thread->id; ?>"><?php echo htmlspecialchars($thread->title);
+                    ?> <?php if($thread->closed) { echo "(Thread Closed)"; } ?></a>
 
                 </td>
                 <td style="font-size: 14px;text-align: center;">
@@ -86,7 +92,8 @@
                 <?php if ($thread->closed) { ?>
                 <td>Thread Closed</td>
                 <?php } else { ?>
-                <td> <p class="text-danger"> <a href="/AdminCloseThread.php?id=<?php echo $thread->id; ?>"><i class="fa fa-times-circle-o"></i> Close Thread</a></p> </td>
+                <td><p class="text-danger"><a href="/AdminCloseThread.php?id=<?php echo $thread->id; ?>"><i
+                        class="fa fa-times-circle-o"></i> Close Thread</a></p></td>
                 <?php }} ?>
             </tr>
             <?php endforeach;?>

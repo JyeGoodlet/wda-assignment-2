@@ -18,9 +18,12 @@
                             <?php
                             foreach($allUsers as $eachUser){
                                 if ($eachUser['id'] == $sendTo )
-                                    $option = '<option value="' . $eachUser['id']. '" selected>'.$eachUser['username']. '</option>';
-                                else
-                                    $option = '<option value="' . $eachUser['id']. '">'.$eachUser['username'] .'</option>' ;
+                                    $option = '<option value="' . $eachUser['id']. '" selected>'.$eachUser['username'].
+                            '</option>';
+                            else
+                            $option = '
+                            <option value="' . $eachUser['id']. '">'.$eachUser['username'] .'</option>
+                            ' ;
                             echo $option; }
                             ?>
 
@@ -29,7 +32,8 @@
                     </div>
                     <div class="form-group <?php echo (isset($subjectReq) ? $subjectReq : '' ); ?> ">
                         <label for="subject"> Subject </label>
-                        <input class="form-control" name="subject" id="subject" value="<?php echo $replySubject.$fwdSubject; ?>" type="text"> </input>
+                        <input class="form-control" name="subject" id="subject"
+                               value="<?php echo $replySubject.$fwdSubject; ?>" type="text"> </input>
                         <?php if(isset($subjectReq)): ?>
                         <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
                         <span id="inputWarning2Status" class="sr-only">(warning)</span>
@@ -38,7 +42,8 @@
 
                     <div class="form-group <?php echo (isset($messageReq) ? $messageReq : '' ); ?> ">
                         <label for="message">Message</label>
-                        <textarea rows="6" class="form-control" name="message" id="message" type="text"><?php echo $fwdMessage ; ?></textarea>
+                        <textarea rows="6" class="form-control" name="message" id="message"
+                                  type="text"><?php echo $fwdMessage ; ?></textarea>
                         <?php if(isset($messageReq)): ?>
                         <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
                         <span id="inputWarning3Status" class="sr-only">(warning)</span>

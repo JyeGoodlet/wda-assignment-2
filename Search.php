@@ -10,18 +10,15 @@ require "/Model/ModelFacade.php";
 
 OnRequest();
 
-function OnRequest() {
+function OnRequest()
+{
     $threads = null;
     if (isset($_GET['search'])) {
         $threads = ModelFacade::SearchThreads($_GET["search"]);
         include_once('/Views/Search.html');
+    } else {
+        header('Location: Index.php');
     }
-    else {
-        header( 'Location: Index.php' ) ;
-    }
-
-
-
 
 
 }
