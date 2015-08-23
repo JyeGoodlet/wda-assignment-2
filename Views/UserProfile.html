@@ -35,7 +35,7 @@ include_once('Include/Header.html'); ?>
                 <a href="/UserChangePassword.php?id=<?php echo $currentUser->id ?>" type="button"
                    class="btn btn-primary pull-right"><i class="fa fa-unlock-alt fa-fw"></i> Change Password</a>
                 <?php } else { ?>
-                <a href="/DirectMsgCreate.php?sendTo=<'.$userDetails->id.'" type="button"
+                <a href="/DirectMsgCreate.php?sendTo=<?php echo $userDetails->id ?>" type="button"
                    class="btn btn-primary pull-right"><i class="fa fa-paper-plane fa-fw"></i> Message User</a>
                 <?php } ?>
             </div>
